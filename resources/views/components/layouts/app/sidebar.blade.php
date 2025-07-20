@@ -74,82 +74,82 @@
             @endif
 
            @php
-    $newsRoutes = [
-        'posts.create',
-        'news.index',
-        'news.drafts',
-        'news.scheduled',
-        'posts.trashed',
-    ];
-    $isNewsOpen = collect($newsRoutes)->contains(fn($route) => request()->routeIs($route));
-@endphp
+            $newsRoutes = [
+                'posts.create',
+                'news.index',
+                'news.drafts',
+                'news.scheduled',
+                'posts.trashed',
+            ];
+            $isNewsOpen = collect($newsRoutes)->contains(fn($route) => request()->routeIs($route));
+        @endphp
 
-<flux:navlist variant="outline">
-    <div x-data="{ open: {{ $isNewsOpen ? 'true' : 'false' }} }">
-        <button @click="open = !open"
-            class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+        <flux:navlist variant="outline">
+            <div x-data="{ open: {{ $isNewsOpen ? 'true' : 'false' }} }">
+                <button @click="open = !open"
+                    class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
 
-            <span>{{ __('News Management') }}</span>
-            <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-            <svg x-show="open" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-            </svg>
-        </button>
+                    <span>{{ __('News Management') }}</span>
+                    <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    <svg x-show="open" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                </button>
 
-        <div x-show="open" x-transition>
-            <flux:navlist.group class="pl-4 mt-1">
+                <div x-show="open" x-transition>
+                    <flux:navlist.group class="pl-4 mt-1">
+                        @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                            <flux:navlist.item
+                                icon="plus-circle"
+                                :href="route('posts.create')"
+                                :current="request()->routeIs('posts.create')"
+                                wire:navigate
+                                class="{{ request()->routeIs('posts.create') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Add New') }}
+                            </flux:navlist.item>
+                        @endif
+                        <flux:navlist.item
+                            icon="plus-circle"
+                            :href="route('news.index')"
+                            :current="request()->routeIs('news.index')"
+                            wire:navigate
+                            class="{{ request()->routeIs('news.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                            {{ __('All News') }}
+                        </flux:navlist.item>
 
-                <flux:navlist.item
-                    icon="plus-circle"
-                    :href="route('posts.create')"
-                    :current="request()->routeIs('posts.create')"
-                    wire:navigate
-                    class="{{ request()->routeIs('posts.create') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                    {{ __('Add New') }}
-                </flux:navlist.item>
+                        <flux:navlist.item
+                            icon="document-text"
+                            :href="route('news.drafts')"
+                            :current="request()->routeIs('news.drafts')"
+                            wire:navigate
+                            class="{{ request()->routeIs('news.drafts') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                            {{ __('Drafts') }}
+                        </flux:navlist.item>
 
-                <flux:navlist.item
-                    icon="plus-circle"
-                    :href="route('news.index')"
-                    :current="request()->routeIs('news.index')"
-                    wire:navigate
-                    class="{{ request()->routeIs('news.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                    {{ __('All News') }}
-                </flux:navlist.item>
+                        <flux:navlist.item
+                            icon="clock"
+                            :href="route('news.scheduled')"
+                            :current="request()->routeIs('news.scheduled')"
+                            wire:navigate
+                            class="{{ request()->routeIs('news.scheduled') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                            {{ __('Scheduled') }}
+                        </flux:navlist.item>
 
-                <flux:navlist.item
-                    icon="document-text"
-                    :href="route('news.drafts')"
-                    :current="request()->routeIs('news.drafts')"
-                    wire:navigate
-                    class="{{ request()->routeIs('news.drafts') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                    {{ __('Drafts') }}
-                </flux:navlist.item>
+                        <flux:navlist.item
+                            icon="trash"
+                            :href="route('posts.trashed')"
+                            :current="request()->routeIs('posts.trashed')"
+                            wire:navigate
+                            class="{{ request()->routeIs('posts.trashed') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                            {{ __('Trashed') }}
+                        </flux:navlist.item>
 
-                <flux:navlist.item
-                    icon="clock"
-                    :href="route('news.scheduled')"
-                    :current="request()->routeIs('news.scheduled')"
-                    wire:navigate
-                    class="{{ request()->routeIs('news.scheduled') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                    {{ __('Scheduled') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item
-                    icon="trash"
-                    :href="route('posts.trashed')"
-                    :current="request()->routeIs('posts.trashed')"
-                    wire:navigate
-                    class="{{ request()->routeIs('posts.trashed') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                    {{ __('Trashed') }}
-                </flux:navlist.item>
-
-            </flux:navlist.group>
-        </div>
-    </div>
-</flux:navlist>
+                    </flux:navlist.group>
+                </div>
+            </div>
+        </flux:navlist>
 
 
             
