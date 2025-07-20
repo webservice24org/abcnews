@@ -31,19 +31,20 @@
                                 {{ $news->updated_at->format('M d, Y') }}
                             </td>
                             <td class="px-4 py-2 border flex items-center space-x-2">
-                                {{-- Edit --}}
+                                @hasanyrole('Super Admin|Admin|Editor')
                                 <a href="{{ route('posts.edit', $news->id) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit">
                                     <flux:icon name="pencil-square" class="w-5 h-5" />
                                 </a>
-
-                                {{-- Delete --}}
+                                @endhasanyrole
+                                @hasanyrole('Admin|Super Admin')
                                 <button wire:click="confirmDelete({{ $news->id }})"
-                                        class="text-red-600 hover:underline"type="button"
-                                            class="text-red-600 hover:text-red-800"
-                                            title="Delete">
-                                        <flux:icon name="trash" class="w-5 h-5" />
-                                                                        
-                                    </button>
+                                    class="text-red-600 hover:underline"type="button"
+                                        class="text-red-600 hover:text-red-800"
+                                        title="Delete">
+                                    <flux:icon name="trash" class="w-5 h-5" />
+                                                                    
+                                </button>
+                                @endhasanyrole
                             </td>
                         </tr>
                     @endforeach

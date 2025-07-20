@@ -5,12 +5,23 @@ namespace App\Traits;
 
 use App\Models\NewsPost;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 trait HandlesNewsDeletion
 {
+    protected function deletePermission()
+    {
+        $user = Auth::user();
+
+        if (! $user->hasRole(['Super Admin', 'Admin'])) {
+            abort(403, 'You are not authorized to delete news posts.');
+        }
+    }
 
     public function deleteConfirmed($id)
     {
+        $this->deletePermission(); 
+
         $post = NewsPost::find($id);
 
         if (!$post) {
@@ -34,9 +45,10 @@ trait HandlesNewsDeletion
         $this->dispatch('confirm-delete', $id);
     }
 
-
     public function restorePost($id)
     {
+        
+
         $post = NewsPost::withTrashed()->find($id);
 
         if (!$post) {
@@ -57,12 +69,10 @@ trait HandlesNewsDeletion
         $this->dispatch('newsRestored');
     }
 
-
-
-
-
     public function forceDeleteConfirmed($id)
     {
+        $this->deletePermission(); 
+
         $post = NewsPost::withTrashed()->find($id);
 
         if (!$post) {
@@ -84,8 +94,7 @@ trait HandlesNewsDeletion
             'message' => 'News post permanently deleted!',
         ]);
     }
-
-
 }
+
 
 

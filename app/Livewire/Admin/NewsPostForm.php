@@ -12,11 +12,44 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-
 class NewsPostForm extends Component
 {
     use WithFileUploads;
 
+    protected function checkPermission()
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'User not authenticated.');
+        }
+
+        $action = $this->editing ? 'edit news' : 'create news';
+
+        // Map roles to allowed actions
+        $rolePermissions = [
+            'Super Admin' => ['create news', 'edit news', 'update news', 'delete news'],
+            'Admin' => ['create news', 'edit news', 'update news', 'delete news'],
+            'Editor' => ['create news', 'edit news', 'update news'],
+            'Seo Expert' => ['edit news'],
+            'Reporter' => ['create news', 'edit news'],
+            'Subscriber' => ['read news'],
+        ];
+
+        $userRoles = $user->getRoleNames(); // Collection of role names
+
+        $hasPermission = $userRoles->contains(function ($role) use ($rolePermissions, $action) {
+            return isset($rolePermissions[$role]) && in_array($action, $rolePermissions[$role]);
+        });
+
+        if (! $hasPermission) {
+            abort(403, 'You are not authorized to perform this action.');
+        }
+    }
+
+
+    
+    
 
 
 
@@ -100,6 +133,8 @@ public $allSubcategories;
 
     public function mount($id = null)
     {
+        $this->editing = $id ? true : false;
+        $this->checkPermission();
         if ($id) {
             $this->post = NewsPost::with('subcategories')->findOrFail($id);
             $this->selected_subcategories = $this->post->subcategories->pluck('id')->toArray();
@@ -187,70 +222,71 @@ public $allSubcategories;
     }
 
     public function submit()
-{
-    $validated = $this->validate([
-        'news_title' => 'required|string|max:255',
-        'slug' => 'required|unique:news_posts,slug,' . $this->newsPostId,
-        'news_description' => 'required|string',
-        'selected_categories' => 'required|array|min:1',
-        'selected_subcategories' => 'array',
-        'selected_subcategories.*' => 'exists:sub_categories,id',
-        'status' => 'required|in:draft,published,scheduled',
-        'scheduled_at' => $this->status === 'scheduled' ? 'required|date' : 'nullable|date',
+    {
+        $this->checkPermission();
+        $validated = $this->validate([
+            'news_title' => 'required|string|max:255',
+            'slug' => 'required|unique:news_posts,slug,' . $this->newsPostId,
+            'news_description' => 'required|string',
+            'selected_categories' => 'required|array|min:1',
+            'selected_subcategories' => 'array',
+            'selected_subcategories.*' => 'exists:sub_categories,id',
+            'status' => 'required|in:draft,published,scheduled',
+            'scheduled_at' => $this->status === 'scheduled' ? 'required|date' : 'nullable|date',
 
-        'news_thumbnail' => $this->newsPostId ? 'nullable|image|max:2048' : 'required|image|max:2048',
-    ]);
+            'news_thumbnail' => $this->newsPostId ? 'nullable|image|max:2048' : 'required|image|max:2048',
+        ]);
 
-    // Continue if validation passes
-    $thumbnailName = $this->existing_thumbnail;
-    if ($this->news_thumbnail) {
-        $thumbnailName = $this->news_thumbnail->store('news', 'public');
-        if ($this->existing_thumbnail) {
-            Storage::disk('public')->delete($this->existing_thumbnail);
+        // Continue if validation passes
+        $thumbnailName = $this->existing_thumbnail;
+        if ($this->news_thumbnail) {
+            $thumbnailName = $this->news_thumbnail->store('news', 'public');
+            if ($this->existing_thumbnail) {
+                Storage::disk('public')->delete($this->existing_thumbnail);
+            }
         }
+
+        $data = [
+            'news_title' => $this->news_title,
+            'slug' => $this->slug,
+            'news_description' => $this->news_description,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
+            'division_id' => $this->division_id,
+            'district_id' => $this->district_id,
+            'upazila_id' => $this->upazila_id,
+            'news_thumbnail' => $thumbnailName,
+            'is_lead' => $this->is_lead,
+            'is_sub_lead' => $this->is_sub_lead,
+            'is_premium' => $this->is_premium,
+            'status' => $this->status,
+            'scheduled_at' => $this->status === 'scheduled' ? $this->scheduled_at : null,
+            'user_id' => Auth::id(),
+        ];
+
+        $post = NewsPost::updateOrCreate(['id' => $this->newsPostId], $data);
+
+        $post->categories()->sync($this->selected_categories);
+        $post->subcategories()->sync($this->selected_subcategories ?? []);
+
+        
+
+        $tagIds = [];
+        foreach ($this->selected_tags as $name) {
+            $tag = Tag::firstOrCreate(['name' => $name]);
+            $tagIds[] = $tag->id;
+        }
+        $post->tags()->sync($tagIds);
+
+        // Show toast only after success
+        $this->dispatch('toast', [
+            'type' => 'success',
+            'message' => $this->newsPostId ? 'Post updated successfully!' : 'Post created successfully!',
+        ]);
+
+        // Then redirect after short delay
+        return redirect()->route('news.index');
     }
-
-    $data = [
-        'news_title' => $this->news_title,
-        'slug' => $this->slug,
-        'news_description' => $this->news_description,
-        'meta_title' => $this->meta_title,
-        'meta_description' => $this->meta_description,
-        'division_id' => $this->division_id,
-        'district_id' => $this->district_id,
-        'upazila_id' => $this->upazila_id,
-        'news_thumbnail' => $thumbnailName,
-        'is_lead' => $this->is_lead,
-        'is_sub_lead' => $this->is_sub_lead,
-        'is_premium' => $this->is_premium,
-        'status' => $this->status,
-        'scheduled_at' => $this->status === 'scheduled' ? $this->scheduled_at : null,
-        'user_id' => Auth::id(),
-    ];
-
-    $post = NewsPost::updateOrCreate(['id' => $this->newsPostId], $data);
-
-   $post->categories()->sync($this->selected_categories);
-    $post->subcategories()->sync($this->selected_subcategories ?? []);
-
-    
-
-    $tagIds = [];
-    foreach ($this->selected_tags as $name) {
-        $tag = Tag::firstOrCreate(['name' => $name]);
-        $tagIds[] = $tag->id;
-    }
-    $post->tags()->sync($tagIds);
-
-    // Show toast only after success
-    $this->dispatch('toast', [
-        'type' => 'success',
-        'message' => $this->newsPostId ? 'Post updated successfully!' : 'Post created successfully!',
-    ]);
-
-    // Then redirect after short delay
-    return redirect()->route('news.index');
-}
 
 
         public function render()

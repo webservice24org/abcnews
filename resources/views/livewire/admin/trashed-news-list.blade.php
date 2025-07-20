@@ -33,6 +33,7 @@
                         <td class="border px-3 py-2">{{ $news->user->name ?? 'N/A' }}</td>
                         <td class="border px-3 py-2">{{ $news->deleted_at->format('M d, Y H:i') }}</td>
                         <td class="border px-3 py-2 space-x-2">
+                            @hasanyrole('Admin|Super Admin|Editor|Seo Expert')
                             <button 
                                 wire:click="restorePost({{ $news->id }})"
                                 class="text-green-600 hover:text-green-800" 
@@ -40,14 +41,16 @@
                             >
                                 <flux:icon name="arrow-uturn-left" />
                             </button>
+                            @endhasanyrole
 
 
-
-                            <button wire:click="forceDeleteConfirmed({{ $news->id }})"
-        type="button"
-        class="text-red-600 hover:text-red-800"
-        title="Delete Forever">
-    <flux:icon name="trash" />
+                            @hasanyrole('Admin|Super Admin')
+                                <button wire:click="forceDeleteConfirmed({{ $news->id }})"
+                                    type="button"
+                                    class="text-red-600 hover:text-red-800"
+                                    title="Delete Forever">
+                                <flux:icon name="trash" />
+                            @endhasanyrole
 </button>
 
 
