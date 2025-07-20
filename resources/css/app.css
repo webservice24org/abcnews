@@ -64,3 +64,16 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+img.front-logo {
+    width: 209px;
+    height: auto;
+}
+.front-navbar, .front-humberger{
+    margin-top: -70px;
+}
+
+.front-humberger{
+    margin-top: -60px;
+}
+

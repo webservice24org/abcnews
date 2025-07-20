@@ -17,12 +17,18 @@ use App\Livewire\Admin\DraftNewsList;
 use App\Livewire\Admin\ScheduledNewsList;
 use \App\Livewire\Admin\TrashedNewsList;
 
+use App\Livewire\Frontend\HomePage;
+use App\Livewire\Frontend\NewsShow;
+
+Route::get('/', HomePage::class)->name('home');
+Route::get('/news/{slug}', NewsShow::class)->name('news.show');
 
 
-
+/*
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+*/
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
