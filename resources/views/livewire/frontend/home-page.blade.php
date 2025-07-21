@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-3xl font-bold mb-4">Latest News</h1>
+    @include('partials.front.lead-news')
 
     @foreach ($news as $item)
         <div class="mb-6 border-b pb-4">

@@ -21,7 +21,7 @@ use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
 
 Route::get('/', HomePage::class)->name('home');
-Route::get('/news/{slug}', NewsShow::class)->name('news.show');
+//Route::get('/news/{slug}', NewsShow::class)->name('news.show');
 
 
 /*
@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::view('users/roles', 'roles.index')->name('roles.index');
     Route::get('users/permissions', PermissionManager::class)->name('permissions.index');
 
-    
+   
+
     Route::get('news/categories', CategoryManager::class)->name('categories.index');
     Route::get('/admin/sub-categories', SubCategoryManager::class)->name('sub-categories.index');
     Route::get('/admin/divisions', DivisionManager::class)->name('divisions.index');
@@ -73,8 +74,9 @@ Route::middleware(['auth'])->group(function () {
     
 });
 
+Route::get('news/{slug}', NewsShow::class)
+    ->where('slug', '^(?!categories$).+')->name('news.show');
 
-
-
+ 
 
 require __DIR__.'/auth.php';
