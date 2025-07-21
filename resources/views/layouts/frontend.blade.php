@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('partials.head')
+    @livewireStyles
 </head>
 <body class="bg-white text-gray-800">
 

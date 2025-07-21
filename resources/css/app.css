@@ -77,3 +77,13 @@ img.front-logo {
     margin-top: -60px;
 }
 
+
+.handle {
+    cursor: move;
+    padding: 5px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+

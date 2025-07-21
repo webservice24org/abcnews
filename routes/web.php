@@ -67,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
    Route::get('admin/news/trashed', TrashedNewsList::class)->name('posts.trashed');
 
-
+    Route::get('/admin/menu-manager', \App\Livewire\Admin\MenuManager::class)->name('admin.menu-manager');
 
     
 
