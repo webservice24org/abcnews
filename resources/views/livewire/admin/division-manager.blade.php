@@ -29,13 +29,15 @@
     <table class="w-full border border-collapse">
         <thead class="bg-gray-100">
             <tr>
-                <th class="border px-4 py-2 text-left text-black">Name</th>
+                <th class="border px-4 py-2 text-left text-black">Sl</th>
+                <th class="border px-4 py-2 text-left text-black">Naame</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($divisions as $division)
                 <tr class="hover:bg-gray-50">
+                    <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                     <td class="border px-4 py-2 text-black">
                         {{ $division->name }}
                     </td>

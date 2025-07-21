@@ -37,6 +37,7 @@
     <table class="w-full border border-collapse">
         <thead class="bg-gray-100">
             <tr>
+                <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">District</th>
                 <th class="border px-4 py-2 text-left text-black">Upazila</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
@@ -45,6 +46,7 @@
         <tbody>
             @foreach ($upazilas as $upa)
                 <tr class="hover:bg-gray-50">
+                    <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                     <td class="border px-4 py-2 text-black">{{ $upa->district->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $upa->name }}</td>
                     <td class="border px-4 py-2">

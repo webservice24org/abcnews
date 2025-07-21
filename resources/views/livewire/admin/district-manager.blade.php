@@ -43,6 +43,7 @@
     <table class="w-full border border-collapse">
         <thead class="bg-gray-100">
             <tr>
+                <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">Division</th>
                 <th class="border px-4 py-2 text-left text-black">District</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
@@ -51,6 +52,7 @@
         <tbody>
             @foreach ($districts as $district)
                 <tr class="hover:bg-gray-50">
+                    <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                     <td class="border px-4 py-2 text-black">{{ $district->division->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $district->name }}</td>
                     <td class="border px-4 py-2">
