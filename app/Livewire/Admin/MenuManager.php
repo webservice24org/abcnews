@@ -21,8 +21,14 @@ class MenuManager extends Component
     public $selectedDivisions = [];
 
     public $menuItems = [];
+    public $newTitle = '';
+    public $newType = '';
+    public $newTypeId = null;
+    public $parentIdForSubmenu = null;
+    public $customMenuTitle;
 
-    //protected $listeners = ['updateMenuOrder'];
+
+    
 
     public function mount()
     {
@@ -32,9 +38,26 @@ class MenuManager extends Component
     }
 
     public function loadMenu()
-{
-    $this->menuItems = Menu::whereNull('parent_id')->with('children')->orderBy('order')->get();
-}
+    {
+        $this->menuItems = Menu::whereNull('parent_id')->with('children')->orderBy('order')->get();
+    }
+
+    public function addCustomMenu()
+    {
+        $this->validate([
+            'customMenuTitle' => 'required|string|max:255',
+        ]);
+
+        Menu::create([
+            'title' => $this->customMenuTitle,
+            'type' => 'custom', // Optional type for identification
+            'parent_id' => null,
+            'order' => Menu::max('order') + 1,
+        ]);
+
+        $this->customMenuTitle = '';
+        $this->loadMenu(); // If you're using eager loading
+    }
 
 
     public function addToMenu()
@@ -91,36 +114,43 @@ class MenuManager extends Component
         $this->loadMenu();
     }
 
-    #[On('updateMenuOrder')]
-    public function updateMenuOrder(array $structure)
+    public function showSubmenuForm($parentId)
     {
-        \Log::info('updateMenuOrder called with:', $structure);
+        $this->parentIdForSubmenu = $parentId;
+        $this->newTitle = '';
+        $this->newType = '';
+        $this->newTypeId = null;
+    }
 
-        $this->updateMenuHierarchy($structure);
+    public function createSubmenu()
+    {
+        $this->validate([
+            'newTitle' => 'required|string|max:255',
+            'newType' => 'required|string',
+        ]);
 
-        $this->loadMenu();
+        Menu::create([
+            'title' => $this->newTitle,
+            'type' => $this->newType,
+            'type_id' => $this->newTypeId,
+            'parent_id' => $this->parentIdForSubmenu,
+            'order' => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
+        ]);
 
+        $this->reset(['newTitle', 'newType', 'newTypeId', 'parentIdForSubmenu']);
+        $this->loadMenu(); // reload the menu tree
     }
 
 
-    // Recursive update of order and parent_id
-   public function updateMenuHierarchy(array $items, $parentId = null)
-    {
-        foreach ($items as $index => $item) {
-            Menu::where('id', $item['id'])->update([
-                'parent_id' => $parentId,
-                'order' => $index
-            ]);
-
-            if (!empty($item['children'])) {
-                $this->updateMenuHierarchy($item['children'], $item['id']);
-            }
-        }
-    }
+    
 
 
     public function render()
     {
-        return view('livewire.admin.menu-manager');
+        $menuTree = Menu::whereNull('parent_id')->with('children')->orderBy('order')->get();
+        return view('livewire.admin.menu-manager', compact('menuTree'));
     }
+
+
+    
 }

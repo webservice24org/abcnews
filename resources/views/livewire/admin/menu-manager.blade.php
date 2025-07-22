@@ -2,6 +2,16 @@
 
     {{-- Left column: Categories, Subcategories, Divisions --}}
     <div class="w-1/3 p-4 bg-white rounded shadow space-y-6">
+        {{-- Custom Menu Section --}}
+        <div class="border rounded p-4">
+            <h3 class="font-semibold mb-2 text-black">➕ Add Custom Parent Menu</h3>
+            <form wire:submit.prevent="addCustomMenu" class="space-y-2">
+                <input type="text" wire:model.defer="customMenuTitle" placeholder="Custom menu name" class="border px-2 py-1 rounded w-full text-black" />
+                <button type="submit" class="bg-black text-white px-4 py-1 rounded hover:bg-gray-800 w-full">
+                    Add Custom Menu
+                </button>
+            </form>
+        </div>
 
         <div class="border rounded p-4">
             <h3 class="font-semibold mb-2 text-black">Categories & Subcategories</h3>
@@ -49,31 +59,28 @@
 
     {{-- Right column: Menu Items with drag-and-drop --}}
     <div class="w-2/3 p-4 bg-white rounded shadow">
-    <h3 class="font-semibold mb-4 text-black">Menu Items (Drag and Drop to reorder)</h3>
+    
 
-    <ul id="menu-list">
-    @foreach ($menuItems as $menu)
-        <li data-id="{{ $menu->id }}" class="mb-2 border p-2 rounded bg-gray-100">
-            <div class="flex justify-between items-center">
-                <span class="handle cursor-move text-black">{{ $menu->title }}</span>
-                <button wire:click="removeMenu({{ $menu->id }})" class="text-red-500 hover:text-red-700 font-bold">&times;</button>
-            </div>
 
-            @if ($menu->children->count())
-                <ul>
-                    @foreach ($menu->children as $child)
-                        <li data-id="{{ $child->id }}" class="ml-6 mt-2 border p-2 rounded bg-gray-50">
-                            <div class="flex justify-between items-center">
-                                <span class="handle cursor-move text-black">{{ $child->title }}</span>
-                                <button wire:click="removeMenu({{ $child->id }})" class="text-red-500 hover:text-red-700 font-bold">&times;</button>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-        </li>
-    @endforeach
-</ul>
+    <h2 class="text-2xl font-bold mb-4">Menu Manager</h2>
+
+    <table class="w-full table-auto border border-collapse">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="text-left px-2 py-1 border text-black">Title</th>
+                <th class="text-left px-2 py-1 border text-black">Type</th>
+                <th class="text-left px-2 py-1 border text-black">Order</th>
+                <th class="text-left px-2 py-1 border text-black">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @include('partials.admin.menu-tree', ['menus' => $menuTree, 'level' => 0])
+        </tbody>
+    </table>
+
+
+
+
 
 
 
@@ -82,59 +89,9 @@
 
 </div>
 
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>
-    document.addEventListener('livewire:load', function () {
-        let menuList = document.getElementById('menu-list');
-
-        new Sortable(menuList, {
-            animation: 150,
-            handle: '.handle', // this matches your <span class="handle">
-            onEnd: function (evt) {
-                let order = serializeMenu(menuList);
-                Livewire.emit('updateMenuOrder', order);
-            }
-        });
-
-        // Initialize sortable on all child ULs (if you want nested drag & drop)
-        menuList.querySelectorAll('ul').forEach(function(childUl) {
-            new Sortable(childUl, {
-                group: 'nested',
-                animation: 150,
-                handle: '.handle',
-                onEnd: function (evt) {
-                    let order = serializeMenu(menuList);
-                    Livewire.emit('updateMenuOrder', order);
-                }
-            });
-        });
-    });
-
-    function serializeMenu(el) {
-        let items = [];
-        el.querySelectorAll(':scope > li').forEach((li, index) => {
-            let item = {
-                id: li.getAttribute('data-id'),
-                order: index + 1,
-                children: []
-            };
-
-            let childUl = li.querySelector('ul');
-            if (childUl) {
-                item.children = serializeMenu(childUl);
-            }
-
-            items.push(item);
-        });
-        return items;
-    }
-</script>
 
 
 
-
-@endpush
 
 
 
