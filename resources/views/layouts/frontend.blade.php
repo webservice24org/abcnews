@@ -7,7 +7,7 @@
 <body class="bg-white text-gray-800">
 
     
-        @include('partials.frontend-navbar')
+        @include('partials.front.frontend-navbar')
     
 
     <!-- Content -->
@@ -15,7 +15,9 @@
         {{ $slot }}
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @livewireScripts
+
     
 </body>
 </html>

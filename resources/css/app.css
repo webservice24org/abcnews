@@ -69,12 +69,19 @@ img.front-logo {
     width: 209px;
     height: auto;
 }
-.front-navbar, .front-humberger{
-    margin-top: -70px;
+.front-navbar {
+    margin-top: -40px!important;
+}
+/* Example Tailwind overrides */
+.mobile-menu a {
+    transition: all 0.2s ease;
+}
+.mobile-menu a:hover {
+    background-color: #f3f4f6;
 }
 
-.front-humberger{
-    margin-top: -60px;
+[x-cloak] {
+    display: none !important;
 }
 
 
