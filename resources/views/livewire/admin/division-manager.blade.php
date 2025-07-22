@@ -3,34 +3,44 @@
 
     @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
         <form wire:key="{{ $editingDivisionId ? 'edit-form' : 'add-form' }}"
-      wire:submit.prevent="{{ $editingDivisionId ? 'updateDivision' : 'saveDivision' }}"
-      class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-center">
+            wire:submit.prevent="{{ $editingDivisionId ? 'updateDivision' : 'saveDivision' }}"
+            class="flex flex-wrap gap-4 mb-4 items-center"
+            style="gap: 0.5rem;">  {{-- optional custom gap if needed --}}
 
             <input wire:model="{{ $editingDivisionId ? 'editingName' : 'name' }}"
-                   type="text"
-                   placeholder="Division Name"
-                   class="text-black w-full border p-2 rounded" />
+                type="text"
+                placeholder="Division Name"
+                class="text-black flex-grow min-w-[150px] border p-2 rounded" />
+
+            <input wire:model="{{ $editingDivisionId ? 'editingSlug' : 'slug' }}"
+                type="text"
+                placeholder="Slug (optional)"
+                title="Leave blank to auto-generate from name"
+                class="text-black flex-grow min-w-[150px] border p-2 rounded" />
 
             <button type="submit"
-                    class="bg-{{ $editingDivisionId ? 'green' : 'blue' }}-600 text-white px-4 py-2 rounded w-full">
+                    class="bg-{{ $editingDivisionId ? 'green' : 'blue' }}-600 text-white px-4 py-2 rounded min-w-[100px]">
                 {{ $editingDivisionId ? 'Update' : 'Add' }}
             </button>
 
             @if($editingDivisionId)
                 <button type="button"
                         wire:click="$set('editingDivisionId', null)"
-                        class="bg-gray-500 text-white px-4 py-2 rounded w-full">
+                        class="bg-gray-500 text-white px-4 py-2 rounded min-w-[100px]">
                     Cancel
                 </button>
             @endif
         </form>
     @endif
 
+
+
     <table class="w-full border border-collapse">
         <thead class="bg-gray-100">
             <tr>
                 <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">Naame</th>
+                <th class="border px-4 py-2 text-left text-black">slug</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
             </tr>
         </thead>
@@ -41,6 +51,7 @@
                     <td class="border px-4 py-2 text-black">
                         {{ $division->name }}
                     </td>
+                    <td class="border px-4 py-2 text-black">{{ $division->slug }}</td>
                     <td class="border px-4 py-2">
                         @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                             <button wire:click="editDivision({{ $division->id }})" class="text-white mr-2 px-3 py-1 bg-yellow-500 hover:bg-yellow-60 rounded text-sm">Edit</button>

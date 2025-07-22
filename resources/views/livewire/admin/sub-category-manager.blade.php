@@ -1,9 +1,9 @@
 <div class="p-6 bg-white rounded shadow">
     <h2 class="text-lg font-semibold mb-4 text-black">Sub-Category Manager</h2>
 
-    @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+   @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
         <form wire:submit.prevent="{{ $editingSubCategoryId ? 'updateSubCategory' : 'saveSubCategory' }}"
-            class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-center">
+            class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 items-center">
 
             <!-- Category Dropdown -->
             <select wire:model="{{ $editingSubCategoryId ? 'editingCategoryId' : 'category_id' }}"
@@ -20,6 +20,13 @@
                 placeholder="Sub-Category Name"
                 class="text-black w-full border p-2 rounded" />
 
+            <!-- Slug (optional) -->
+            <input wire:model="{{ $editingSubCategoryId ? 'editingSlug' : 'slug' }}"
+                type="text"
+                placeholder="Slug (optional)"
+                class="text-black w-full border p-2 rounded"
+                title="Leave blank to auto-generate from name" />
+
             <!-- Submit / Cancel Buttons -->
             <div class="flex gap-2">
                 <button type="submit" class="bg-{{ $editingSubCategoryId ? 'green' : 'blue' }}-600 text-white px-3 py-2 rounded text-sm">
@@ -33,9 +40,9 @@
                     </button>
                 @endif
             </div>
-
         </form>
     @endif
+
 
 
 
@@ -46,6 +53,7 @@
                 <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">Category</th>
                 <th class="border px-4 py-2 text-left text-black">Sub-Category</th>
+                <th class="border px-4 py-2 text-left text-black">Slig</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
             </tr>
         </thead>
@@ -55,6 +63,7 @@
                     <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                     <td class="border px-4 py-2 text-black">{{ $sub->category->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $sub->name }}</td>
+                    <td class="border px-4 py-2 text-black">{{ $sub->slug }}</td>
                     <td class="border px-4 py-2">
                         @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                             <button wire:click="editSubCategory({{ $sub->id }})" class="text-white mr-2 px-3 py-1 bg-yellow-500 hover:bg-yellow-60 rounded text-sm">Edit</button>

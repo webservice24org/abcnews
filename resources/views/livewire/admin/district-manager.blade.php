@@ -2,42 +2,49 @@
     <h2 class="text-lg font-semibold mb-4 text-black">District Manager</h2>
 
     @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
-        <form wire:submit.prevent="{{ $editingDistrictId ? 'updateDistrict' : 'saveDistrict' }}"
-            class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-center">
+    <form wire:submit.prevent="{{ $editingDistrictId ? 'updateDistrict' : 'saveDistrict' }}"
+        class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 items-center">
 
-            {{-- Column 1: Division Dropdown --}}
-            <select wire:model="{{ $editingDistrictId ? 'editingDivisionId' : 'division_id' }}"
-                    class="text-black w-full border p-2 rounded">
-                <option value="">Select Division</option>
-                @foreach($divisions as $div)
-                    <option value="{{ $div->id }}">{{ $div->name }}</option>
-                @endforeach
-            </select>
+        {{-- Column 1: Division Dropdown --}}
+        <select wire:model="{{ $editingDistrictId ? 'editingDivisionId' : 'division_id' }}"
+                class="text-black w-full border p-2 rounded">
+            <option value="">Select Division</option>
+            @foreach($divisions as $div)
+                <option value="{{ $div->id }}">{{ $div->name }}</option>
+            @endforeach
+        </select>
 
-            {{-- Column 2: District Name Input --}}
-            <input wire:model="{{ $editingDistrictId ? 'editingName' : 'name' }}"
-                type="text"
-                placeholder="District Name"
-                class="text-black w-full border p-2 rounded" />
+        {{-- Column 2: District Name Input --}}
+        <input wire:model="{{ $editingDistrictId ? 'editingName' : 'name' }}"
+            type="text"
+            placeholder="District Name"
+            class="text-black w-full border p-2 rounded" />
 
-            {{-- Column 3: Buttons --}}
-            <div class="flex gap-2">
-                <button type="submit"
-                        class="bg-{{ $editingDistrictId ? 'green' : 'blue' }}-600 text-white px-4 py-2 rounded w-full">
-                    {{ $editingDistrictId ? 'Update' : 'Add' }}
+        {{-- Column 3: Slug Input --}}
+        <input wire:model="{{ $editingDistrictId ? 'editingSlug' : 'slug' }}"
+            type="text"
+            placeholder="Slug (optional)"
+            class="text-black w-full border p-2 rounded" />
+
+        {{-- Column 4: Buttons --}}
+        <div class="flex gap-2">
+            <button type="submit"
+                    class="bg-{{ $editingDistrictId ? 'green' : 'blue' }}-600 text-white px-4 py-2 rounded w-full">
+                {{ $editingDistrictId ? 'Update' : 'Add' }}
+            </button>
+
+            @if($editingDistrictId)
+                <button type="button"
+                        wire:click="$set('editingDistrictId', null)"
+                        class="bg-gray-500 text-white px-4 py-2 rounded w-full">
+                    Cancel
                 </button>
+            @endif
+        </div>
 
-                @if($editingDistrictId)
-                    <button type="button"
-                            wire:click="$set('editingDistrictId', null)"
-                            class="bg-gray-500 text-white px-4 py-2 rounded w-full">
-                        Cancel
-                    </button>
-                @endif
-            </div>
+    </form>
+@endif
 
-        </form>
-    @endif
 
 
     <table class="w-full border border-collapse">
@@ -46,6 +53,7 @@
                 <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">Division</th>
                 <th class="border px-4 py-2 text-left text-black">District</th>
+                <th class="border px-4 py-2 text-left text-black">Slug</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
             </tr>
         </thead>
@@ -55,6 +63,7 @@
                     <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                     <td class="border px-4 py-2 text-black">{{ $district->division->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $district->name }}</td>
+                    <td class="border px-4 py-2 text-black">{{ $district->slug }}</td>
                     <td class="border px-4 py-2">
                         @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                             <button wire:click="editDistrict({{ $district->id }})" class="text-white mr-2 px-3 py-1 bg-yellow-500 hover:bg-yellow-60 rounded text-sm">Edit</button>

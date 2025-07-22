@@ -14,25 +14,29 @@ class UpazilaManager extends Component
     
     protected $listeners = ['deleteConfirmed'];
 
-    public $district_id, $name;
+    public $district_id, $name, $slug;
     public $editingUpazilaId = null;
-    public $editingName, $editingDistrictId;
+    public $editingName, $editingDistrictId, $editingSlug;
 
-    public function saveUpazila()
+
+   public function saveUpazila()
     {
         $this->validate([
             'district_id' => 'required|exists:districts,id',
             'name' => 'required|string|max:255|unique:upazilas,name',
+            'slug' => 'nullable|string|max:255|unique:upazilas,slug',
         ]);
 
         Upazila::create([
             'district_id' => $this->district_id,
             'name' => $this->name,
+            'slug' => $this->slug, // optional slug
         ]);
 
-        $this->reset('district_id', 'name');
+        $this->reset('district_id', 'name', 'slug');
         $this->dispatch('toast', ['type' => 'success', 'message' => 'Upazila added successfully.']);
     }
+
 
     public function editUpazila($id)
     {
@@ -40,24 +44,29 @@ class UpazilaManager extends Component
         $this->editingUpazilaId = $id;
         $this->editingName = $upazila->name;
         $this->editingDistrictId = $upazila->district_id;
+        $this->editingSlug = $upazila->slug;
     }
+
 
     public function updateUpazila()
-    {
-        $this->validate([
-            'editingDistrictId' => 'required|exists:districts,id',
-            'editingName' => 'required|string|max:255|unique:upazilas,name,' . $this->editingUpazilaId,
-        ]);
+{
+    $this->validate([
+        'editingDistrictId' => 'required|exists:districts,id',
+        'editingName' => 'required|string|max:255|unique:upazilas,name,' . $this->editingUpazilaId,
+        'editingSlug' => 'nullable|string|max:255|unique:upazilas,slug,' . $this->editingUpazilaId,
+    ]);
 
-        $upazila = Upazila::findOrFail($this->editingUpazilaId);
-        $upazila->update([
-            'district_id' => $this->editingDistrictId,
-            'name' => $this->editingName,
-        ]);
+    $upazila = Upazila::findOrFail($this->editingUpazilaId);
+    $upazila->update([
+        'district_id' => $this->editingDistrictId,
+        'name' => $this->editingName,
+        'slug' => $this->editingSlug,
+    ]);
 
-        $this->reset('editingUpazilaId', 'editingName', 'editingDistrictId');
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Upazila updated successfully.']);
-    }
+    $this->reset('editingUpazilaId', 'editingName', 'editingDistrictId', 'editingSlug');
+    $this->dispatch('toast', ['type' => 'success', 'message' => 'Upazila updated successfully.']);
+}
+
 
      public function confirmDeleteUpazila($id)
     {

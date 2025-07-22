@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::table('categories', function (Blueprint $table) {
-        $table->string('slug')->unique()->nullable()->after('name');
+        Schema::table('districts', function (Blueprint $table) {
+            $table->string('slug')->after('name')->nullable();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('districts', function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }
+
 };

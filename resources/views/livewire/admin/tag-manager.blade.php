@@ -2,19 +2,29 @@
     <h2 class="text-lg font-semibold mb-4 text-black">Tag Manager</h2>
 
     @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
-    <form wire:submit.prevent="{{ $editingTagId ? 'updateTag' : 'saveTag' }}" class="flex gap-4 mb-4">
+    <form wire:submit.prevent="{{ $editingTagId ? 'updateTag' : 'saveTag' }}" class="flex gap-4 mb-4 items-center">
         <input
             wire:model="{{ $editingTagId ? 'editingName' : 'name' }}"
             type="text"
             placeholder="Tag Name"
-            class="text-black w-full border p-2 rounded"
+            class="text-black flex-grow border p-2 rounded"
         />
+
+        <input
+            wire:model="{{ $editingTagId ? 'editingSlug' : 'slug' }}"
+            type="text"
+            placeholder="Slug (optional)"
+            title="Leave blank to auto-generate from name"
+            class="text-black flex-grow border p-2 rounded"
+        />
+
         <button
             type="submit"
             class="bg-{{ $editingTagId ? 'green' : 'blue' }}-600 text-white px-4 py-2 rounded"
         >
             {{ $editingTagId ? 'Update' : 'Add' }}
         </button>
+
         @if($editingTagId)
             <button
                 type="button"
@@ -29,11 +39,13 @@
 
 
 
+
 <table class="w-full border border-collapse">
     <thead class="bg-gray-100">
         <tr>
             <th class="border px-4 py-2 text-left text-black">Sl</th>
             <th class="border px-4 py-2 text-left text-black">Name</th>
+            <th class="border px-4 py-2 text-left text-black">Slug</th>
             <th class="border px-4 py-2 text-left text-black">Action</th>
         </tr>
     </thead>
@@ -42,6 +54,7 @@
             <tr class="hover:bg-gray-50">
                 <td class="border px-4 py-2 text-black">{{ $loop->iteration }}</td>
                 <td class="border px-4 py-2 text-black">{{ $tag->name }}</td>
+                <td class="border px-4 py-2 text-black">{{ $tag->slug }}</td>
                 <td class="border px-4 py-2">
                     @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                         <button wire:click="editTag({{ $tag->id }})" class="text-white mr-2 px-3 py-1 bg-yellow-500 hover:bg-yellow-60 rounded text-sm">Edit</button>

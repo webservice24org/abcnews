@@ -6,13 +6,15 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\District;
 use App\Models\Division;
+use Illuminate\Support\Str;
 
 class DistrictManager extends Component
 {
     use WithPagination;
 
-    public $division_id, $name;
-    public $editingDistrictId, $editingName, $editingDivisionId;
+    public $division_id, $name, $slug;
+    public $editingDistrictId, $editingName, $editingDivisionId, $editingSlug;
+
     
     protected $listeners = ['deleteConfirmed'];
 
@@ -21,8 +23,10 @@ class DistrictManager extends Component
         return [
             'division_id' => 'required|exists:divisions,id',
             'name' => 'required|string|max:255|unique:districts,name',
+            'slug' => 'nullable|string|max:255|unique:districts,slug',
         ];
     }
+
 
     public function saveDistrict()
     {
@@ -31,11 +35,13 @@ class DistrictManager extends Component
         District::create([
             'division_id' => $this->division_id,
             'name' => $this->name,
+            'slug' => $this->slug, // Allow custom or null (auto-generated)
         ]);
 
-        $this->reset(['division_id', 'name']);
+        $this->reset(['division_id', 'name', 'slug']);
         $this->dispatch('toast', ['type' => 'success', 'message' => 'District added successfully.']);
     }
+
 
     public function editDistrict($id)
     {
@@ -43,6 +49,7 @@ class DistrictManager extends Component
         $this->editingDistrictId = $district->id;
         $this->editingName = $district->name;
         $this->editingDivisionId = $district->division_id;
+        $this->editingSlug = $district->slug;
     }
 
     public function updateDistrict()
@@ -50,17 +57,20 @@ class DistrictManager extends Component
         $this->validate([
             'editingDivisionId' => 'required|exists:divisions,id',
             'editingName' => 'required|string|max:255|unique:districts,name,' . $this->editingDistrictId,
+            'editingSlug' => 'nullable|string|max:255|unique:districts,slug,' . $this->editingDistrictId,
         ]);
 
         $district = District::findOrFail($this->editingDistrictId);
         $district->update([
             'division_id' => $this->editingDivisionId,
             'name' => $this->editingName,
+            'slug' => $this->editingSlug, // Allow custom or null (auto-generated)
         ]);
 
-        $this->reset(['editingDistrictId', 'editingDivisionId', 'editingName']);
+        $this->reset(['editingDistrictId', 'editingDivisionId', 'editingName', 'editingSlug']);
         $this->dispatch('toast', ['type' => 'success', 'message' => 'District updated successfully.']);
     }
+
 
     
     public function confirmDeleteDistrict($id)

@@ -13,6 +13,10 @@ class Kernel extends ConsoleKernel
         // This will run your command every minute
         $schedule->command('news:publish-scheduled')->everyMinute();
     }
+    protected $commands = [
+        \App\Console\Commands\TransliterateDistrictSlugs::class,
+    ];
+
 
     protected function commands(): void
     {

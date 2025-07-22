@@ -5,25 +5,38 @@ namespace App\Livewire\Admin;
 use App\Models\Division;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class DivisionManager extends Component
 {
     use WithPagination;
 
-    public $name, $editingName, $editingDivisionId = null;
-     
+    public $name;
+    public $slug;
+    public $editingDivisionId = null;
+    public $editingName;
+    public $editingSlug;
+
     protected $listeners = ['deleteConfirmed'];
 
-    protected $rules = [
-        'name' => 'required|string|max:255|unique:divisions,name',
-    ];
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255|unique:divisions,name,' . ($this->editingDivisionId ?? 'NULL'),
+            'slug' => 'nullable|string|max:255|unique:divisions,slug,' . ($this->editingDivisionId ?? 'NULL'),
+        ];
+    }
 
     public function saveDivision()
     {
         $this->validate();
 
-        Division::create(['name' => $this->name]);
-        $this->reset('name');
+        Division::create([
+            'name' => $this->name,
+            'slug' => $this->slug ?: Str::slug($this->name), // auto-generate slug if empty
+        ]);
+
+        $this->reset('name', 'slug');
 
         $this->dispatch('toast', [
             'type' => 'success',
@@ -36,20 +49,23 @@ class DivisionManager extends Component
         $division = Division::findOrFail($id);
         $this->editingDivisionId = $division->id;
         $this->editingName = $division->name;
+        $this->editingSlug = $division->slug;
     }
 
     public function updateDivision()
     {
         $this->validate([
             'editingName' => 'required|string|max:255|unique:divisions,name,' . $this->editingDivisionId,
+            'editingSlug' => 'nullable|string|max:255|unique:divisions,slug,' . $this->editingDivisionId,
         ]);
 
         $division = Division::findOrFail($this->editingDivisionId);
-        $division->update(['name' => $this->editingName]);
+        $division->update([
+            'name' => $this->editingName,
+            'slug' => $this->editingSlug ?: \Str::slug($this->editingName), // auto-generate slug if empty
+        ]);
 
-        
-        $this->editingDivisionId = null;
-        $this->editingName = '';
+        $this->reset('editingDivisionId', 'editingName', 'editingSlug');
 
         $this->dispatch('toast', [
             'type' => 'success',

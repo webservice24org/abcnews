@@ -8,40 +8,55 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
+use Illuminate\Support\Str;
 
 class SubCategoryManager extends Component
 {
     use WithPagination;
 
     public $name;
+    public $slug; 
     public $category_id;
+
     public $editingSubCategoryId;
     public $editingName;
+    public $editingSlug; 
     public $editingCategoryId;
+
+
+
+
 
     protected $rules = [
         'name' => 'required|string|max:255|unique:sub_categories,name',
+        'slug' => 'nullable|string|max:255|unique:sub_categories,slug',
         'category_id' => 'required|exists:categories,id',
     ];
+
+        
+
 
     public function saveSubCategory()
     {
         $this->validate();
 
         SubCategory::create([
-            'name' => $this->name,
             'category_id' => $this->category_id,
+            'name' => $this->name,
+            'slug' => $this->slug ?: Str::slug($this->name),
         ]);
 
-        $this->reset('name', 'category_id');
+        $this->reset(['category_id', 'name', 'slug']);
         $this->dispatch('toast', ['type' => 'success', 'message' => 'Sub-category added successfully.']);
     }
+
 
     public function editSubCategory($id)
     {
         $sub = SubCategory::findOrFail($id);
         $this->editingSubCategoryId = $sub->id;
         $this->editingName = $sub->name;
+        $this->editingSlug = $sub->slug;
         $this->editingCategoryId = $sub->category_id;
     }
 
@@ -51,17 +66,20 @@ class SubCategoryManager extends Component
 
         $this->validate([
             'editingName' => 'required|string|max:255|unique:sub_categories,name,' . $sub->id,
+            'editingSlug' => 'nullable|string|max:255|unique:sub_categories,slug,' . $sub->id,
             'editingCategoryId' => 'required|exists:categories,id',
         ]);
 
         $sub->update([
             'name' => $this->editingName,
+            'slug' => $this->editingSlug, // may be null, handled in model
             'category_id' => $this->editingCategoryId,
         ]);
 
-        $this->reset('editingSubCategoryId', 'editingName', 'editingCategoryId');
+        $this->reset('editingSubCategoryId', 'editingName', 'editingSlug', 'editingCategoryId');
         $this->dispatch('toast', ['type' => 'success', 'message' => 'Sub-category updated successfully.']);
     }
+
 
     public function confirmDeleteSubCategory($id)
     {
