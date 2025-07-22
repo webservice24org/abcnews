@@ -23,10 +23,14 @@ class MenuManager extends Component
     public $menuItems = [];
     public $newTitle = '';
     public $newType = '';
+    public $editOrder = '';
     public $newTypeId = null;
     public $parentIdForSubmenu = null;
     public $customMenuTitle;
 
+    public $editingMenuId = null;
+    public $editTitle;
+    public $editType;
 
     
 
@@ -123,25 +127,48 @@ class MenuManager extends Component
     }
 
     public function createSubmenu()
+{
+    $this->validate([
+        'newTitle' => 'required|string|max:255',
+        'newType' => 'required|string|in:custom,category,subcategory,division',
+        'newTypeId' => 'required_if:newType,category,subcategory,division|nullable|integer',
+    ]);
+
+    Menu::create([
+        'title' => $this->newTitle,
+        'type' => $this->newType,
+        'type_id' => $this->newTypeId,
+        'parent_id' => $this->parentIdForSubmenu,
+        'order' => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
+    ]);
+
+    $this->reset(['newTitle', 'newType', 'newTypeId', 'parentIdForSubmenu']);
+    $this->loadMenu();
+}
+
+
+
+    public function editMenu($menuId)
     {
-        $this->validate([
-            'newTitle' => 'required|string|max:255',
-            'newType' => 'required|string',
-        ]);
-
-        Menu::create([
-            'title' => $this->newTitle,
-            'type' => $this->newType,
-            'type_id' => $this->newTypeId,
-            'parent_id' => $this->parentIdForSubmenu,
-            'order' => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
-        ]);
-
-        $this->reset(['newTitle', 'newType', 'newTypeId', 'parentIdForSubmenu']);
-        $this->loadMenu(); // reload the menu tree
+        $menu = Menu::findOrFail($menuId);
+        $this->editingMenuId = $menuId;
+        $this->editTitle = $menu->title;
+        $this->editType = $menu->type;
+        $this->editOrder = $menu->order;
     }
 
+    public function updateMenu()
+    {
+        $menu = Menu::findOrFail($this->editingMenuId);
 
+        $menu->title = $this->editTitle;
+        $menu->type = $this->editType;
+        $menu->order = $this->editOrder;
+        $menu->save();
+
+        $this->editingMenuId = null;
+        $this->loadMenu(); // reload updated menu list
+    }
     
 
 
@@ -150,6 +177,7 @@ class MenuManager extends Component
         $menuTree = Menu::whereNull('parent_id')->with('children')->orderBy('order')->get();
         return view('livewire.admin.menu-manager', compact('menuTree'));
     }
+
 
 
     
