@@ -1,15 +1,19 @@
 <div>
-    @include('partials.front.lead-news')
+   
+    @include('partials.front.lead-news', ['leadNews' => $leadNews, 'subLeadNews' => $subLeadNews])
 
-    @foreach ($news as $item)
-        <div class="mb-6 border-b pb-4">
-            <a href="{{ route('news.show', $item->slug) }}" class="text-2xl text-blue-600 hover:underline">
-                {{ $item->news_title }}
-            </a>
-            <p class="text-gray-600 text-sm">{{ $item->created_at->format('d M Y') }}</p>
-            <p class="mt-2">{{ \Illuminate\Support\Str::limit(strip_tags($item->news_description), 150) }}</p>
-        </div>
-    @endforeach
+    
+    <livewire:frontend.section-card :title="'জাতীয় সংবাদ'" :news="$nationalNews" />
 
-    {{ $news->links() }}
+    <livewire:frontend.section-card :title="'আন্তর্জাতিক সংবাদ'" :news="$internationalNews" />
+
+    <livewire:frontend.grid-section-card title="অর্থনীতি" :news="$economyNews" />
+
+    <livewire:frontend.middle-grid-section title="বিনোদন" categorySlug="entertainment" />
+
+
+
+    
+
+    
 </div>

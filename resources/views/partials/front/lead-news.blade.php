@@ -26,37 +26,34 @@
         @endif
     </div>
 
-  {{-- Sub Lead News (4 columns) --}}
-<div class="md:col-span-4 space-y-4">
-    @foreach($subLeadNews as $news)
-        <div class="flex justify-between items-start gap-3">
-            {{-- Text Content (left side) --}}
-            <div class="flex-1">
-                {{-- Category Name(s) --}}
-                <p class="text-xs text-red-600 font-semibold">
-                    @foreach($news->categories as $category)
-                        {{ $category->name }}@if(!$loop->last), @endif
-                    @endforeach
-                </p>
+    {{-- Sub Lead News (4 columns) --}}
+    <div class="md:col-span-4 space-y-4">
+        @foreach($subLeadNews as $news)
+            <div class="flex justify-between items-start gap-3">
+                {{-- Text Content (left side) --}}
+                <div class="flex-1">
+                    {{-- Category Name(s) --}}
+                    <p class="text-xs text-red-600 font-semibold">
+                        @foreach($news->categories as $category)
+                            {{ $category->name }}@if(!$loop->last), @endif
+                        @endforeach
+                    </p>
 
-                {{-- Title --}}
-                <a href="{{ route('news.show', $news->slug) }}">
-                    <h4 class="text-md font-bold leading-tight hover:underline hover:text-blue-600">
-                        {{ $news->news_title }}
-                    </h4>
-                </a>
+                    {{-- Title --}}
+                    <a href="{{ route('news.show', $news->slug) }}">
+                        <h4 class="text-md font-bold leading-tight hover:text-blue-600">
+                            {{ $news->news_title }}
+                        </h4>
+                    </a>
 
-                {{-- Author & Date --}}
-                <p class="text-xs text-gray-500">
-                    By {{ optional($news->user)->name }} | {{ $news->created_at->format('M d, Y') }}
-                </p>
+                   
+                </div>
+
+                {{-- Thumbnail on the right --}}
+                <img src="{{ asset('storage/' . $news->news_thumbnail) }}" alt="{{ $news->news_title }}" class="w-24 h-20 object-cover rounded">
             </div>
-
-            {{-- Thumbnail on the right --}}
-            <img src="{{ asset('storage/' . $news->news_thumbnail) }}" alt="{{ $news->news_title }}" class="w-24 h-20 object-cover rounded">
-        </div>
-    @endforeach
-</div>
+        @endforeach
+    </div>
 
 
 </div>

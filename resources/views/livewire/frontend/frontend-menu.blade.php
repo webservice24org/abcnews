@@ -46,34 +46,34 @@
         </div>
 
         <!-- Mobile Menu -->
-<div :class="{ 'block': open, 'hidden': !open }" class="bg-white md:hidden px-4 pb-4 space-y-2">
-    @foreach ($menuTree as $menu)
-        @php $hasChildren = $menu->children->isNotEmpty(); @endphp
-        <div x-data="{ openDropdown: false }">
-            <button 
-                @click="openDropdown = !openDropdown" 
-                class="flex justify-between w-full text-black font-medium py-2 border-b border-gray-300 focus:outline-none"
-            >
-                <span>{{ $menu->title }}</span>
-                @if ($hasChildren)
-                    <svg :class="{ 'rotate-180': openDropdown }" class="w-4 h-4 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                    </svg>
-                @endif
-            </button>
+        <div :class="{ 'block': open, 'hidden': !open }" class="bg-white md:hidden px-4 pb-4 space-y-2">
+            @foreach ($menuTree as $menu)
+                @php $hasChildren = $menu->children->isNotEmpty(); @endphp
+                <div x-data="{ openDropdown: false }">
+                    <button 
+                        @click="openDropdown = !openDropdown" 
+                        class="flex justify-between w-full text-black font-medium py-2 border-b border-gray-300 focus:outline-none"
+                    >
+                        <span>{{ $menu->title }}</span>
+                        @if ($hasChildren)
+                            <svg :class="{ 'rotate-180': openDropdown }" class="w-4 h-4 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        @endif
+                    </button>
 
-            @if ($hasChildren)
-                <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
-                    @foreach ($menu->children as $child)
-                        <a href="#" class="block text-sm text-gray-700 py-1 hover:underline">
-                            - {{ $child->title }}
-                        </a>
-                    @endforeach
+                    @if ($hasChildren)
+                        <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
+                            @foreach ($menu->children as $child)
+                                <a href="#" class="block text-sm text-gray-700 py-1 hover:underline">
+                                    - {{ $child->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
-            @endif
+            @endforeach
         </div>
-    @endforeach
-</div>
 
     </nav>
 </header>
