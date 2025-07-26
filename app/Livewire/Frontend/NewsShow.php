@@ -16,6 +16,7 @@ class NewsShow extends Component
         $this->news = NewsPost::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
+            $this->news->increment('view_count');
     }
 
     public function render()
@@ -26,3 +27,4 @@ class NewsShow extends Component
           ->title($this->news->news_title);
     }
 }
+

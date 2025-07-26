@@ -5,7 +5,7 @@
         {{-- Left Column --}}
         <div class="md:col-span-3 space-y-4">
             @foreach($leftNews as $news)
-                <div class="flex gap-3">
+                <div class="flex gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                     <img src="{{ asset('storage/' . $news->news_thumbnail) }}" class="w-20 h-16 object-cover rounded" alt="{{ $news->news_title }}">
                     <div>
                         <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md text-black hover:text-blue-600">
@@ -47,7 +47,7 @@
         {{-- Right Column --}}
         <div class="md:col-span-3 space-y-4">
             @foreach($rightNews as $news)
-                <div class="flex gap-3">
+                <div class="flex gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                     <img src="{{ asset('storage/' . $news->news_thumbnail) }}" class="w-20 h-16 object-cover rounded" alt="{{ $news->news_title }}">
                     <div>
                         <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md text-black hover:text-blue-600">

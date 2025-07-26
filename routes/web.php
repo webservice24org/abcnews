@@ -19,7 +19,7 @@ use \App\Livewire\Admin\TrashedNewsList;
 
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
-
+ use App\Livewire\Frontend\CategoryNewsSection;
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
 
@@ -77,6 +77,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('news/{slug}', NewsShow::class)
     ->where('slug', '^(?!categories$).+')->name('news.show');
 
- 
+
+
+Route::get('/category/{slug}', CategoryNewsSection::class)->name('category.show');
+//Route::get('/subcategory/{slug}', SubCategoryNewsSection::class)->name('subcategory.show');
+
 
 require __DIR__.'/auth.php';

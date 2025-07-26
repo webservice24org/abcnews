@@ -29,7 +29,7 @@
     {{-- Sub Lead News (4 columns) --}}
     <div class="md:col-span-4 space-y-4">
         @foreach($subLeadNews as $news)
-            <div class="flex justify-between items-start gap-3">
+            <div class="flex justify-between items-start gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                 {{-- Text Content (left side) --}}
                 <div class="flex-1">
                     {{-- Category Name(s) --}}

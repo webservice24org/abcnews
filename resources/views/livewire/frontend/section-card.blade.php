@@ -1,5 +1,14 @@
 <section class="mb-10">
-    <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-700 mb-4">{{ $title }}</h2>
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-700 inline-block">{{ $title }}</h2>
+
+        {{-- Read More Button --}}
+        
+        @if (!empty($categorySlug))
+            <a href="{{ route('category.show', ['slug' => $categorySlug]) }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
+        @endif
+
+    </div>
 
     @php
         $last = $news->first();
