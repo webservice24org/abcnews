@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
     {{-- Lead News (8 columns) --}}
     <div class="md:col-span-8">

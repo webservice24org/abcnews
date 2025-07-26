@@ -70,7 +70,7 @@ img.front-logo {
     height: auto;
 }
 .front-navbar {
-    margin-top: -40px!important;
+    margin-top: -50px !important;
 }
 /* Example Tailwind overrides */
 .mobile-menu a {
