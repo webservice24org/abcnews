@@ -1,10 +1,10 @@
 @if ($news && count($news))
     <section class="mb-10">
-        <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-700 mb-4">{{ $title }}</h2>
-        @if (!empty($categorySlug))
-                    <a href="{{ route('category.show', ['slug' => $categorySlug]) }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
-                @endif
+        <div class="flex justify-between items-center border-b-3 border-red-700 mb-4">
+            <h2 class="text-2xl font-bold text-white bg-red-600 p-2">{{ $title }}</h2>
+            @if (!empty($categorySlug))
+                <a href="{{ route('category.show', ['slug' => $categorySlug]) }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
+            @endif
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($news as $item)

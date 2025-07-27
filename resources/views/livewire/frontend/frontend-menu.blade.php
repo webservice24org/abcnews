@@ -4,8 +4,11 @@
 
             <!-- Logo -->
             <div class="flex items-center">
-                <img src="{{ asset('storage/logos/front-logo.png') }}" alt="Logo" class="h-12 md:h-30 object-contain">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('storage/logos/front-logo.png') }}" alt="Logo" class="h-12 md:h-30 object-contain">
+                </a>
             </div>
+
 
             <!-- Hamburger Icon (Mobile only) -->
             <button @click="open = !open" class="md:hidden p-2 text-white focus:outline-none">

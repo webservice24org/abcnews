@@ -1,6 +1,6 @@
 <section class="mb-10">
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-700 inline-block">{{ $title }}</h2>
+    <div class="flex justify-between items-center border-b-3 border-red-700 mb-4">
+        <h2 class="text-2xl font-bold text-white bg-red-600 p-2 inline-block">{{ $title }}</h2>
 
         {{-- Read More Button --}}
         

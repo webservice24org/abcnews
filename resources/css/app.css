@@ -93,4 +93,7 @@ img.front-logo {
     margin-bottom: 5px;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 

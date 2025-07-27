@@ -1,7 +1,7 @@
 <section class="mb-10">
 {{-- Category Name with Inline Subcategories --}}
-<div class="mb-4 flex flex-wrap items-center gap-2">
-    <h2 class="text-2xl font-bold text-red-700 border-b-2 border-red-700 pr-4">
+<div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
+    <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2  pr-4">
         {{ $category->name }}
     </h2>
 
@@ -44,7 +44,7 @@
                     <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-24 h-20 object-cover rounded">
                     <div class="flex-1">
                         <a href="{{ route('news.show', $item->slug) }}">
-                            <h4 class="text-md font-semibold text-blue-700 hover:underline">
+                            <h4 class="text-md font-semibold text-black hover:text-blue-700 ">
                                 {{ $item->news_title }}
                             </h4>
                         </a>
@@ -84,7 +84,7 @@
                             {{ $item->created_at->format('M d, Y') }}
                         </p>
                         <p class="text-sm text-gray-600">
-                            {{ \Illuminate\Support\Str::limit(strip_tags($item->news_description), 120) }}
+                            {{ \Illuminate\Support\Str::limit(strip_tags($item->news_description), 200) }}
                         </p>
                     </div>
                 </div>
@@ -95,6 +95,10 @@
                     {{ $gridNews->links() }}
                 </div>
             @endif
+
+            <div class="hidden md:flex  items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-1">
+                <img src="{{ asset('storage/ads/Advertisement.png') }}" alt="add" class="object-fill">
+            </div>
         </div>
 
         {{-- Right Sidebar --}}

@@ -20,6 +20,7 @@ use \App\Livewire\Admin\TrashedNewsList;
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\CategoryNewsSection;
+ 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
 
