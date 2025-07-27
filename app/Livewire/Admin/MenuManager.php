@@ -26,11 +26,17 @@ class MenuManager extends Component
     public $editOrder = '';
     public $newTypeId = null;
     public $parentIdForSubmenu = null;
+    public $availableSubcategories = [];
+    public $selectedSubcategoryId;
     public $customMenuTitle;
 
     public $editingMenuId = null;
     public $editTitle;
     public $editType;
+    public $editSlug;
+
+    
+
 
     
 
@@ -67,44 +73,47 @@ class MenuManager extends Component
     public function addToMenu()
     {
         foreach ($this->selectedCategories as $catId) {
-            $exists = Menu::where('type', 'category')->where('type_id', $catId)->exists();
-            if (!$exists) {
-                $order = Menu::max('order') + 1;
+            if (!Menu::where('type', 'category')->where('type_id', $catId)->exists()) {
                 $category = Category::find($catId);
-                Menu::create([
-                    'title' => $category->name,
-                    'type' => 'category',
-                    'type_id' => $catId,
-                    'order' => $order
-                ]);
+                if ($category) {
+                    Menu::create([
+                        'title' => $category->name,
+                        'type' => 'category',
+                        'slug' => $category->slug,
+                        'type_id' => $catId,
+                        'order' => Menu::max('order') + 1
+                    ]);
+                }
             }
         }
 
         foreach ($this->selectedSubCategories as $subCatId) {
-            $exists = Menu::where('type', 'subcategory')->where('type_id', $subCatId)->exists();
-            if (!$exists) {
-                $order = Menu::max('order') + 1;
+            if (!Menu::where('type', 'subcategory')->where('type_id', $subCatId)->exists()) {
                 $subcategory = SubCategory::find($subCatId);
-                Menu::create([
-                    'title' => $subcategory->name,
-                    'type' => 'subcategory',
-                    'type_id' => $subCatId,
-                    'order' => $order
-                ]);
+                if ($subcategory) {
+                    Menu::create([
+                        'title' => $subcategory->name,
+                        'type' => 'subcategory',
+                        'slug' => $subcategory->slug,
+                        'type_id' => $subCatId,
+                        'order' => Menu::max('order') + 1
+                    ]);
+                }
             }
         }
 
         foreach ($this->selectedDivisions as $divId) {
-            $exists = Menu::where('type', 'division')->where('type_id', $divId)->exists();
-            if (!$exists) {
-                $order = Menu::max('order') + 1;
+            if (!Menu::where('type', 'division')->where('type_id', $divId)->exists()) {
                 $division = Division::find($divId);
-                Menu::create([
-                    'title' => $division->name,
-                    'type' => 'division',
-                    'type_id' => $divId,
-                    'order' => $order
-                ]);
+                if ($division) {
+                    Menu::create([
+                        'title' => $division->name,
+                        'type' => 'division',
+                        'slug' => $division->slug,
+                        'type_id' => $divId,
+                        'order' => Menu::max('order') + 1
+                    ]);
+                }
             }
         }
 
@@ -112,12 +121,13 @@ class MenuManager extends Component
         $this->loadMenu();
     }
 
+
     public function removeMenu($menuId)
     {
         Menu::findOrFail($menuId)->delete();
         $this->loadMenu();
     }
-
+    /*
     public function showSubmenuForm($parentId)
     {
         $this->parentIdForSubmenu = $parentId;
@@ -125,26 +135,43 @@ class MenuManager extends Component
         $this->newType = '';
         $this->newTypeId = null;
     }
+        */
+
+    public function showSubmenuForm($parentId)
+    {
+        $this->parentIdForSubmenu = $parentId;
+        $this->availableSubcategories = [];
+
+        $menu = Menu::find($parentId);
+
+        // Only for category-type menu items
+        if ($menu && $menu->type === 'category' && $menu->type_id) {
+            $this->availableSubcategories = \App\Models\SubCategory::where('category_id', $menu->type_id)->get();
+        }
+    }
+
 
     public function createSubmenu()
-{
-    $this->validate([
-        'newTitle' => 'required|string|max:255',
-        'newType' => 'required|string|in:custom,category,subcategory,division',
-        'newTypeId' => 'required_if:newType,category,subcategory,division|nullable|integer',
-    ]);
+    {
+        $this->validate([
+            'selectedSubcategoryId' => 'required|exists:sub_categories,id',
+        ]);
 
-    Menu::create([
-        'title' => $this->newTitle,
-        'type' => $this->newType,
-        'type_id' => $this->newTypeId,
-        'parent_id' => $this->parentIdForSubmenu,
-        'order' => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
-    ]);
+        $subcategory = \App\Models\SubCategory::find($this->selectedSubcategoryId);
 
-    $this->reset(['newTitle', 'newType', 'newTypeId', 'parentIdForSubmenu']);
-    $this->loadMenu();
-}
+        Menu::create([
+            'title' => $subcategory->name,
+            'type' => 'subcategory',
+            'type_id' => $subcategory->id,
+            'slug' => $subcategory->slug,
+            'parent_id' => $this->parentIdForSubmenu,
+            'order' => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
+        ]);
+
+        $this->reset(['parentIdForSubmenu', 'selectedSubcategoryId', 'availableSubcategories']);
+        $this->loadMenu();
+    }
+
 
 
 
@@ -155,20 +182,31 @@ class MenuManager extends Component
         $this->editTitle = $menu->title;
         $this->editType = $menu->type;
         $this->editOrder = $menu->order;
+        $this->editSlug = $menu->slug; // include slug
     }
+
 
     public function updateMenu()
-    {
-        $menu = Menu::findOrFail($this->editingMenuId);
+{
+    $this->validate([
+        'editTitle' => 'required|string|max:255',
+        'editType' => 'required|string|in:category,subcategory,division,custom',
+        'editOrder' => 'nullable|integer',
+        'editSlug' => 'nullable|string|max:255'
+    ]);
 
-        $menu->title = $this->editTitle;
-        $menu->type = $this->editType;
-        $menu->order = $this->editOrder;
-        $menu->save();
+    $menu = Menu::findOrFail($this->editingMenuId);
 
-        $this->editingMenuId = null;
-        $this->loadMenu(); // reload updated menu list
-    }
+    $menu->title = $this->editTitle;
+    $menu->type = $this->editType;
+    $menu->order = $this->editOrder;
+    $menu->slug  = $this->editSlug; // update slug
+    $menu->save();
+
+    $this->reset(['editingMenuId', 'editTitle', 'editType', 'editOrder', 'editSlug']);
+    $this->loadMenu();
+}
+
     
 
 

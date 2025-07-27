@@ -29,7 +29,7 @@
                                 @foreach($category->subcategories as $subcategory)
                                     <label class="inline-flex items-center mb-1 text-black">
                                         <input type="checkbox" wire:model="selectedSubCategories" value="{{ $subcategory->id }}" class="mr-2">
-                                        {{ $subcategory->name }}
+                                        {{ $subcategory->name }} {{ $subcategory->slug }} 
                                     </label>
                                 @endforeach
                             </div>
@@ -45,7 +45,7 @@
                 @foreach($divisions as $division)
                     <label class="inline-flex items-center mb-2 text-black">
                         <input type="checkbox" wire:model="selectedDivisions" value="{{ $division->id }}" class="mr-2">
-                        {{ $division->name }}
+                        {{ $division->name }} {{$division->slug}}
                     </label>
                 @endforeach
             </div>
@@ -70,6 +70,7 @@
                 <th class="text-left px-2 py-1 border text-black">Title</th>
                 <th class="text-left px-2 py-1 border text-black">Type</th>
                 <th class="text-left px-2 py-1 border text-black">Order</th>
+                <th class="text-left px-2 py-1 border text-black">Slug</th>
                 <th class="text-left px-2 py-1 border text-black">Actions</th>
             </tr>
         </thead>

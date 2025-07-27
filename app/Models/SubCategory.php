@@ -32,6 +32,12 @@ class SubCategory extends Model
 
     public function newsPosts()
     {
-        return $this->belongsToMany(NewsPost::class, 'subcategory_news_post');
+        return $this->belongsToMany(
+            NewsPost::class,
+            'subcategory_news_post',
+            'subcategory_id', // foreign key on pivot table for SubCategory
+            'news_post_id'    // foreign key on pivot table for NewsPost
+        );
     }
+
 }

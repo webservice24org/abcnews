@@ -22,8 +22,27 @@
             <div class="hidden md:flex overflow-x-auto md:overflow-visible">
                 <nav class="flex space-x-3 md:space-x-3 whitespace-nowrap front-navbar">
                     @foreach ($menuTree as $menu)
+                        @php
+                            switch ($menu->type) {
+                                case 'category':
+                                    $url = $menu->slug ? route('category.show', $menu->slug) : '#';
+                                    break;
+                                case 'subcategory':
+                                    $url = $menu->slug ? route('subcategory.show', $menu->slug) : '#';
+                                    break;
+                                case 'division':
+                                    $url = $menu->slug ? route('division.show', $menu->slug) : '#';
+                                    break;
+                                case 'custom':
+                                    $url = $menu->slug ?: '#'; // use slug as full URL
+                                    break;
+                                default:
+                                    $url = '#';
+                            }
+                        @endphp
+
                         <div class="relative group shrink-0 {{ !$loop->last ? 'border-r border-white pr-3' : '' }}">
-                            <a href="#" class="flex items-center px-1 py-2 text-white hover:underline font-medium">
+                            <a href="{{ $url ?? '#' }}" class="flex items-center px-1 py-2 text-white hover:underline font-medium">
                                 {{ $menu->title }}
                                 @if ($menu->children->count())
                                     <svg class="ml-1 w-4 h-4 transform group-hover:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 20 20">
@@ -32,11 +51,31 @@
                                 @endif
                             </a>
 
+                            {{-- Dropdown for child menus --}}
                             @php $children = $menu->children ?? collect(); @endphp
                             @if ($children->isNotEmpty())
                                 <div class="absolute left-0 hidden group-hover:block bg-white border border-gray-200 rounded shadow-lg min-w-[160px] z-50">
                                     @foreach ($children as $child)
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">
+                                       @php
+                                            switch ($child->type) {
+                                                case 'category':
+                                                    $childUrl = $child->slug ? route('category.show', $child->slug) : '#';
+                                                    break;
+                                                case 'subcategory':
+                                                    $childUrl = $child->slug ? route('subcategory.show', $child->slug) : '#';
+                                                    break;
+                                                case 'division':
+                                                    $childUrl = $child->slug ? route('division.show', $child->slug) : '#';
+                                                    break;
+                                                case 'custom':
+                                                    $childUrl = $child->slug ?: '#'; // Custom URL or #
+                                                    break;
+                                                default:
+                                                    $childUrl = '#';
+                                            }
+                                        @endphp
+
+                                        <a href="{{ $childUrl }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">
                                             {{ $child->title }}
                                         </a>
                                     @endforeach
@@ -44,6 +83,7 @@
                             @endif
                         </div>
                     @endforeach
+
                 </nav>
             </div>
         </div>
