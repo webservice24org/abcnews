@@ -2,15 +2,12 @@
     <nav class="max-w-7xl mx-auto border-b border-gray-200 w-full h-full">
         <div class="px-4 flex justify-between items-center h-full">
 
-            <!-- Logo -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('storage/logos/front-logo.png') }}" alt="Logo" class="h-12 md:h-30 object-contain">
+                    <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="object-contain front-logo">
                 </a>
             </div>
 
-
-            <!-- Hamburger Icon (Mobile only) -->
             <button @click="open = !open" class="md:hidden p-2 text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -18,7 +15,6 @@
                 </svg>
             </button>
 
-            <!-- Desktop Menu -->
             <div class="hidden md:flex overflow-x-auto md:overflow-visible">
                 <nav class="flex space-x-3 md:space-x-3 whitespace-nowrap front-navbar">
                     @foreach ($menuTree as $menu)
@@ -88,7 +84,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div :class="{ 'block': open, 'hidden': !open }" class="bg-white md:hidden px-4 pb-4 space-y-2">
             @foreach ($menuTree as $menu)
                 @php $hasChildren = $menu->children->isNotEmpty(); @endphp

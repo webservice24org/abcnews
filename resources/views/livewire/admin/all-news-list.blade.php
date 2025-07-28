@@ -39,7 +39,7 @@
                                 <div class="flex items-center space-x-2">
 
                                     
-                                    <a href="{{ route('news.index', $news->slug) }}" class="text-blue-600 hover:text-blue-800" title="View">
+                                    <a href="{{ route('news.show', $news->slug) }}" class="text-blue-600 hover:text-blue-800" target="blank" title="View">
                                         <flux:icon name="eye" class="w-5 h-5" />
                                     </a>
 

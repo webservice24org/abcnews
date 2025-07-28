@@ -7,7 +7,7 @@
 <body class="bg-white text-gray-800">
 
     
-        @include('partials.front.frontend-navbar')
+        <livewire:frontend.frontend-menu />
     
 
     <!-- Content -->

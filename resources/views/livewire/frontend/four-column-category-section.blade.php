@@ -23,7 +23,7 @@
                     @foreach($section['others'] as $item)
                         <div class="@if(!$loop->last) border-b border-gray-300 pb-2 mb-2 @endif">
                             <a href="{{ route('news.show', $item->slug) }}">
-                                <p class="text-sm text-black hover:text-red-600">{{ $item->news_title }}</p>
+                                <p class="text-sm text-black hover:text-blue-600">{{ $item->news_title }}</p>
                             </a>
                         </div>
                     @endforeach

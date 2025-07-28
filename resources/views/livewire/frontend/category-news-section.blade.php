@@ -108,6 +108,7 @@
                 <div class="md:col-span-4">
                     <div>
                         @livewire('frontend.popular-news-sidebar')
+                        <livewire:frontend.news-archive-search />
                     </div>
                 </div>
             </div>

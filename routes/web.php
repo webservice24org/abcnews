@@ -22,6 +22,10 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\CategoryNewsSection;
  use App\Livewire\Frontend\SubCategoryNewsSection;
  use App\Livewire\Frontend\DivisionNewsSection;
+ use App\Livewire\Frontend\DistrictNewsSection;
+ use App\Livewire\Frontend\UpazilaNewsSection;
+
+ use App\Livewire\Frontend\NewsArchivePage;
 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
@@ -88,6 +92,12 @@ Route::get('/subcategory/{subcategory:slug}', SubCategoryNewsSection::class)->na
 
 
 Route::get('/division/{slug}', DivisionNewsSection::class)->name('division.show');
+Route::get('/district/{slug}', DistrictNewsSection::class)->name('district.show');
+Route::get('/upazila/{slug}', UpazilaNewsSection::class)->name('upazila.show');
+
+
+Route::get('/archive/{date}', NewsArchivePage::class)->name('archive.show');
+
 
 
 require __DIR__.'/auth.php';

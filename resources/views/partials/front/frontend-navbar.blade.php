@@ -1,3 +1,0 @@
-
-
-<livewire:frontend.frontend-menu />
