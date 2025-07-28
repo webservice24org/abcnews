@@ -34,10 +34,12 @@ class SubCategory extends Model
     {
         return $this->belongsToMany(
             NewsPost::class,
-            'subcategory_news_post',
-            'subcategory_id', // foreign key on pivot table for SubCategory
-            'news_post_id'    // foreign key on pivot table for NewsPost
+            'subcategory_news_post',  // ✅ pivot table name
+            'subcategory_id',         // ✅ FK on pivot table referencing this model
+            'news_post_id'            // ✅ FK on pivot table referencing NewsPost
         );
     }
+
+
 
 }

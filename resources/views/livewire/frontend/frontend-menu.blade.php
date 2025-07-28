@@ -42,7 +42,7 @@
                         @endphp
 
                         <div class="relative group shrink-0 {{ !$loop->last ? 'border-r border-white pr-3' : '' }}">
-                            <a href="{{ $url ?? '#' }}" class="flex items-center px-1 py-2 text-white hover:underline font-medium">
+                            <a href="{{ $url ?? '#' }}" class="flex items-center px-1 py-2 text-white hover:text-gray-100 font-medium">
                                 {{ $menu->title }}
                                 @if ($menu->children->count())
                                     <svg class="ml-1 w-4 h-4 transform group-hover:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 20 20">

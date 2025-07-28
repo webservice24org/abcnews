@@ -28,7 +28,7 @@
                         @endforeach
                     </p>
 
-                    <a href="{{ route('news.show', $last->slug) }}" class="text-3xl font-bold leading-snug mb-1 hover:text-blue-600">
+                    <a href="{{ route('news.show', $last->slug) }}" class="text-2xl font-bold leading-snug mb-1 hover:text-blue-600">
                         {{ $last->news_title }}
                     </a>
 

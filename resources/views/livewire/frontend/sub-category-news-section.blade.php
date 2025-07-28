@@ -1,14 +1,39 @@
 <section class="mb-10">
-    {{-- Subcategory Name --}}
+    {{-- Subcategory Name with Parent Category --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
+        {{-- Parent Category Name with link --}}
+        <a href="{{ route('category.show', ['slug' => $subcategory->category->slug]) }}"
+        class="text-2xl font-bold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 pb-2 ps-2 pt-2 pr-4 transition">
+            {{ $subcategory->category->name }}
+        </a>
+
+        {{-- Subcategory Name --}}
         <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">
             {{ $subcategory->name }}
         </h2>
     </div>
+
         @if($topLeft)
             <div class="mb-10">
         {{-- Top Section --}}
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
+            {{-- Top Left --}}
+                <div class="md:col-span-6">
+                    @if($topLeft)
+                        <div>
+                            <img src="{{ asset('storage/' . $topLeft->news_thumbnail) }}" class="w-full h-auto rounded mb-3">
+                            <a href="{{ route('news.show', $topLeft->slug) }}">
+                                <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
+                            </a>
+                            <p class="text-sm text-gray-600 mb-2">
+                                {{ $topLeft->created_at->format('M d, Y') }}
+                            </p>
+                            <p class="text-gray-700">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($topLeft->news_description), 150) }}
+                            </p>
+                        </div>
+                    @endif
+                </div>
             {{-- Top Right --}}
             <div class="md:col-span-3 space-y-4">
                 @foreach($topRight as $item)

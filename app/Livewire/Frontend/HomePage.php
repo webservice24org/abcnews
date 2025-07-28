@@ -34,20 +34,19 @@ class HomePage extends Component
             ->take(8)
             ->get();
 
-        $sportsNews = Category::where('slug', 'sports')->first()?->newsPosts()
-            ->where('status', 'published')
-            ->latest()
-            ->take(8)
-            ->get();
-
-            $economyNews = Category::where('slug', 'economics')->first()?->newsPosts()
+       
+        $economyNews = Category::where('slug', 'economics')->first()?->newsPosts()
             ->where('status', 'published')
             ->latest()
             ->take(6)
             ->get() ?? collect();
 
 
-        
+        $health = Category::where('slug', 'health')->first()?->newsPosts()
+            ->where('status', 'published')
+            ->latest()
+            ->take(8)
+            ->get();
 
         
 
@@ -56,8 +55,8 @@ class HomePage extends Component
             'subLeadNews',
             'nationalNews',
             'internationalNews',
-            'sportsNews',
             'economyNews',
+            'health',
             
         ))->layout('layouts.frontend')->title('Home');
     }

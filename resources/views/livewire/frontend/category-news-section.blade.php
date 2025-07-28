@@ -1,19 +1,22 @@
 <section class="mb-10">
     {{-- Category Name with Inline Subcategories --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
-        <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2  pr-4">
+        <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">
             {{ $category->name }}
         </h2>
 
         @if($category->subcategories->isNotEmpty())
             @foreach($category->subcategories as $subcategory)
-                <a href=""
-                class="text-sm px-3 py-1 bg-gray-100 border border-gray-300 rounded hover:bg-red-600 hover:text-white transition">
-                    {{ $subcategory->name }}
-                </a>
+                @if (!empty($subcategory->slug))
+                    <a href="{{ route('subcategory.show', ['subcategory' => $subcategory->slug]) }}"
+                    class="text-sm px-3 py-1 bg-gray-100 border border-gray-300 rounded hover:bg-red-600 hover:text-white transition">
+                        {{ $subcategory->name }}
+                    </a>
+                @endif
             @endforeach
         @endif
     </div>
+
 
     @if($topLeft)
         <div class="mb-10">

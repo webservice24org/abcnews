@@ -20,17 +20,21 @@ class SubCategoryNewsSection extends Component
         $this->subcategory = $subcategory;
 
         $query = $this->subcategory->newsPosts()
-            ->where('status', 1)
+            ->where('status', 'published')
             ->latest();
 
         $this->topLeft = $query->first();
         $this->topRight = $query->skip(1)->take(4)->get();
+        
+        
     }
+    
+
 
     public function render()
     {
         $gridNews = $this->subcategory->newsPosts()
-            ->where('status', 1)
+            ->where('status', 'published')
             ->latest()
             ->skip(5)
             ->paginate(6);

@@ -14,7 +14,7 @@
                 </p>
 
                 {{-- Title --}}
-                <a href="{{ route('news.show', $leadNews->slug) }}" class="text-3xl font-bold leading-snug mb-1 hover:text-blue-600">
+                <a href="{{ route('news.show', $leadNews->slug) }}" class="text-2xl font-bold leading-snug mb-1 hover:text-blue-600">
                     {{ $leadNews->news_title }}
                 </a>
 

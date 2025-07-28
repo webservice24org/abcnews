@@ -66,7 +66,7 @@ class MenuManager extends Component
         ]);
 
         $this->customMenuTitle = '';
-        $this->loadMenu(); // If you're using eager loading
+        $this->loadMenu(); 
     }
 
 
@@ -127,15 +127,7 @@ class MenuManager extends Component
         Menu::findOrFail($menuId)->delete();
         $this->loadMenu();
     }
-    /*
-    public function showSubmenuForm($parentId)
-    {
-        $this->parentIdForSubmenu = $parentId;
-        $this->newTitle = '';
-        $this->newType = '';
-        $this->newTypeId = null;
-    }
-        */
+   
 
     public function showSubmenuForm($parentId)
     {
@@ -144,9 +136,8 @@ class MenuManager extends Component
 
         $menu = Menu::find($parentId);
 
-        // Only for category-type menu items
         if ($menu && $menu->type === 'category' && $menu->type_id) {
-            $this->availableSubcategories = \App\Models\SubCategory::where('category_id', $menu->type_id)->get();
+            $this->availableSubcategories = SubCategory::where('category_id', $menu->type_id)->get();
         }
     }
 
@@ -157,7 +148,7 @@ class MenuManager extends Component
             'selectedSubcategoryId' => 'required|exists:sub_categories,id',
         ]);
 
-        $subcategory = \App\Models\SubCategory::find($this->selectedSubcategoryId);
+        $subcategory = SubCategory::find($this->selectedSubcategoryId);
 
         Menu::create([
             'title' => $subcategory->name,
@@ -182,7 +173,7 @@ class MenuManager extends Component
         $this->editTitle = $menu->title;
         $this->editType = $menu->type;
         $this->editOrder = $menu->order;
-        $this->editSlug = $menu->slug; // include slug
+        $this->editSlug = $menu->slug; 
     }
 
 
@@ -200,7 +191,7 @@ class MenuManager extends Component
     $menu->title = $this->editTitle;
     $menu->type = $this->editType;
     $menu->order = $this->editOrder;
-    $menu->slug  = $this->editSlug; // update slug
+    $menu->slug  = $this->editSlug; 
     $menu->save();
 
     $this->reset(['editingMenuId', 'editTitle', 'editType', 'editOrder', 'editSlug']);
