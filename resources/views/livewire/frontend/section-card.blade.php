@@ -22,11 +22,7 @@
                 <div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition p-4">
                     <img src="{{ asset('storage/' . $last->news_thumbnail) }}" alt="{{ $last->news_title }}" class="w-full h-auto mb-4 rounded">
 
-                    <p class="text-sm text-red-600 font-bold mb-1">
-                        @foreach($last->categories as $category)
-                            {{ $category->category_name ?? $category->name }}@if(!$loop->last), @endif
-                        @endforeach
-                    </p>
+                    
 
                     <a href="{{ route('news.show', $last->slug) }}" class="text-2xl font-bold leading-snug mb-1 hover:text-blue-600">
                         {{ $last->news_title }}
@@ -51,11 +47,7 @@
             @foreach($others as $newsItem)
                 <div class="flex items-start gap-3 p-3 @if (!$loop->last) border-b border-gray-200 @endif">
                     <div class="flex-1">
-                        <p class="text-xs text-red-600 font-semibold">
-                            @foreach($newsItem->categories as $category)
-                                {{ $category->category_name ?? $category->name }}@if(!$loop->last), @endif
-                            @endforeach
-                        </p>
+                        
 
                         <a href="{{ route('news.show', $newsItem->slug) }}">
                             <h4 class="text-md font-bold leading-tight hover:text-blue-600">

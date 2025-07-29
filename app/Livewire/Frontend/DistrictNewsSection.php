@@ -18,22 +18,32 @@ class DistrictNewsSection extends Component
 
     public function mount($slug)
     {
-        $this->district = District::where('slug', $slug)->firstOrFail();
+        $this->district = District::with(['division', 'upazilas'])->where('slug', $slug)->firstOrFail();
 
-        $query = NewsPost::where('district_id', $this->district->id)
+        // Get first 6 items (topLeft + topRight)
+        $topItems = NewsPost::whereHas('upazila.district', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })
             ->where('status', 'published')
-            ->latest();
+            ->latest()
+            ->take(6)
+            ->get();
 
-        $this->topLeft = $query->first();
-        $this->topRight = (clone $query)->skip(1)->take(4)->get();
+        $this->topLeft = $topItems->first();
+        $this->topRight = $topItems->slice(1, 5);
     }
 
     public function render()
     {
+        $excludedIds = collect([$this->topLeft])
+            ->merge($this->topRight)
+            ->pluck('id')
+            ->toArray();
+
         $gridNews = NewsPost::where('district_id', $this->district->id)
             ->where('status', 'published')
+            ->whereNotIn('id', $excludedIds)
             ->latest()
-            ->skip(5)
             ->paginate(6);
 
         return view('livewire.frontend.district-news-section', [

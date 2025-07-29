@@ -7,6 +7,7 @@ use App\Models\SubCategory;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+
 class SubCategoryNewsSection extends Component
 {
     use WithPagination;
@@ -19,24 +20,29 @@ class SubCategoryNewsSection extends Component
     {
         $this->subcategory = $subcategory;
 
-        $query = $this->subcategory->newsPosts()
+        // Get top 6 items first
+        $topItems = $this->subcategory->newsPosts()
             ->where('status', 'published')
-            ->latest();
+            ->latest()
+            ->take(6)
+            ->get();
 
-        $this->topLeft = $query->first();
-        $this->topRight = $query->skip(1)->take(4)->get();
-        
-        
+        $this->topLeft = $topItems->first();
+        $this->topRight = $topItems->slice(1, 5);
     }
-    
-
 
     public function render()
     {
+        // Get IDs to exclude
+        $excludedIds = collect([$this->topLeft])
+            ->merge($this->topRight)
+            ->pluck('id')
+            ->toArray();
+
         $gridNews = $this->subcategory->newsPosts()
             ->where('status', 'published')
+            ->whereNotIn('id', $excludedIds)
             ->latest()
-            ->skip(5)
             ->paginate(6);
 
         return view('livewire.frontend.sub-category-news-section', [

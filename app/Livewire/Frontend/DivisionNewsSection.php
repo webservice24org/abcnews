@@ -17,27 +17,36 @@ class DivisionNewsSection extends Component
 
     public function mount($slug)
     {
-        $this->division = Division::where('slug', $slug)->firstOrFail();
+        $this->division = Division::with('districts')->where('slug', $slug)->firstOrFail();
 
-        $query = NewsPost::whereHas('district.division', function ($q) use ($slug) {
-            $q->where('slug', $slug);
-        })
-        ->where('status', 'published')
-        ->latest();
+        // Get first 6 posts (1 for topLeft, 5 for topRight)
+        $topItems = NewsPost::whereHas('district.division', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })
+            ->where('status', 'published')
+            ->latest()
+            ->take(6)
+            ->get();
 
-        $this->topLeft = $query->first();
-        $this->topRight = (clone $query)->skip(1)->take(4)->get();
+        $this->topLeft = $topItems->first();
+        $this->topRight = $topItems->slice(1, 5);
     }
 
     public function render()
     {
+        // Get IDs to exclude
+        $excludedIds = collect([$this->topLeft])
+            ->merge($this->topRight)
+            ->pluck('id')
+            ->toArray();
+
         $gridNews = NewsPost::whereHas('district.division', function ($q) {
-            $q->where('id', $this->division->id);
-        })
-        ->where('status', 'published')
-        ->latest()
-        ->skip(5)
-        ->paginate(6);
+                $q->where('id', $this->division->id);
+            })
+            ->where('status', 'published')
+            ->whereNotIn('id', $excludedIds)
+            ->latest()
+            ->paginate(7);
 
         return view('livewire.frontend.division-news-section', [
             'division' => $this->division,

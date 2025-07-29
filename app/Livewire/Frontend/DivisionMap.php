@@ -7,55 +7,77 @@ use App\Models\District;
 use App\Models\Upazila;
 use Livewire\Component;
 
+
 class DivisionMap extends Component
 {
     public $divisions;
-    public $districts = [];
-    public $upazilas = [];
+    public $division_id = '';
+    public $district_id = '';
+    public $upazila_id = '';
 
-    public $selectedDivision = '';
-    public $selectedDistrict = '';
-    public $selectedUpazila = '';
 
     public function mount()
     {
         $this->divisions = Division::all();
     }
 
-    public function updatedSelectedDivision($divisionId)
+     public function getFilteredDistrictsProperty()
     {
-        $this->districts = District::where('division_id', $divisionId)->get();
-        $this->selectedDistrict = '';
-        $this->upazilas = [];
-        $this->selectedUpazila = '';
+        return $this->division_id
+            ? District::where('division_id', $this->division_id)->get()
+            : collect();
     }
 
-    public function updatedSelectedDistrict($districtId)
+    public function getFilteredUpazilasProperty()
     {
-        $this->upazilas = Upazila::where('district_id', $districtId)->get();
-        $this->selectedUpazila = '';
+        return $this->district_id
+            ? Upazila::where('district_id', $this->district_id)->get()
+            : collect();
     }
 
-    public function searchNews()
+     public function updatedDivisionId($value)
     {
-        if ($this->selectedUpazila) {
-            $upazila = Upazila::find($this->selectedUpazila);
-            return redirect()->route('upazila.show', $upazila->slug);
-        }
+        $this->district_id = null;
+        $this->upazila_id = null;
 
-        if ($this->selectedDistrict) {
-            $district = District::find($this->selectedDistrict);
-            return redirect()->route('district.show', $district->slug);
-        }
-
-        if ($this->selectedDivision) {
-            $division = Division::find($this->selectedDivision);
-            return redirect()->route('division.show', $division->slug);
-        }
+        $this->dispatch('$refresh'); 
     }
+
+
+    public function updatedDistrictId($value)
+    {
+        $this->upazila_id = null;
+
+        $this->dispatch('$refresh'); 
+    }
+
+   public function searchNews()
+{
+    if ($this->upazila_id) {
+        $upazila = Upazila::find($this->upazila_id);
+        return redirect()->route('upazila.show', $upazila->slug);
+    }
+
+    if ($this->district_id) {
+        $district = District::find($this->district_id);
+        return redirect()->route('district.show', $district->slug);
+    }
+
+    if ($this->division_id) {
+        $division = Division::find($this->division_id);
+        return redirect()->route('division.show', $division->slug);
+    }
+}
+
 
     public function render()
     {
-        return view('livewire.frontend.division-map');
+        return view('livewire.frontend.division-map', [
+            'divisions' => $this->divisions,
+            'filteredDistricts' => $this->filteredDistricts,
+            'filteredUpazilas' => $this->filteredUpazilas,
+        ]);
     }
+
 }
+

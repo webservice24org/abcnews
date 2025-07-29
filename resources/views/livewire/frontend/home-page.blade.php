@@ -12,6 +12,10 @@
     
     <livewire:frontend.grid-section-card title="অর্থনীতি" :news="$economyNews" categorySlug="economics" />
     
+
+    <livewire:frontend.middle-grid-section-with-sidebar title="সারা দেশ" categorySlug="country" />
+
+
     <livewire:frontend.middle-grid-section title="বিনোদন" categorySlug="entertainment" />
     
     <livewire:frontend.middle-lower-grid-section title="খেলাধুলা" categorySlug="sports" />
