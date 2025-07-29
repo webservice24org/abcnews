@@ -16,6 +16,8 @@ use App\Livewire\Admin\AllNewsList;
 use App\Livewire\Admin\DraftNewsList;
 use App\Livewire\Admin\ScheduledNewsList;
 use \App\Livewire\Admin\TrashedNewsList;
+use \App\Livewire\Admin\MenuManager;
+use \App\Livewire\Admin\SiteSettingForm;
 
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
@@ -74,9 +76,9 @@ Route::middleware(['auth'])->group(function () {
 
    Route::get('admin/news/trashed', TrashedNewsList::class)->name('posts.trashed');
 
-    Route::get('/admin/menu-manager', \App\Livewire\Admin\MenuManager::class)->name('admin.menu-manager');
+   Route::get('/admin/menu-manager', MenuManager::class)->name('admin.menu-manager');
 
-    
+   Route::get('/admin/site-settings', SiteSettingForm::class)->name('admin.site-settings');
 
     
 });

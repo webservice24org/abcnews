@@ -4,7 +4,7 @@
 
             <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="object-contain front-logo">
+                    <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-10 md:h-15 object-contain">
                 </a>
             </div>
 

@@ -48,11 +48,6 @@ class NewsPostForm extends Component
     }
 
 
-    
-    
-
-
-
     public $editing = false;
     // Form Fields
     public $news_title, $slug, $news_description;
@@ -77,7 +72,7 @@ class NewsPostForm extends Component
     public $selected_subcategories = [];
 
 
-    public $newsPostId = null; // For editing
+    public $newsPostId = null; 
 
     public function getCategoryTreeProperty()
     {
@@ -126,9 +121,6 @@ class NewsPostForm extends Component
 
 
 public $allSubcategories;
-
-
-
 
 
     public function mount($id = null)

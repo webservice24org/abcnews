@@ -111,13 +111,14 @@
                             </flux:navlist.item>
                         @endif
                         <flux:navlist.item
-                            icon="plus-circle"
+                            icon="newspaper"
                             :href="route('news.index')"
                             :current="request()->routeIs('news.index')"
                             wire:navigate
                             class="{{ request()->routeIs('news.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                             {{ __('All News') }}
                         </flux:navlist.item>
+
 
                         <flux:navlist.item
                             icon="document-text"
@@ -244,6 +245,7 @@
              @php
                 $appearanceOpenRoutes = [
                     'admin.menu-manager',
+                    'admin.site-settings',
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -271,6 +273,16 @@
                                 class="{{ request()->routeIs('admin.menu-manager') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                                 {{ __('Menu Settings') }}
                             </flux:navlist.item>
+
+                           <flux:navlist.item
+                                icon="photo"
+                                :href="route('admin.site-settings')"
+                                :current="request()->routeIs('admin.site-settings')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.site-settings') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Logo Settings') }}
+                            </flux:navlist.item>
+
 
                             
 
