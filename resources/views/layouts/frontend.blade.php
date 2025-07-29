@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+@if (!empty($siteInfo->meta_description))
+    <meta name="description" content="{{ $siteInfo->meta_description }}">
+@endif
+
+@if (!empty($siteInfo->meta_tags))
+    <meta name="keywords" content="{{ $siteInfo->meta_tags }}">
+@endif
+
+@if ($siteConnection = \App\Models\SiteConnection::first())
+    @if ($siteConnection->google_verification)
+        <meta name="google-site-verification" content="{{ $siteConnection->google_verification }}">
+    @endif
+    @if ($siteConnection->bing_verification)
+        <meta name="msvalidate.01" content="{{ $siteConnection->bing_verification }}">
+    @endif
+    @if ($siteConnection->baidu_verification)
+        <meta name="baidu-site-verification" content="{{ $siteConnection->baidu_verification }}">
+    @endif
+    @if ($siteConnection->pinterest_verification)
+        <meta name="p:domain_verify" content="{{ $siteConnection->pinterest_verification }}">
+    @endif
+    @if ($siteConnection->yandex_verification)
+        <meta name="yandex-verification" content="{{ $siteConnection->yandex_verification }}">
+    @endif
+@endif
+
+
     @include('partials.head')
     @livewireStyles
 </head>

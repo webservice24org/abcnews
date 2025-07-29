@@ -5,6 +5,8 @@ namespace App\Livewire\Frontend;
 use Livewire\Component;
 use App\Models\Menu;
 
+use App\Models\SiteSetting;
+
 class FrontendMenu extends Component
 {
     public function render()
@@ -14,6 +16,8 @@ class FrontendMenu extends Component
             ->orderBy('order')
             ->get();
 
-        return view('livewire.frontend.frontend-menu', compact('menuTree'));
+        $siteSetting = SiteSetting::first();
+
+        return view('livewire.frontend.frontend-menu', compact('menuTree', 'siteSetting'));
     }
 }

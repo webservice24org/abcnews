@@ -18,6 +18,9 @@ use App\Livewire\Admin\ScheduledNewsList;
 use \App\Livewire\Admin\TrashedNewsList;
 use \App\Livewire\Admin\MenuManager;
 use \App\Livewire\Admin\SiteSettingForm;
+use \App\Livewire\Admin\SiteInfoForm;
+use \App\Livewire\Admin\SiteConnectionForm;
+use \App\Livewire\Admin\SocialConnectionForm;
 
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
@@ -79,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/admin/menu-manager', MenuManager::class)->name('admin.menu-manager');
 
    Route::get('/admin/site-settings', SiteSettingForm::class)->name('admin.site-settings');
+   Route::get('/admin/site-info', SiteInfoForm::class)->name('admin.site-info');
+   Route::get('/admin/site-connections', SiteConnectionForm::class)->name('admin.site-connections');
+   Route::get('/admin/social-connections', SocialConnectionForm::class)->name('admin.social-connections');
 
     
 });

@@ -246,6 +246,9 @@
                 $appearanceOpenRoutes = [
                     'admin.menu-manager',
                     'admin.site-settings',
+                    'admin.site-info',
+                    'admin.site-connections',
+                    'admin.social-connections'
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -283,8 +286,34 @@
                                 {{ __('Logo Settings') }}
                             </flux:navlist.item>
 
-
+                            <flux:navlist.item
+                                icon="information-circle"
+                                :href="route('admin.site-info')"
+                                :current="request()->routeIs('admin.site-info')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.site-info') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Basic Informations') }}
+                            </flux:navlist.item>
                             
+                            <flux:navlist.item
+                                icon="globe-alt"
+                                :href="route('admin.site-connections')"
+                                :current="request()->routeIs('admin.site-connections')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.site-connections') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Site Connections') }}
+                            </flux:navlist.item>
+
+
+                            <flux:navlist.item
+                                icon="share"
+                                :href="route('admin.social-connections')"
+                                :current="request()->routeIs('admin.social-connections')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.social-connections') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Social Connections') }}
+                            </flux:navlist.item>
+
 
                         </flux:navlist.group>
                     </div>

@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Support\Facades\View;
+use App\Models\SiteSetting;
+use App\Models\SiteInfo;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view) {
+            $view->with('siteSetting', SiteSetting::first());
+            $view->with('siteInfo', SiteInfo::first());
+        });
     }
 }

@@ -4,9 +4,14 @@
 
             <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-10 md:h-15 object-contain">
+                    @if (!empty($siteSetting) && $siteSetting->header_logo)
+                        <img src="{{ asset('storage/' . $siteSetting->header_logo) }}" alt="Logo" class="h-10 md:h-15 object-contain">
+                    @else
+                        <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-10 md:h-15 object-contain">
+                    @endif
                 </a>
             </div>
+
 
             <button @click="open = !open" class="md:hidden p-2 text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
