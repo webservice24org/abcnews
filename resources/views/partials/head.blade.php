@@ -3,7 +3,8 @@
 
 <title>{{ ($siteInfo->site_name ?? $title ?? config('app.name')) }} | @if (!empty($siteInfo->tagline))
     {{ $siteInfo->tagline }}
-@endif</title>
+    @endif
+</title>
 
 @if (!empty($siteSetting) && $siteSetting->favicon)
     <link rel="icon" href="{{ asset('storage/' . $siteSetting->favicon) }}" type="image/x-icon" />

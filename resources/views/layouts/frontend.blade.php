@@ -31,6 +31,8 @@
 
     @include('partials.head')
     @livewireStyles
+
+
 </head>
 <body class="bg-white text-gray-800">
 
@@ -43,7 +45,9 @@
         {{ $slot }}
     </main>
 
-    
+    <livewire:frontend.footer />
+
+
     @livewireScripts
 
     <div 

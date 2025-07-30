@@ -74,23 +74,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/news/create', NewsPostForm::class)->name('posts.create');
     Route::get('admin/news/edit/{id}', NewsPostForm::class)->name('posts.edit');
     Route::get('admin/news', AllNewsList::class)->name('news.index');
-   Route::get('admin/news/drafts', DraftNewsList::class)->name('news.drafts');
-   Route::get('admin/news/scheduled', ScheduledNewsList::class)->name('news.scheduled');
+    Route::get('admin/news/drafts', DraftNewsList::class)->name('news.drafts');
+    Route::get('admin/news/scheduled', ScheduledNewsList::class)->name('news.scheduled');
 
-   Route::get('admin/news/trashed', TrashedNewsList::class)->name('posts.trashed');
+    Route::get('admin/news/trashed', TrashedNewsList::class)->name('posts.trashed');
 
-   Route::get('/admin/menu-manager', MenuManager::class)->name('admin.menu-manager');
+    Route::get('/admin/menu-manager', MenuManager::class)->name('admin.menu-manager');
 
-   Route::get('/admin/site-settings', SiteSettingForm::class)->name('admin.site-settings');
-   Route::get('/admin/site-info', SiteInfoForm::class)->name('admin.site-info');
-   Route::get('/admin/site-connections', SiteConnectionForm::class)->name('admin.site-connections');
-   Route::get('/admin/social-connections', SocialConnectionForm::class)->name('admin.social-connections');
+    Route::get('/admin/site-settings', SiteSettingForm::class)->name('admin.site-settings');
+    Route::get('/admin/site-info', SiteInfoForm::class)->name('admin.site-info');
+    Route::get('/admin/site-connections', SiteConnectionForm::class)->name('admin.site-connections');
+    Route::get('/admin/social-connections', SocialConnectionForm::class)->name('admin.social-connections');
 
     
 });
 
-Route::get('news/{slug}', NewsShow::class)
-    ->where('slug', '^(?!categories$).+')->name('news.show');
+Route::get('news/{slug}', NewsShow::class)->where('slug', '^(?!categories$).+')->name('news.show');
 
 
 
