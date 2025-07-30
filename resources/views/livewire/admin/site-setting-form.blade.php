@@ -25,6 +25,16 @@
             @elseif ($siteSetting->footer_logo)
                 <img src="{{ asset('storage/' . $siteSetting->footer_logo) }}" class="bg-green-300 h-16 my-2">
             @endif
+        </div> 
+        <div>
+            <label class="block font-bold text-black">Print Logo</label>
+
+            <input type="file" wire:model="print_logo" class="text-black border p-2 rounded w-full">
+            @if ($print_logo && is_object($print_logo))
+                <img src="{{ $print_logo->temporaryUrl() }}" class="bg-green-100 h-16 my-2 border rounded">
+            @elseif ($siteSetting->print_logo)
+                <img src="{{ asset('storage/' . $siteSetting->print_logo) }}" class="bg-green-300 h-16 my-2">
+            @endif
         </div>
 
         <div>

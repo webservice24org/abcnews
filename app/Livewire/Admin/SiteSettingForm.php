@@ -15,6 +15,7 @@ class SiteSettingForm extends Component
 
     public $header_logo;
     public $footer_logo;
+    public $print_logo;
     public $favicon;
 
     public function mount()
@@ -22,6 +23,7 @@ class SiteSettingForm extends Component
         $this->siteSetting = SiteSetting::first() ?? new SiteSetting();
         $this->header_logo = $this->siteSetting->header_logo;
         $this->footer_logo = $this->siteSetting->footer_logo;
+        $this->print_logo = $this->siteSetting->print_logo;
         $this->favicon = $this->siteSetting->favicon;
     }
 
@@ -43,6 +45,15 @@ class SiteSettingForm extends Component
             }
 
             $this->siteSetting->footer_logo = $this->footer_logo->store('logos', 'public');
+        }
+
+        // Print Logo
+        if (is_object($this->print_logo)) {
+            if ($this->siteSetting->print_logo) {
+                Storage::disk('public')->delete($this->siteSetting->print_logo);
+            }
+
+            $this->siteSetting->print_logo = $this->print_logo->store('logos', 'public');
         }
 
         // Favicon

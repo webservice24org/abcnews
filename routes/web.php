@@ -21,6 +21,7 @@ use \App\Livewire\Admin\SiteSettingForm;
 use \App\Livewire\Admin\SiteInfoForm;
 use \App\Livewire\Admin\SiteConnectionForm;
 use \App\Livewire\Admin\SocialConnectionForm;
+use App\Http\Controllers\Frontend\NewsPrintController; 
 
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
@@ -104,6 +105,11 @@ Route::get('/upazila/{slug}', UpazilaNewsSection::class)->name('upazila.show');
 
 
 Route::get('/archive/{date}', NewsArchivePage::class)->name('archive.show');
+
+
+
+Route::get('/print-news/{slug}/print', [NewsPrintController::class, 'downloadPdf'])->name('news.print');
+
 
 
 

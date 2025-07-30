@@ -5,7 +5,7 @@
         <div class="md:col-span-8 space-y-6">
 
             {{-- Breadcrumb --}}
-            <div class="flex flex-wrap items-center text-sm text-gray-500 gap-2">
+            <div class="flex flex-wrap items-center text-sm text-gray-500 gap-2 bg-gray-100 p-2">
                 <a href="{{ route('home') }}" class="text-gray-600 hover:text-red-600">
                     {{-- Home Icon --}}
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -35,16 +35,53 @@
             <h1 class="text-3xl font-bold text-black">{{ $news->news_title }}</h1>
 
             {{-- Author & Date --}}
-            <div class="flex items-center text-sm text-gray-600">
-                @if ($news->user && $news->user->profile?->profile_photo)
-                    <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="h-8 w-8 rounded-full mr-2" alt="{{ $news->user->name }}">
-                @endif
-                <span>
-                    <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
-                   প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
-                   
-                </span>
-            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 mt-4">
+
+    {{-- Author Info --}}
+    <div class="flex items-center mb-2 md:mb-0">
+        @if ($news->user && $news->user->profile?->profile_photo)
+            <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="h-8 w-8 rounded-full mr-2" alt="{{ $news->user->name }}">
+        @endif
+        <span>
+            <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
+            প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
+        </span>
+    </div>
+
+    {{-- Social Share Icons --}}
+    <div class="flex items-center gap-3 text-xl text-gray-700">
+
+        {{-- Facebook --}}
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}"
+           target="_blank" class="hover:text-blue-600" title="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+
+        {{-- X (Twitter) --}}
+        <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}&text={{ urlencode($news->news_title) }}"
+           target="_blank" class="hover:text-black" title="Share on X">
+            <i class="fab fa-x-twitter"></i>
+        </a>
+
+        {{-- WhatsApp --}}
+        <a href="https://wa.me/?text={{ urlencode(Request::fullUrl()) }}"
+           target="_blank" class="hover:text-green-600" title="Share on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        {{-- Copy Link --}}
+        <button onclick="navigator.clipboard.writeText('{{ Request::fullUrl() }}'); showToast('success', 'Link copied!');"
+                class="hover:text-blue-500" title="Copy link">
+            <i class="fas fa-link"></i>
+        </button>
+        <a href="{{ route('news.print', $news->slug) }}" target="_blank"
+        class="inline-flex items-center gap-1 px-4 py-1 border text-sm rounded hover:bg-gray-100 text-gray-600 border-gray-400">
+            <i class="fas fa-print"></i> প্রিন্ট
+        </a>
+
+    </div>
+</div>
+
 
             {{-- Thumbnail --}}
             @if ($news->news_thumbnail)
