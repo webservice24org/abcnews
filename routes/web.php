@@ -21,6 +21,9 @@ use \App\Livewire\Admin\SiteSettingForm;
 use \App\Livewire\Admin\SiteInfoForm;
 use \App\Livewire\Admin\SiteConnectionForm;
 use \App\Livewire\Admin\SocialConnectionForm;
+use \App\Livewire\Admin\AdvertisementForm;
+use \App\Livewire\Admin\AdList;
+
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
 use App\Livewire\Frontend\HomePage;
@@ -85,7 +88,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/site-settings', SiteSettingForm::class)->name('admin.site-settings');
     Route::get('/admin/site-info', SiteInfoForm::class)->name('admin.site-info');
     Route::get('/admin/site-connections', SiteConnectionForm::class)->name('admin.site-connections');
+
     Route::get('/admin/social-connections', SocialConnectionForm::class)->name('admin.social-connections');
+
+    Route::get('/admin/advertisements/create', AdvertisementForm::class)->name('admin.advertisements.create');
+    Route::get('/admin/ads', AdList::class)->name('admin.ads-list');
+
 
     
 });
@@ -109,6 +117,7 @@ Route::get('/archive/{date}', NewsArchivePage::class)->name('archive.show');
 
 
 Route::get('/print-news/{slug}/print', [NewsPrintController::class, 'downloadPdf'])->name('news.print');
+
 
 
 
