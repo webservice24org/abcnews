@@ -23,9 +23,11 @@ use \App\Livewire\Admin\SiteConnectionForm;
 use \App\Livewire\Admin\SocialConnectionForm;
 use \App\Livewire\Admin\AdvertisementForm;
 use \App\Livewire\Admin\AdList;
+use App\Livewire\Admin\VideoPostForm;
+    use App\Livewire\Admin\VideoPostList;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
-use App\Http\Controllers\Frontend\SearchController; 
+
 
 
 use App\Livewire\Frontend\HomePage;
@@ -38,6 +40,9 @@ use App\Livewire\Frontend\NewsShow;
 
  use App\Livewire\Frontend\NewsArchivePage;
  use App\Livewire\Frontend\SearchResults;
+ use App\Livewire\Frontend\SingleVideo;
+ use App\Livewire\Frontend\AllVideos;
+ 
 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
@@ -97,8 +102,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/advertisements/create', AdvertisementForm::class)->name('admin.advertisements.create');
     Route::get('/admin/ads', AdList::class)->name('admin.ads-list');
     Route::get('admin/advertisements/edit/{id}', AdvertisementForm::class)->name('ads.edit');
+    Route::get('/admin/video/create', VideoPostForm::class)->name('admin.video.create');
 
 
+
+    Route::get('/admin/video/list', VideoPostList::class)->name('admin.video.list');
+    Route::get('/admin/video/create', VideoPostForm::class)->name('admin.video.create');
+    Route::get('/admin/video/edit/{id}', VideoPostForm::class)->name('admin.video.edit');
     
 });
 
@@ -125,9 +135,9 @@ Route::get('/print-news/{slug}/print', [NewsPrintController::class, 'downloadPdf
 
 
 Route::get('/search', SearchResults::class)->name('search');
-Route::get('/ajax-search', [SearchController::class, 'ajaxSearch'])->name('ajax.search');
 
-
+Route::get('/video/{id}', SingleVideo::class)->name('video.show');
+Route::get('/videos', AllVideos::class)->name('videos.all');
 
 
 require __DIR__.'/auth.php';

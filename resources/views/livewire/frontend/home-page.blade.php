@@ -24,6 +24,9 @@
    
     <livewire:frontend.four-column-category-section />
 
+    <livewire:frontend.video-section />
+
+
 
 
     

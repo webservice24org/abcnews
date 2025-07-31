@@ -240,7 +240,52 @@
                     </div>
                 </div>
             </flux:navlist>
+ @php
+                $videoRoutes = [
+                    'admin.video.list',
+                    'admin.video.create',
+                ];
+                $isavideoRoutesOpen = collect($videoRoutes)->contains(fn($route) => request()->routeIs($route));
+            @endphp
 
+            <flux:navlist variant="outline">
+                <div x-data="{ open: {{ $isavideoRoutesOpen ? 'true' : 'false' }} }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        <span>{{ __('Video News') }}</span>
+                        <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <svg x-show="open" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition>
+                        <flux:navlist.group class="pl-4 mt-1">
+
+                            <flux:navlist.item
+                                icon="list-bullet"
+                                :href="route('admin.video.list')"
+                                :current="request()->routeIs('admin.video.list')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.video.list') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Video List') }}
+                            </flux:navlist.item>
+
+                            <flux:navlist.item
+                                icon="plus-circle"
+                                :href="route('admin.video.create')"
+                                :current="request()->routeIs('admin.video.create')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.video.create') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Add New Video') }}
+                            </flux:navlist.item>
+
+                        </flux:navlist.group>
+                    </div>
+                </div>
+            </flux:navlist>
 
              @php
                 $appearanceOpenRoutes = [

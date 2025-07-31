@@ -144,7 +144,7 @@
                                 {{ \Illuminate\Support\Str::limit($post->news_title, 70) }}
                             </h4>
                             <p class="text-xs text-gray-500 mt-1">
-                                {{ $post->created_at->format('M d, Y') }}
+                                {{ \App\Helpers\DateHelper::formatBanglaDateTime($post->created_at) }}
                             </p>
                         </a>
                     </div>
