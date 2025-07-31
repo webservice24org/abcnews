@@ -37,50 +37,50 @@
             {{-- Author & Date --}}
             <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 mt-4">
 
-    {{-- Author Info --}}
-    <div class="flex items-center mb-2 md:mb-0">
-        @if ($news->user && $news->user->profile?->profile_photo)
-            <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="h-8 w-8 rounded-full mr-2" alt="{{ $news->user->name }}">
-        @endif
-        <span>
-            <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
-            প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
-        </span>
-    </div>
+                {{-- Author Info --}}
+                <div class="flex items-center mb-2 md:mb-0">
+                    @if ($news->user && $news->user->profile?->profile_photo)
+                        <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="h-8 w-8 rounded-full mr-2" alt="{{ $news->user->name }}">
+                    @endif
+                    <span>
+                        <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
+                        প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
+                    </span>
+                </div>
 
-    {{-- Social Share Icons --}}
-    <div class="flex items-center gap-3 text-xl text-gray-700">
+                {{-- Social Share Icons --}}
+                <div class="flex items-center gap-3 text-xl text-gray-700">
 
-        {{-- Facebook --}}
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}"
-           target="_blank" class="hover:text-blue-600" title="Share on Facebook">
-            <i class="fab fa-facebook-f"></i>
-        </a>
+                    {{-- Facebook --}}
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}"
+                    target="_blank" class="hover:text-blue-600" title="Share on Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
 
-        {{-- X (Twitter) --}}
-        <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}&text={{ urlencode($news->news_title) }}"
-           target="_blank" class="hover:text-black" title="Share on X">
-            <i class="fab fa-x-twitter"></i>
-        </a>
+                    {{-- X (Twitter) --}}
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}&text={{ urlencode($news->news_title) }}"
+                    target="_blank" class="hover:text-black" title="Share on X">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
 
-        {{-- WhatsApp --}}
-        <a href="https://wa.me/?text={{ urlencode(Request::fullUrl()) }}"
-           target="_blank" class="hover:text-green-600" title="Share on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+                    {{-- WhatsApp --}}
+                    <a href="https://wa.me/?text={{ urlencode(Request::fullUrl()) }}"
+                    target="_blank" class="hover:text-green-600" title="Share on WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
 
-        {{-- Copy Link --}}
-        <button onclick="navigator.clipboard.writeText('{{ Request::fullUrl() }}'); showToast('success', 'Link copied!');"
-                class="hover:text-blue-500" title="Copy link">
-            <i class="fas fa-link"></i>
-        </button>
-        <a href="{{ route('news.print', $news->slug) }}" target="_blank"
-        class="inline-flex items-center gap-1 px-4 py-1 border text-sm rounded hover:bg-gray-100 text-gray-600 border-gray-400">
-            <i class="fas fa-print"></i> প্রিন্ট
-        </a>
+                    {{-- Copy Link --}}
+                    <button onclick="navigator.clipboard.writeText('{{ Request::fullUrl() }}'); showToast('success', 'Link copied!');"
+                            class="hover:text-blue-500" title="Copy link">
+                        <i class="fas fa-link"></i>
+                    </button>
+                    <a href="{{ route('news.print', $news->slug) }}" target="_blank"
+                    class="inline-flex items-center gap-1 px-4 py-1 border text-sm rounded hover:bg-gray-100 text-gray-600 border-gray-400">
+                        <i class="fas fa-print"></i> প্রিন্ট
+                    </a>
 
-    </div>
-</div>
+                </div>
+            </div>
 
 
             {{-- Thumbnail --}}
@@ -117,8 +117,8 @@
 
         {{-- Sidebar --}}
         <div class="md:col-span-4">
-            @livewire('frontend.popular-news-sidebar')
-            @livewire('frontend.latest-news-sidebar')
+            <livewire:frontend.popular-news-sidebar />
+            <livewire:frontend.latest-news-sidebar />
             <livewire:frontend.news-archive-search />
 
 

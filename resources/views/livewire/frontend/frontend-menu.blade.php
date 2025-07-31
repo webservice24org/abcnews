@@ -1,4 +1,7 @@
-<header class="bg-red-600 h-[50px] md:h-[100px] sticky top-0 z-50" x-data="{ open: false }">
+
+<header class="bg-red-600 h-[50px] md:h-[100px] sticky top-0 z-50"
+        x-data="{ open: false, showSearch: false, showSlideMenu: false }">
+
     <nav class="max-w-7xl mx-auto border-b border-gray-200 w-full h-full">
         <div class="px-4 flex justify-between items-center h-full">
 
@@ -13,12 +16,22 @@
             </div>
 
 
-            <button @click="open = !open" class="md:hidden p-2 text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
+            <div class="flex">
+                <button @click="open = !open" class="md:hidden p-2 mr-2 text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <button @click="showSearch = !showSearch"
+                    class="md:hidden inline-flex items-center justify-center mt-2 w-8 h-8 text-white hover:text-yellow-300 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                    </svg>
+                </button>
+            </div>
 
             <div class="hidden md:flex overflow-x-auto md:overflow-visible">
                 <nav class="flex space-x-3 md:space-x-3 whitespace-nowrap front-navbar">
@@ -42,8 +55,8 @@
                             }
                         @endphp
 
-                        <div class="relative group shrink-0 {{ !$loop->last ? 'border-r border-white pr-3' : '' }}">
-                            <a href="{{ $url ?? '#' }}" class="flex items-center px-1 py-2 text-white hover:text-gray-100 font-medium">
+                        <div class="relative group shrink-0 {{ !$loop->last ? 'border-r border-white pr-2' : '' }}">
+                            <a href="{{ $url ?? '#' }}" class="flex items-center px-1 py-1 text-white hover:text-gray-100 font-medium">
                                 {{ $menu->title }}
                                 @if ($menu->children->count())
                                     <svg class="ml-1 w-4 h-4 transform group-hover:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 20 20">
@@ -85,7 +98,29 @@
                         </div>
                     @endforeach
 
+                    <!-- Slide Menu Icon (Desktop only) -->
+                    <button @click="showSlideMenu = !showSlideMenu"
+                        class="hidden md:inline-flex items-center justify-center w-10 h-10 text-white hover:text-yellow-300 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                    </button>
+
+                    <!-- Search Icon (Both desktop and mobile) -->
+                    <button @click="showSearch = !showSearch"
+                        class="inline-flex items-center justify-center w-10 h-10 text-white hover:text-yellow-300 transition md:ml-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                        </svg>
+                    </button>
+
+                    
                 </nav>
+                
+
             </div>
         </div>
 
@@ -97,7 +132,7 @@
                         @click="openDropdown = !openDropdown" 
                         class="flex justify-between w-full text-black font-medium py-2 border-b border-gray-300 focus:outline-none"
                     >
-                        <span>{{ $menu->title }}</span>
+                        <a href="{{ $url ?? '#' }}">{{ $menu->title }}</a>
                         @if ($hasChildren)
                             <svg :class="{ 'rotate-180': openDropdown }" class="w-4 h-4 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
@@ -108,7 +143,7 @@
                     @if ($hasChildren)
                         <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
                             @foreach ($menu->children as $child)
-                                <a href="#" class="block text-sm text-gray-700 py-1 hover:underline">
+                                <a  href="{{ $childUrl }}" class="block text-sm text-gray-700 py-1 hover:underline">
                                     - {{ $child->title }}
                                 </a>
                             @endforeach
@@ -119,4 +154,37 @@
         </div>
 
     </nav>
+
+    <!-- Toggleable Search Form -->
+<div x-show="showSearch" x-transition class="bg-white px-4 py-3 relative">
+    <form action="{{ route('search') }}" method="GET" class="max-w-xl mx-auto flex relative">
+        <input type="text" name="q" id="searchInput" autocomplete="off"
+            placeholder="Search posts..."
+            class="w-full border border-gray-300 rounded-l px-3 py-2 focus:outline-none text-black">
+
+        <button type="submit"
+                class="bg-red-600 text-white px-4 py-2 rounded-r hover:bg-red-700">
+            Search
+        </button>
+    </form>
+</div>
+
+
+    <!-- Desktop Slide Menu (right side) -->
+    <div x-show="showSlideMenu" x-transition
+        class="hidden md:block fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-50 p-5 text-black overflow-y-auto">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <h3 class="text-lg font-semibold">Quick Access</h3>
+            <button @click="showSlideMenu = false" class="text-gray-500 hover:text-red-600">
+                ✕
+            </button>
+        </div>
+        <ul class="space-y-2">
+            <li><a href="#" class="hover:text-red-600">Popular Posts</a></li>
+            <li><a href="#" class="hover:text-red-600">Latest Updates</a></li>
+            <li><a href="#" class="hover:text-red-600">Contact</a></li>
+            <!-- Add anything you want -->
+        </ul>
+    </div>
 </header>
+

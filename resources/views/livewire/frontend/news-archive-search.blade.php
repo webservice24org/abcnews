@@ -1,4 +1,4 @@
-<div x-data class="space-y-2 bg-white shadow-sm hover:shadow-md transition rounded p-2">
+<div x-data class="space-y-2 bg-white shadow-sm hover:shadow-md transition rounded p-2 mb-2">
     <label class="text-md mb-1 border-b-2 pb-1 font-bold text-black">সংবাদ আর্কাইভ</label>
 
     <div class="relative" x-data="{

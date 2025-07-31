@@ -2,7 +2,7 @@
    
     @include('partials.front.lead-news', ['leadNews' => $leadNews, 'subLeadNews' => $subLeadNews])
 
-    
+
     <livewire:frontend.section-card title="জাতীয় সংবাদ" :news="$nationalNews" categorySlug="national" />
 
 

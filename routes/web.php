@@ -25,6 +25,8 @@ use \App\Livewire\Admin\AdvertisementForm;
 use \App\Livewire\Admin\AdList;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
+use App\Http\Controllers\Frontend\SearchController; 
+
 
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
@@ -35,6 +37,7 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\UpazilaNewsSection;
 
  use App\Livewire\Frontend\NewsArchivePage;
+ use App\Livewire\Frontend\SearchResults;
 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
@@ -119,6 +122,10 @@ Route::get('/archive/{date}', NewsArchivePage::class)->name('archive.show');
 
 Route::get('/print-news/{slug}/print', [NewsPrintController::class, 'downloadPdf'])->name('news.print');
 
+
+
+Route::get('/search', SearchResults::class)->name('search');
+Route::get('/ajax-search', [SearchController::class, 'ajaxSearch'])->name('ajax.search');
 
 
 
