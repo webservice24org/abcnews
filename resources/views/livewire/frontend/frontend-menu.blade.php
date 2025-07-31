@@ -174,17 +174,80 @@
     <div x-show="showSlideMenu" x-transition
         class="hidden md:block fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-50 p-5 text-black overflow-y-auto">
         <div class="flex justify-between items-center border-b pb-3 mb-4">
-            <h3 class="text-lg font-semibold">Quick Access</h3>
+            <div>
+                <a href="{{ route('login') }}" class="text-sm underline">Login</a> / 
+                <a href="#" class="text-sm underline">Sign Up</a>
+            </div>
+
             <button @click="showSlideMenu = false" class="text-gray-500 hover:text-red-600">
                 ✕
             </button>
+            
         </div>
-        <ul class="space-y-2">
-            <li><a href="#" class="hover:text-red-600">Popular Posts</a></li>
-            <li><a href="#" class="hover:text-red-600">Latest Updates</a></li>
-            <li><a href="#" class="hover:text-red-600">Contact</a></li>
-            <!-- Add anything you want -->
-        </ul>
+        <div class="search-form bg-white px-4 py-3">
+            <form action="{{ route('search') }}" method="GET" class="max-w-xl mx-auto flex relative">
+                <input type="text" name="q" id="searchInput" autocomplete="off"
+                    placeholder="Search posts..."
+                    class="w-full border border-gray-300 rounded-l px-3 py-2 focus:outline-none text-black">
+
+                <button type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded-r hover:bg-red-700">
+                    Search
+                </button>
+            </form>
+        </div>
+
+        <!-- Icons -->
+        <div class="flex justify-around py-4 border-b border-black text-center">
+            <div>
+                <span class="text-xl">🎥</span>
+                <p class="text-xs">WATCH</p>
+            </div>
+            <div>
+                <span class="text-xl">🔊</span>
+                <p class="text-xs">LISTEN</p>
+            </div>
+            <div>
+                <span class="text-xl">🗂️</span>
+                <p class="text-xs">PLAY</p>
+            </div>
+        </div>
+        
+        <nav class="flex flex-col space-y-3 p-4">
+            @foreach ($menuTree as $menu)
+                @php $hasChildren = $menu->children->isNotEmpty(); @endphp
+                <div x-data="{ openDropdown: false }">
+                    <button 
+                        @click="openDropdown = !openDropdown" 
+                        class="flex justify-between w-full text-black font-medium py-2 border-b border-gray-300 focus:outline-none"
+                    >
+                        <a href="{{ $url ?? '#' }}">{{ $menu->title }}</a>
+                        @if ($hasChildren)
+                            <svg :class="{ 'rotate-180': openDropdown }" class="w-4 h-4 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        @endif
+                    </button>
+
+                    @if ($hasChildren)
+                        <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
+                            @foreach ($menu->children as $child)
+                                <a  href="{{ $childUrl }}" class="block text-sm text-gray-700 py-1 hover:underline">
+                                    - {{ $child->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        </nav>
+
+        <button type="submit" class="bg-red-600 hover:bg-black text-white px-4 py-2 rounded">
+            Become a Member
+        </button>
+        <div class="mt-4">
+            <livewire:frontend.social-icons />
+        </div>
     </div>
 </header>
 
