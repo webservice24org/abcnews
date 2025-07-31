@@ -25,7 +25,7 @@ class NewsPost extends Model
         'is_premium',
         'is_lead',
         'is_sub_lead',
-        'status',         // draft / published / scheduled
+        'status',         
         'scheduled_at',
     ];
 

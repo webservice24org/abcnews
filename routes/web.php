@@ -24,7 +24,9 @@ use \App\Livewire\Admin\SocialConnectionForm;
 use \App\Livewire\Admin\AdvertisementForm;
 use \App\Livewire\Admin\AdList;
 use App\Livewire\Admin\VideoPostForm;
-    use App\Livewire\Admin\VideoPostList;
+use App\Livewire\Admin\VideoPostList;
+use App\Livewire\Admin\PhotoNewsForm;
+use App\Livewire\Admin\PhotoNewsList;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -109,6 +111,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/video/list', VideoPostList::class)->name('admin.video.list');
     Route::get('/admin/video/create', VideoPostForm::class)->name('admin.video.create');
     Route::get('/admin/video/edit/{id}', VideoPostForm::class)->name('admin.video.edit');
+
+    Route::get('/admin/photo-news/create', PhotoNewsForm::class)->name('admin.photo-news.create');
+    Route::get('/admin/photo-news', PhotoNewsList::class)->name('admin.photo-news.index');
+    Route::get('admin/photo-news/edit/{id}', PhotoNewsForm::class)->name('admin.photo-news.edit');
+
+
     
 });
 
