@@ -93,6 +93,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/advertisements/create', AdvertisementForm::class)->name('admin.advertisements.create');
     Route::get('/admin/ads', AdList::class)->name('admin.ads-list');
+    Route::get('admin/advertisements/edit/{id}', AdvertisementForm::class)->name('ads.edit');
 
 
     

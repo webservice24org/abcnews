@@ -41,31 +41,35 @@
                         </button>
                     </td>
                     <td class="px-4 py-2 border space-x-2">
-                        <button wire:click="$dispatch('edit-ad', { id: {{ $ad->id }} })" class="text-blue-600 hover:underline"><flux:icon name="pencil-square" class="w-5 h-5" /></button>
-                        <button
-                            x-data
-                            @click.prevent="
-                                Swal.fire({
-                                    title: 'Are you sure?',
-                                    text: 'This ad will be permanently deleted!',
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#d33',
-                                    cancelButtonColor: '#3085d6',
-                                    confirmButtonText: 'Yes, delete it!'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $wire.delete({{ $ad->id }});
-                                    }
-                                })
-                            "
-                            class="text-red-600 hover:text-red-800"
-                            title="Delete"
-                        >
-                            <flux:icon name="trash" class="w-5 h-5" />
-                        </button>
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('ads.edit', $ad->id) }}" class="text-blue-600 hover:underline">
+                                <flux:icon name="pencil-square" class="w-5 h-5" />
+                            </a>
+                            <button
+                                x-data
+                                @click.prevent="
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: 'This ad will be permanently deleted!',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#d33',
+                                        cancelButtonColor: '#3085d6',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $wire.delete({{ $ad->id }});
+                                        }
+                                    })
+                                "
+                                class="text-red-600 hover:text-red-800"
+                                title="Delete"
+                            >
+                                <flux:icon name="trash" class="w-5 h-5" />
+                            </button>
 
-                        <button wire:click="preview({{ $ad->id }})" class="text-gray-800 hover:underline"><flux:icon name="eye" class="w-5 h-5" /></button>
+                            <button wire:click="preview({{ $ad->id }})" class="text-gray-800 hover:underline"><flux:icon name="eye" class="w-5 h-5" /></button>
+                        </div>
                     </td>
                 </tr>
             @endforeach

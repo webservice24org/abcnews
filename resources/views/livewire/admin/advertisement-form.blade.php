@@ -1,5 +1,5 @@
 <div class="p-6 bg-white shadow rounded space-y-4">
-    <h2 class="text-lg font-semibold mb-4 text-black">Create Advertisement</h2>
+    <h2 class="text-lg font-semibold mb-4 text-black bg-amber-100 p-2">Create Advertisement</h2>
 
     <form wire:submit.prevent="save" class="space-y-4" enctype="multipart/form-data">
 
@@ -17,8 +17,11 @@
         <div>
             <label class="font-bold text-black">Ad Image</label>
             <input type="file" wire:model="ad_image" class="text-black w-full p-2 border rounded">
-            @if ($ad_image)
-                <img src="{{ $ad_image->temporaryUrl() }}" class="h-20 mt-2 rounded">
+            @if ($ad_image && is_object($ad_image))
+                <img src="{{ $ad_image->temporaryUrl() }}" class="h-full w-full my-2 rounded border">
+            
+            @elseif ($existing_ad_image && !$ad_image)
+                <img src="{{ asset('storage/' . $existing_ad_image) }}" class="mt-2 w-full h-full object-cover border rounded" />
             @endif
             @error('ad_image') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>

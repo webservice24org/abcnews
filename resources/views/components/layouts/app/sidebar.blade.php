@@ -322,6 +322,7 @@
 
              @php
                 $advertisementpentRoutes = [
+                    'admin.ads-list',
                     'admin.advertisements.create',
                 ];
                 $isadvertisementpentOpen = collect($advertisementpentRoutes)->contains(fn($route) => request()->routeIs($route));
@@ -349,26 +350,23 @@
                                 :current="request()->routeIs('admin.ads-list')"
                                 wire:navigate
                                 class="{{ request()->routeIs('admin.ads-list') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                                {{ __('Advertisement list') }}
+                                {{ __('Advertisement List') }}
                             </flux:navlist.item>
 
                             <flux:navlist.item
-                                icon="list-bullet"
+                                icon="plus-circle"
                                 :href="route('admin.advertisements.create')"
                                 :current="request()->routeIs('admin.advertisements.create')"
                                 wire:navigate
                                 class="{{ request()->routeIs('admin.advertisements.create') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                                 {{ __('Create Advertisement') }}
                             </flux:navlist.item>
-                            
-                            
-
-
 
                         </flux:navlist.group>
                     </div>
                 </div>
             </flux:navlist>
+
 
 
 
