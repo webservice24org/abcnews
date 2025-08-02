@@ -43,23 +43,27 @@
                     <button type="button" wire:click="removeImageInput({{ $index }})"
                         class="absolute top-1 right-2 text-red-600 text-sm">Remove</button>
 
-                    <input type="file" wire:model="photos.{{ $index }}"
-                        class="w-full mb-2 text-black border px-2 py-1">
-                    {{-- Existing image from DB --}}
-                    @if (!empty($images[$index]) && !is_object($images[$index]))
-                        <img src="{{ asset('storage/' . $images[$index]) }}" class="h-16 my-2 rounded border">
-                    @endif
-
-                    {{-- Newly uploaded image --}}
+                    {{-- Newly uploaded (not saved yet) --}}
+                    <input type="file" wire:model="photos.{{ $index }}" class="w-full mb-2 text-black border px-2 py-1">
                     @if (!empty($photos[$index]))
                         <img src="{{ $photos[$index]->temporaryUrl() }}" class="h-20 mb-2 border rounded">
                     @endif
 
+                    {{-- Already saved images --}}
+                    @if (!empty($images[$index]) && !is_object($images[$index]))
+                        <div class="relative">
+                            <img src="{{ asset('storage/' . $images[$index]) }}" class="h-20 mb-2 border rounded">
+                            <button type="button" wire:click="deleteSavedImage({{ $index }})"
+                                class="absolute top-1 right-1 bg-red-600 text-white px-2 py-1 text-xs rounded hover:bg-red-700">
+                                Delete
+                            </button>
+                        </div>
+                    @endif
 
-                    <input type="text" wire:model="captions.{{ $index }}"
-                        class="w-full border px-2 py-1 text-black" placeholder="Caption (optional)">
+                    <input type="text" wire:model="captions.{{ $index }}" class="w-full border px-2 py-1 text-black" placeholder="Caption (optional)">
                 </div>
             @endforeach
+
 
 
 

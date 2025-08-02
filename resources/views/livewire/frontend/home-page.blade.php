@@ -26,6 +26,9 @@
 
     <livewire:frontend.video-section />
 
+    <livewire:frontend.photo-news-section />
+
+
 
 
 

@@ -44,6 +44,8 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\SearchResults;
  use App\Livewire\Frontend\SingleVideo;
  use App\Livewire\Frontend\AllVideos;
+ use App\Livewire\Frontend\SinglePhotoNews;
+ use App\Livewire\Frontend\AllPhotoNews;
  
 
 Route::get('/', HomePage::class)->name('home');
@@ -146,6 +148,12 @@ Route::get('/search', SearchResults::class)->name('search');
 
 Route::get('/video/{id}', SingleVideo::class)->name('video.show');
 Route::get('/videos', AllVideos::class)->name('videos.all');
+Route::get('/photo-news/{id}', SinglePhotoNews::class)->name('photo-news.show');
+
+
+
+Route::get('/photo-news', AllPhotoNews::class)->name('photo-news.index');
+
 
 
 require __DIR__.'/auth.php';

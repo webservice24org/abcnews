@@ -15,7 +15,7 @@ class PhotoNewsForm extends Component
 
     public $description;
 
-    public $imageInputs = []; // dynamic photo + caption inputs
+    public $imageInputs = []; 
     public $photos = [];
     public $images = [];
     public $captions = [];
@@ -35,10 +35,12 @@ class PhotoNewsForm extends Component
         $this->status = $news->status;
 
         foreach ($news->images as $i => $img) {
-            $this->imageInputs[] = $i; // ensure inputs match count
-            $this->images[$i] = $img->image; // image path
+            $this->imageInputs[] = $i; 
+            $this->images[$i] = $img->image; 
             $this->captions[$i] = $img->caption;
         }
+        
+
     }
 }
 
@@ -89,71 +91,91 @@ class PhotoNewsForm extends Component
     }
 
     public function updateOrCreate()
-{
-    $this->validate([
-        'title' => 'required|string|max:255',
-        'main_thumbnail' => 'nullable|image|max:2048',
-        'photos.*' => 'nullable|image|max:2048',
-        'captions.*' => 'nullable|string|max:255',
-    ]);
+    {
+        $this->validate([
+            'title' => 'required|string|max:255',
+            'main_thumbnail' => 'nullable|image|max:2048',
+            'photos.*' => 'nullable|image|max:2048',
+            'captions.*' => 'nullable|string|max:255',
+        ]);
 
-    $news = PhotoNews::findOrFail($this->photoNewsId);
+        $news = PhotoNews::findOrFail($this->photoNewsId);
 
-    // ✅ Replace main thumbnail if changed
-    if ($this->main_thumbnail && is_object($this->main_thumbnail)) {
-        if ($news->main_thumbnail && Storage::disk('public')->exists($news->main_thumbnail)) {
-            Storage::disk('public')->delete($news->main_thumbnail);
-        }
-
-        $news->main_thumbnail = $this->main_thumbnail->store('photo-news', 'public');
-    }
-
-    $news->title = $this->title;
-    $news->description = $this->description;
-    $news->status = $this->status;
-    $news->save();
-
-    // ✅ Update each image
-    $existingImages = $news->images;
-
-    foreach ($existingImages as $i => $oldImage) {
-        $newPhoto = $this->photos[$i] ?? null;
-        $caption = $this->captions[$i] ?? '';
-
-        if ($newPhoto && is_object($newPhoto)) {
-            if (Storage::disk('public')->exists($oldImage->image)) {
-                Storage::disk('public')->delete($oldImage->image);
+        if ($this->main_thumbnail && is_object($this->main_thumbnail)) {
+            if ($news->main_thumbnail && Storage::disk('public')->exists($news->main_thumbnail)) {
+                Storage::disk('public')->delete($news->main_thumbnail);
             }
 
-            $path = $newPhoto->store('photo-news/photos', 'public');
-            $oldImage->update([
-                'image' => $path,
-                'caption' => $caption,
-            ]);
-        } else {
-            $oldImage->update([
-                'caption' => $caption,
-            ]);
+            $news->main_thumbnail = $this->main_thumbnail->store('photo-news', 'public');
         }
-    }
 
-    // ✅ New uploads beyond existing
-    if (count($this->photos) > $existingImages->count()) {
-        for ($i = $existingImages->count(); $i < count($this->photos); $i++) {
-            if ($this->photos[$i] && is_object($this->photos[$i])) {
-                $path = $this->photos[$i]->store('photo-news/photos', 'public');
-                $caption = $this->captions[$i] ?? '';
-                $news->images()->create([
+        $news->title = $this->title;
+        $news->description = $this->description;
+        $news->status = $this->status;
+        $news->save();
+
+        $existingImages = $news->images;
+
+        foreach ($existingImages as $i => $oldImage) {
+            $newPhoto = $this->photos[$i] ?? null;
+            $caption = $this->captions[$i] ?? '';
+
+            if ($newPhoto && is_object($newPhoto)) {
+                if (Storage::disk('public')->exists($oldImage->image)) {
+                    Storage::disk('public')->delete($oldImage->image);
+                }
+
+                $path = $newPhoto->store('photo-news/photos', 'public');
+                $oldImage->update([
                     'image' => $path,
+                    'caption' => $caption,
+                ]);
+            } else {
+                $oldImage->update([
                     'caption' => $caption,
                 ]);
             }
         }
+
+        if (count($this->photos) > $existingImages->count()) {
+            for ($i = $existingImages->count(); $i < count($this->photos); $i++) {
+                if ($this->photos[$i] && is_object($this->photos[$i])) {
+                    $path = $this->photos[$i]->store('photo-news/photos', 'public');
+                    $caption = $this->captions[$i] ?? '';
+                    $news->images()->create([
+                        'image' => $path,
+                        'caption' => $caption,
+                    ]);
+                }
+            }
+        }
+
+        session()->flash('success', 'Photo news updated successfully!');
+        return redirect()->route('admin.photo-news.index');
     }
 
-    session()->flash('success', 'Photo news updated successfully!');
-    return redirect()->route('admin.photo-news.index');
-}
+
+    public function deleteSavedImage($index)
+    {
+        $news = PhotoNews::findOrFail($this->photoNewsId);
+        $imageModel = $news->images[$index] ?? null;
+
+        if ($imageModel) {
+            if (Storage::disk('public')->exists($imageModel->image)) {
+                Storage::disk('public')->delete($imageModel->image);
+            }
+
+            $imageModel->delete();
+
+            unset($this->images[$index]);
+            unset($this->captions[$index]);
+            unset($this->imageInputs[$index]);
+
+            $this->images = array_values($this->images);
+            $this->captions = array_values($this->captions);
+            $this->imageInputs = array_values($this->imageInputs);
+        }
+    }
 
 
 
