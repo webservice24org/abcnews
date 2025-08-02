@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-5">
 
     {{-- Lead News (8 columns) --}}
-    <div class="md:col-span-8">
+    <div class="md:col-span-6">
         @if($leadNews)
             <div>
                 <img src="{{ asset('storage/' . $leadNews->news_thumbnail) }}" alt="{{ $leadNews->news_title }}" class="w-full h-auto mb-4">
@@ -22,12 +22,15 @@
                 <p class="text-gray-500 text-sm mb-4">
                     By {{ optional($leadNews->user)->name }} | {{ $leadNews->created_at->format('M d, Y') }}
                 </p>
+                <p class="mt-3 text-gray-700">
+                        {{ \Illuminate\Support\Str::limit(strip_tags($leadNews->news_description), 180) }}
+                    </p>
             </div>
         @endif
     </div>
 
     {{-- Sub Lead News (4 columns) --}}
-    <div class="md:col-span-4 space-y-4">
+    <div class="md:col-span-3 space-y-4">
         @foreach($subLeadNews as $news)
             <div class="flex justify-between items-start gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                 {{-- Text Content (left side) --}}
@@ -55,5 +58,9 @@
         @endforeach
     </div>
 
+    <div class="md:col-span-3 space-y-4">
+        <img src="{{ asset('storage/ads/latest-post-ad.png') }}" alt="Ad" class="object-fill">
+        <livewire:frontend.division-map />
+    </div>
 
 </div>

@@ -124,9 +124,29 @@
             </div>
         </div>
 
+        <!-- Mobile Dropdown Menu -->
         <div :class="{ 'block': open, 'hidden': !open }" class="bg-white md:hidden px-4 pb-4 space-y-2">
             @foreach ($menuTree as $menu)
                 @php $hasChildren = $menu->children->isNotEmpty(); @endphp
+                @php
+                    switch ($menu->type) {
+                        case 'category':
+                            $url = $menu->slug ? route('category.show', $menu->slug) : '#';
+                            break;
+                        case 'subcategory':
+                            $url = $menu->slug ? route('subcategory.show', $menu->slug) : '#';
+                            break;
+                        case 'division':
+                            $url = $menu->slug ? route('division.show', $menu->slug) : '#';
+                            break;
+                        case 'custom':
+                            $url = $menu->slug ?: '#';
+                            break;
+                        default:
+                            $url = '#';
+                    }
+                @endphp
+
                 <div x-data="{ openDropdown: false }">
                     <button 
                         @click="openDropdown = !openDropdown" 
@@ -143,6 +163,26 @@
                     @if ($hasChildren)
                         <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
                             @foreach ($menu->children as $child)
+                            @php
+                                switch ($child->type) {
+                                    case 'category':
+                                        $childUrl = $child->slug ? route('category.show', $child->slug) : '#';
+                                        break;
+                                    case 'subcategory':
+                                        $childUrl = $child->slug ? route('subcategory.show', $child->slug) : '#';
+                                        break;
+                                    case 'division':
+                                        $childUrl = $child->slug ? route('division.show', $child->slug) : '#';
+                                        break;
+                                    case 'custom':
+                                        $childUrl = $child->slug ?: '#';
+                                        break;
+                                    default:
+                                        $childUrl = '#';
+                                }
+                            @endphp
+
+
                                 <a  href="{{ $childUrl }}" class="block text-sm text-gray-700 py-1 hover:underline">
                                     - {{ $child->title }}
                                 </a>
@@ -212,10 +252,29 @@
                 <p class="text-xs">PLAY</p>
             </div>
         </div>
-        
+        <!-- desktop slide menu Menu Items -->
         <nav class="flex flex-col space-y-3 p-4">
             @foreach ($menuTree as $menu)
                 @php $hasChildren = $menu->children->isNotEmpty(); @endphp
+                @php
+                    switch ($menu->type) {
+                        case 'category':
+                            $url = $menu->slug ? route('category.show', $menu->slug) : '#';
+                            break;
+                        case 'subcategory':
+                            $url = $menu->slug ? route('subcategory.show', $menu->slug) : '#';
+                            break;
+                        case 'division':
+                            $url = $menu->slug ? route('division.show', $menu->slug) : '#';
+                            break;
+                        case 'custom':
+                            $url = $menu->slug ?: '#';
+                            break;
+                        default:
+                            $url = '#';
+                    }
+                @endphp
+
                 <div x-data="{ openDropdown: false }">
                     <button 
                         @click="openDropdown = !openDropdown" 
@@ -232,6 +291,25 @@
                     @if ($hasChildren)
                         <div x-show="openDropdown" x-transition class="pl-4 space-y-1 mt-1">
                             @foreach ($menu->children as $child)
+                            @php
+                                switch ($child->type) {
+                                    case 'category':
+                                        $childUrl = $child->slug ? route('category.show', $child->slug) : '#';
+                                        break;
+                                    case 'subcategory':
+                                        $childUrl = $child->slug ? route('subcategory.show', $child->slug) : '#';
+                                        break;
+                                    case 'division':
+                                        $childUrl = $child->slug ? route('division.show', $child->slug) : '#';
+                                        break;
+                                    case 'custom':
+                                        $childUrl = $child->slug ?: '#';
+                                        break;
+                                    default:
+                                        $childUrl = '#';
+                                }
+                            @endphp
+
                                 <a  href="{{ $childUrl }}" class="block text-sm text-gray-700 py-1 hover:underline">
                                     - {{ $child->title }}
                                 </a>

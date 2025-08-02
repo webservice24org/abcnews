@@ -19,12 +19,12 @@ class MiddleGridSectionWithSidebar extends Component
             ? $category->newsPosts()
                 ->where('status', 'published')
                 ->latest()
-                ->take(7)
+                ->take(8)
                 ->get()
             : collect();
 
         $middleNews = $allNews->slice(0, 1)->first();
-        $leftNews = $allNews->slice(1, 6);
+        $leftNews = $allNews->slice(1, 7);
 
         $divisions = Division::all(); // 👈 Add this
 
