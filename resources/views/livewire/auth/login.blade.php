@@ -85,7 +85,8 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 bg-white shadow-md dark:bg-zinc-800 dark:shadow-zinc-700 p-6 rounded-lg">
+
     <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
 
     <!-- Session Status -->

@@ -39,9 +39,8 @@
 
                 {{-- Author Info --}}
                 <div class="flex items-center mb-2 md:mb-0">
-                    @if ($news->user && $news->user->profile?->profile_photo)
-                        <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="h-8 w-8 rounded-full mr-2" alt="{{ $news->user->name }}">
-                    @endif
+                    
+                    <img src="{{ asset('storage/profiles/2c6EeHpwkCRzLBoFn7EjiBwEYhWDymWr7Mo2ht2y.jpg') }}" class="w-16 h-16" />
                     <span>
                         <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
                         প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}

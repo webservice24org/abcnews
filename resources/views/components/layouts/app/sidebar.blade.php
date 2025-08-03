@@ -17,7 +17,9 @@
                 </flux:navlist.group>
             </flux:navlist>
 
-            @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+            
+            @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+
             <flux:navlist variant="outline">
     
                 <div x-data="{ open: {{ request()->routeIs('roles.index') || request()->routeIs('permissions.index') || request()->routeIs('users.index') ? 'true' : 'false' }} }">
@@ -100,7 +102,7 @@
 
                 <div x-show="open" x-transition>
                     <flux:navlist.group class="pl-4 mt-1">
-                        @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                        @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                             <flux:navlist.item
                                 icon="plus-circle"
                                 :href="route('posts.create')"
@@ -469,16 +471,17 @@
 
 
             <!-- Desktop User Menu -->
+            @auth
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
                 <flux:profile
                     :name="auth()->user()->name"
                     :initials="auth()->user()->initials()"
                     icon:trailing="chevrons-up-down"
                 >
-                    <!-- Add profile photo preview if exists -->
                     @php
                         $photo = auth()->user()->profile?->profile_photo;
                     @endphp
+
                     @if ($photo)
                         <img
                             src="{{ asset('storage/' . $photo) }}"
@@ -487,9 +490,7 @@
                         />
                     @else
                         <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full">
-                            <span
-                                class="flex h-full w-full items-center justify-center rounded-full bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                            >
+                            <span class="flex h-full w-full items-center justify-center rounded-full bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                 {{ auth()->user()->initials() }}
                             </span>
                         </span>
@@ -508,94 +509,19 @@
                                     />
                                 @else
                                     <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                        <span
-                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                        >
+                                        <span class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                             {{ auth()->user()->initials() }}
                                         </span>
                                     </span>
                                 @endif
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
-                        </flux:menu.item>
-                    </form>
-                </flux:menu>
-            </flux:dropdown>
-
-        </flux:sidebar>
-
-        <!-- Mobile User Menu -->
-        <flux:header class="lg:hidden">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
-            <flux:spacer />
-
-            <flux:dropdown position="top" align="end">
-                <flux:profile
-                    :name="auth()->user()->name"
-                    icon-trailing="chevron-down"
-                >
-                    @php
-                        $profilePhoto = optional(auth()->user()->profile)->profile_photo;
-                    @endphp
-
-                    @if ($profilePhoto)
-                        <img
-                            src="{{ asset('storage/' . $profilePhoto) }}"
-                            alt="Profile Picture"
-                            class="w-8 h-8 rounded-full object-cover"
-                        />
-                    @else
-                        <span
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                        >
-                            {{ auth()->user()->initials() }}
-                        </span>
-                    @endif
-                </flux:profile>
-
-                <flux:menu>
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    @if ($profilePhoto)
-                                        <img
-                                            src="{{ asset('storage/' . $profilePhoto) }}"
-                                            alt="Profile Picture"
-                                            class="h-8 w-8 rounded-full object-cover"
-                                        />
-                                    @else
-                                        <span
-                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                        >
-                                            {{ auth()->user()->initials() }}
-                                        </span>
-                                    @endif
-                                </span>
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                                    <span class="truncate font-semibold">
+                                        {{ auth()->user()->name }}
+                                    </span>
+                                    <span class="truncate text-xs">
+                                        {{ auth()->user()->email }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -619,12 +545,99 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
-        </flux:header>
-        {{ $slot }}
-        
-        @fluxScripts
-        @livewireScripts
-        @stack('scripts')
+            @endauth
+
+
+        </flux:sidebar>
+
+        <!-- Mobile User Menu -->
+@auth
+    <flux:header class="lg:hidden">
+        <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+
+        <flux:spacer />
+
+        <flux:dropdown position="top" align="end">
+            @php
+                $profilePhoto = optional(auth()->user()->profile)->profile_photo;
+            @endphp
+
+            <flux:profile
+                :name="auth()->user()->name"
+                icon-trailing="chevron-down"
+            >
+                @if ($profilePhoto)
+                    <img
+                        src="{{ asset('storage/' . $profilePhoto) }}"
+                        alt="Profile Picture"
+                        class="w-8 h-8 rounded-full object-cover"
+                    />
+                @else
+                    <span
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                    >
+                        {{ auth()->user()->initials() }}
+                    </span>
+                @endif
+            </flux:profile>
+
+            <flux:menu>
+                <flux:menu.radio.group>
+                    <div class="p-0 text-sm font-normal">
+                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                                @if ($profilePhoto)
+                                    <img
+                                        src="{{ asset('storage/' . $profilePhoto) }}"
+                                        alt="Profile Picture"
+                                        class="h-8 w-8 rounded-full object-cover"
+                                    />
+                                @else
+                                    <span
+                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                                    >
+                                        {{ auth()->user()->initials() }}
+                                    </span>
+                                @endif
+                            </span>
+
+                            <div class="grid flex-1 text-start text-sm leading-tight">
+                                <span class="truncate font-semibold">
+                                    {{ auth()->user()->name }}
+                                </span>
+                                <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </flux:menu.radio.group>
+
+                <flux:menu.separator />
+
+                <flux:menu.radio.group>
+                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>
+                        {{ __('Settings') }}
+                    </flux:menu.item>
+                </flux:menu.radio.group>
+
+                <flux:menu.separator />
+
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
+                        {{ __('Log Out') }}
+                    </flux:menu.item>
+                </form>
+            </flux:menu>
+        </flux:dropdown>
+    </flux:header>
+@endauth
+
+{{ $slot }}
+
+@fluxScripts
+@livewireScripts
+@stack('scripts')
+
         
     </body>
 </html>

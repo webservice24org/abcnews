@@ -35,6 +35,7 @@ new class extends Component {
             $this->nid_number = $profile->nid_number ?? '';
             $this->mobile_number = $profile->mobile_number ?? '';
             $this->photo_preview = $profile->profile_photo ?? null;
+
         }
     }
 
@@ -65,8 +66,11 @@ new class extends Component {
         $user->save();
 
         if (isset($validated['profile_photo'])) {
-            $validated['profile_photo'] = $this->profile_photo->store('profile_photos', 'public');
+            $path = $this->profile_photo->store('profiles', 'public');
+            $validated['profile_photo'] = $path;
+            $this->photo_preview = $path; // ✅ Update preview path after save
         }
+
 
         $user->profile()->updateOrCreate(
             ['user_id' => $user->id],
@@ -137,9 +141,12 @@ new class extends Component {
             <div>
                 <label class="block text-sm text-black font-medium mb-1">Profile Picture</label>
                 <input type="file" wire:model="profile_photo" class="w-full border rounded p-2" />
-                @if ($photo_preview)
+                @if ($profile_photo)
+                    <img src="{{ $profile_photo->temporaryUrl() }}" class="w-20 h-20 mt-2 rounded-full" />
+                @elseif ($photo_preview)
                     <img src="{{ asset('storage/' . $photo_preview) }}" class="w-20 h-20 mt-2 rounded-full" />
                 @endif
+
             </div>
 
             <div class="flex items-center gap-4">
