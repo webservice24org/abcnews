@@ -29,7 +29,7 @@
                     </a>
 
                     <p class="text-gray-500 text-sm mb-4">
-                         {{ \App\Helpers\DateHelper::formatBanglaDateTime($last->created_at) }}
+                      {{ optional($last->user)->name }} | {{ \App\Helpers\DateHelper::formatBanglaDateTime($last->created_at) }}
                     </p>
 
                     <p class="text-gray-700">
@@ -37,9 +37,15 @@
                     </p>
                 </div>
             @endif
-            <div class="hidden md:flex  items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-2">
-                <img src="{{ asset('storage/ads/national-categoryad.png') }}" alt="add" class="object-fill">
-            </div>
+            <div class="hidden md:flex items-start gap-3 bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition mt-2">
+            @if ($ad && $ad->ad_image)
+                <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+            @elseif ($ad && $ad->ad_code)
+                {!! $ad->ad_code !!}
+            @else
+                <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill w-full">
+            @endif
+        </div>
         </div>
 
         {{-- Remaining News --}}
@@ -63,7 +69,13 @@
             @endforeach
         </div>
         <div class="md:hidden text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition ">
-            <img src="{{ asset('storage/ads/national-categoryad.png') }}" alt="add" class="object-fill">
+            @if ($ad && $ad->ad_image)
+                <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+            @elseif ($ad && $ad->ad_code)
+                {!! $ad->ad_code !!}
+            @else
+                <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill w-full">
+            @endif
         </div>
     </div>
 </section>

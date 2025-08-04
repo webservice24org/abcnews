@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\NewsPost;
+use App\Models\SubCategory;
+use App\Models\Advertisement;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class SubCategory extends Model
 {
@@ -40,6 +45,10 @@ class SubCategory extends Model
         );
     }
 
+    public function advertisements()
+    {
+        return $this->belongsToMany(SubCategory::class, 'advertisement_sub_category');
+    }
 
 
 }

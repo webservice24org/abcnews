@@ -3,12 +3,14 @@
 namespace App\Livewire\Frontend;
 
 use App\Models\Category;
+use App\Models\Advertisement;
 use Livewire\Component;
 
 class MiddleGridSection extends Component
 {
     public string $title;
     public string $categorySlug;
+    public $ad = null;
 
     public function render()
     {
@@ -26,6 +28,19 @@ class MiddleGridSection extends Component
         $middleNews = $allNews->slice(0, 1)->first();
         $rightNews = $allNews->slice(7, 6);
 
+        // 🟨 Advertisement logic
+        if ($category) {
+            $this->ad = Advertisement::whereHas('categories', function ($query) use ($category) {
+                    $query->where('categories.id', $category->id);
+                })
+                ->where('ad_name', 'Categoty Home Section Footer')
+                ->where('status', true)
+                ->latest()
+                ->first();
+        }
+
+        
+
         return view('livewire.frontend.middle-grid-section', compact(
             'leftNews',
             'middleNews',
@@ -33,3 +48,4 @@ class MiddleGridSection extends Component
         ));
     }
 }
+

@@ -58,9 +58,21 @@
         @endforeach
     </div>
 
+   @php
+        use App\Models\Advertisement;
+
+        $sidebarAd = Advertisement::where('ad_name', 'Home Right Sidebar One')->first();
+    @endphp
+
     <div class="md:col-span-3 space-y-4">
-        <img src="{{ asset('storage/ads/latest-post-ad.png') }}" alt="Ad" class="object-fill">
+        @if ($sidebarAd && $sidebarAd->ad_image && Storage::disk('public')->exists($sidebarAd->ad_image))
+            <img src="{{ asset('storage/' . $sidebarAd->ad_image) }}" alt="Ad" class="object-fill">
+        @else
+            <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Ad" class="object-fill">
+        @endif
+
         <livewire:frontend.division-map />
     </div>
+
 
 </div>

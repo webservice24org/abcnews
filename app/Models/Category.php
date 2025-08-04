@@ -3,6 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\NewsPost;
+use App\Models\SubCategory;
+use App\Models\Advertisement;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use Illuminate\Support\Str;
 
@@ -30,5 +37,11 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class);
     }
+
+    public function advertisements()
+    {
+        return $this->belongsToMany(Advertisement::class, 'advertisement_category');
+    }
+
 }
 

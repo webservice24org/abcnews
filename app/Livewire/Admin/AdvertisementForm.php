@@ -35,6 +35,7 @@ class AdvertisementForm extends Component
         'Categoty Sidebar One',
         'Categoty Sidebar Two',
         'Categoty Before Footer',
+        'Categoty Home Section Footer',
     ];
 
     public function mount($id = null)

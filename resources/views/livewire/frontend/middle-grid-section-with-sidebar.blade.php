@@ -79,6 +79,12 @@
 
     {{-- Bottom Ad --}}
     <div class="flex items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-2">
-        <img src="{{ asset('storage/ads/entertainment-add.png') }}" alt="Bottom Ad" class="object-fill">
+         @if ($ad && $ad->ad_image)
+            <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+        @elseif ($ad && $ad->ad_code)
+            {!! $ad->ad_code !!}
+        @else
+            <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill w-full">
+        @endif
     </div>
 </section>
