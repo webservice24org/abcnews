@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use WireComments\Traits\Commentable;
 use App\Models\{
     Category, SubCategory, Tag, Division, District, Upazila, User
 };
@@ -13,6 +14,7 @@ use App\Models\{
 class NewsPost extends Model
 {
     use SoftDeletes;
+     use Commentable;
 
     protected $fillable = [
         'news_title',
