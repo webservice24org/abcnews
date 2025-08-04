@@ -2,19 +2,10 @@
     {{-- Category Name with Inline Subcategories --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
         <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">
-            {{ $category->name }}
+            News by: {{ $user->name }}
         </h2>
 
-        @if($category->subcategories->isNotEmpty())
-            @foreach($category->subcategories as $subcategory)
-                @if (!empty($subcategory->slug))
-                    <a href="{{ route('subcategory.show', ['subcategory' => $subcategory->slug]) }}"
-                    class="text-sm px-3 py-1 bg-gray-100 border border-gray-300 rounded hover:bg-red-600 hover:text-white transition">
-                        {{ $subcategory->name }}
-                    </a>
-                @endif
-            @endforeach
-        @endif
+        
     </div>
 
 
@@ -31,7 +22,7 @@
                                 <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
                             </a>
                             <p class="text-sm text-gray-600 mb-2">
-                                {{ \App\Helpers\DateHelper::formatBanglaDateTime($item->created_at) }}
+                                {{ $topLeft->created_at->format('M d, Y') }}
                             </p>
                             <p class="text-gray-700">
                                 {{ \Illuminate\Support\Str::limit(strip_tags($topLeft->news_description), 150) }}
@@ -52,7 +43,7 @@
                                     </h4>
                                 </a>
                                 <p class="text-xs text-gray-500">
-                                    {{ \App\Helpers\DateHelper::formatBanglaDateTime($item->created_at) }}
+                                    {{ $item->created_at->format('M d, Y') }}
                                 </p>
                             </div>
                         </div>
@@ -84,7 +75,7 @@
                                     </h3>
                                 </a>
                                 <p class="text-sm text-gray-500">
-                                    {{ \App\Helpers\DateHelper::formatBanglaDateTime($item->created_at) }}
+                                    {{ $item->created_at->format('M d, Y') }}
                                 </p>
                                 <p class="text-sm text-gray-600">
                                     {{ \Illuminate\Support\Str::limit(strip_tags($item->news_description), 200) }}
@@ -114,7 +105,7 @@
             </div>
         </div>
     @else
-        <p class="text-center text-xl text-gray-500">No news found in <span class="text-red-600">{{ $category->name }}</span> Sub Category.</p>
+        <p class="text-center text-xl text-gray-500">No news found by <span class="text-red-600">{{ $user->name }}</span></p>
     @endif
 
     

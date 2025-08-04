@@ -272,7 +272,7 @@
                                 :current="request()->routeIs('admin.photo-news.index')"
                                 wire:navigate
                                 class="{{ request()->routeIs('admin.photo-news.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                                {{ __('Video List') }}
+                                {{ __('News List') }}
                             </flux:navlist.item>
 
                             <flux:navlist.item
@@ -281,7 +281,7 @@
                                 :current="request()->routeIs('admin.photo-news.create')"
                                 wire:navigate
                                 class="{{ request()->routeIs('admin.photo-news.create') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
-                                {{ __('Add New Video') }}
+                                {{ __('Add Photo News') }}
                             </flux:navlist.item>
 
                         </flux:navlist.group>

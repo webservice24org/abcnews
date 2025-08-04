@@ -60,7 +60,7 @@
                     </a>
 
                     <p class="text-sm text-gray-500 mt-1">
-                        {{ $middleNews->created_at->format('d M Y') }}
+                        {{ \App\Helpers\DateHelper::formatBanglaDateTime($middleNews->created_at) }}
                     </p>
 
                     <p class="mt-3 text-gray-700">

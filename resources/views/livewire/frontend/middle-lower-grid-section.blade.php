@@ -34,7 +34,7 @@
                     </a>
 
                     <p class="text-gray-500 text-sm mb-4">
-                        By {{ optional($middleNews->user)->name }} | {{ $middleNews->created_at->format('M d, Y') }}
+                        {{ \App\Helpers\DateHelper::formatBanglaDateTime($middleNews->created_at) }}
                     </p>
 
                     <p class="text-gray-700">

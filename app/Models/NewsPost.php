@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\{
+    Category, SubCategory, Tag, Division, District, Upazila, User
+};
 
 class NewsPost extends Model
 {

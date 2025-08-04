@@ -29,7 +29,7 @@
                     </a>
 
                     <p class="text-gray-500 text-sm mb-4">
-                        By {{ optional($last->user)->name }} | {{ $last->created_at->format('M d, Y') }}
+                         {{ \App\Helpers\DateHelper::formatBanglaDateTime($last->created_at) }}
                     </p>
 
                     <p class="text-gray-700">

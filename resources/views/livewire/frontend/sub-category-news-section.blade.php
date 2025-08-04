@@ -26,7 +26,7 @@
                                 <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
                             </a>
                             <p class="text-sm text-gray-600 mb-2">
-                                {{ $topLeft->created_at->format('M d, Y') }}
+                               {{ \App\Helpers\DateHelper::formatBanglaDateTime($topLeft->created_at) }}
                             </p>
                             <p class="text-gray-700">
                                 {{ \Illuminate\Support\Str::limit(strip_tags($topLeft->news_description), 150) }}
@@ -46,7 +46,7 @@
                                 </h4>
                             </a>
                             <p class="text-xs text-gray-500">
-                                {{ $item->created_at->format('M d, Y') }}
+                                {{ \App\Helpers\DateHelper::formatBanglaDateTime($item->created_at) }}
                             </p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 </h3>
                             </a>
                             <p class="text-sm text-gray-500">
-                                {{ $item->created_at->format('M d, Y') }}
+                                {{ \App\Helpers\DateHelper::formatBanglaDateTime($item->created_at) }}
                             </p>
                             <p class="text-sm text-gray-600">
                                 {{ \Illuminate\Support\Str::limit(strip_tags($item->news_description), 200) }}

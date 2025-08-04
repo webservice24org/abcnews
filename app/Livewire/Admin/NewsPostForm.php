@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\{
     NewsPost, Division, District, Upazila,
-    Category, SubCategory, Tag
+    Category, SubCategory, Tag, User
 };
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +74,8 @@ class NewsPostForm extends Component
 
     public $newsPostId = null; 
 
+    public $selected_user_id = null;
+
     public function getCategoryTreeProperty()
     {
         return Category::with('subcategories')->get();
@@ -131,9 +133,9 @@ public $allSubcategories;
             $this->post = NewsPost::with('subcategories')->findOrFail($id);
             $this->selected_subcategories = $this->post->subcategories->pluck('id')->toArray();
             $this->allSubcategories = SubCategory::all();
-
             $this->editing = true;
             $post = NewsPost::with('tags')->findOrFail($id);
+            $this->selected_user_id = $post->user_id;
             $this->newsPostId = $post->id;
             $this->news_title = $post->news_title;
             $this->slug = $post->slug;
@@ -253,7 +255,8 @@ public $allSubcategories;
             'is_premium' => $this->is_premium,
             'status' => $this->status,
             'scheduled_at' => $this->status === 'scheduled' ? $this->scheduled_at : null,
-            'user_id' => Auth::id(),
+            'user_id' => $this->selected_user_id ?? Auth::id(),
+
         ];
 
         $post = NewsPost::updateOrCreate(['id' => $this->newsPostId], $data);
@@ -287,6 +290,7 @@ public $allSubcategories;
             'divisions' => Division::all(),
             'filteredDistricts' => $this->filteredDistricts,
             'filteredUpazilas' => $this->filteredUpazilas,
+            'users' => User::select('id', 'name')->get(),
         ]);
     }
 

@@ -156,13 +156,23 @@
                     @endforeach
                 </div>
             </div>
+            <div class="mb-4">
+                <label for="user_id" class="block text-sm font-medium text-black">Select User (optional)</label>
+                <select wire:model="selected_user_id" id="user_id" class="mt-1 block w-full p-2 text-black border-gray-300 rounded-md shadow-sm">
+                    <option value="">Default (Authenticated User)</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
 
 
 
             <!-- Image Upload -->
             <div>
                 <label class="block font-medium text-sm text-black">Thumbnail</label>
-                <input type="file" wire:model="news_thumbnail" class="w-full text-black" />
+                <input type="file" wire:model="news_thumbnail" class="w-full text-black border p-2 shadow-sm"  />
                 @if ($news_thumbnail)
                     <img src="{{ $news_thumbnail->temporaryUrl() }}" class="mt-2 w-32 h-20 object-cover border rounded" />
                 @elseif ($existing_thumbnail)

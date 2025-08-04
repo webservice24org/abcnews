@@ -46,6 +46,7 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\AllVideos;
  use App\Livewire\Frontend\SinglePhotoNews;
  use App\Livewire\Frontend\AllPhotoNews;
+ use App\Livewire\Frontend\UserNews;
  
 
 Route::get('/', HomePage::class)->name('home');
@@ -153,6 +154,9 @@ Route::get('/photo-news/{id}', SinglePhotoNews::class)->name('photo-news.show');
 
 
 Route::get('/photo-news', AllPhotoNews::class)->name('photo-news.index');
+
+Route::get('/all-news/user/{user}', UserNews::class)->name('news.user');
+
 
 
 

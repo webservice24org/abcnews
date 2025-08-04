@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\UserProfile;
+use App\Models\NewsPost;
 
 class User extends Authenticatable
 {
@@ -32,6 +34,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+
+    public function newsPosts()
+{
+    return $this->hasMany(NewsPost::class);
+}
+
 
 
     /**

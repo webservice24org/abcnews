@@ -4,7 +4,7 @@
     <div class="md:col-span-6">
         @if($leadNews)
             <div>
-                <img src="{{ asset('storage/' . $leadNews->news_thumbnail) }}" alt="{{ $leadNews->news_title }}" class="w-full h-auto mb-4">
+                <img src="{{ url('storage/' . $leadNews->news_thumbnail) }}" alt="{{ $leadNews->news_title }}" class="w-full h-auto mb-4">
 
                 {{-- Categories --}}
                 <p class="text-sm text-red-600 font-bold mb-1">
@@ -20,7 +20,7 @@
 
                 {{-- Author & Date --}}
                 <p class="text-gray-500 text-sm mb-4">
-                    By {{ optional($leadNews->user)->name }} | {{ $leadNews->created_at->format('M d, Y') }}
+                    {{ \App\Helpers\DateHelper::formatBanglaDateTime($leadNews->created_at) }}
                 </p>
                 <p class="mt-3 text-gray-700">
                         {{ \Illuminate\Support\Str::limit(strip_tags($leadNews->news_description), 180) }}

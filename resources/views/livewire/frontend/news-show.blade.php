@@ -38,11 +38,12 @@
             <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 mt-4">
 
                 {{-- Author Info --}}
-                <div class="flex items-center mb-2 md:mb-0">
-                    
-                    <img src="{{ asset('storage/profiles/2c6EeHpwkCRzLBoFn7EjiBwEYhWDymWr7Mo2ht2y.jpg') }}" class="w-16 h-16" />
+                <div class="flex items-center text-md mb-2 md:mb-0">
+                    @if ($news->user && $news->user->profile)
+                        <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="w-10 h-10 rounded-full mr-2"  />
+                    @endif
                     <span>
-                        <strong>{{ $news->user->name ?? 'Unknown' }}</strong> | 
+                        <a href="{{ route('news.user', $news->user->id) }}"><strong>{{ $news->user->name ?? 'Unknown' }}</strong> </a> | 
                         প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
                     </span>
                 </div>

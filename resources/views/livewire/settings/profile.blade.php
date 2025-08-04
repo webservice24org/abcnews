@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 new class extends Component {
     use WithFileUploads;
@@ -40,53 +41,78 @@ new class extends Component {
     }
 
     public function updateProfileInformation(): void
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'address' => 'nullable|string|max:255',
-            'about' => 'nullable|string|max:1000',
-            'dob' => 'nullable|date',
-            'nid_number' => 'nullable|string|max:30',
-            'mobile_number' => 'nullable|string|max:20',
-            'profile_photo' => 'nullable|image|max:2048',
-        ]);
+    $validated = $this->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+        'address' => 'nullable|string|max:255',
+        'about' => 'nullable|string|max:1000',
+        'dob' => 'nullable|date',
+        'nid_number' => 'nullable|string|max:30',
+        'mobile_number' => 'nullable|string|max:20',
+        'profile_photo' => 'nullable|image|max:2048',
+    ]);
 
-        $user->fill([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-        ]);
+    $user->fill([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+    ]);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        $user->save();
-
-        if (isset($validated['profile_photo'])) {
-            $path = $this->profile_photo->store('profiles', 'public');
-            $validated['profile_photo'] = $path;
-            $this->photo_preview = $path; // ✅ Update preview path after save
-        }
-
-
-        $user->profile()->updateOrCreate(
-            ['user_id' => $user->id],
-            collect($validated)->except(['name', 'email'])->toArray()
-        );
-
-        $this->dispatch('profile-updated', name: $user->name);
-
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Profile updated successfully!',
-        ]);
-
-        $this->redirect(request()->header('Referer') ?? route('profile.show'), navigate: true);
-
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
     }
+
+    $user->save();
+
+    // Apply news-style logic to profile photo
+    $profileData = collect($validated)->except(['name', 'email'])->toArray();
+
+    $existingPhoto = $user->profile?->profile_photo;
+
+    if ($this->profile_photo) {
+    // Store the image publicly
+        $newPhoto = $this->profile_photo->store('profile_photos', 'public');
+
+        // Set visibility (important!)
+        Storage::disk('public')->setVisibility($newPhoto, 'public');
+
+        // Set 644 permission on file system (if needed)
+        $fullPath = storage_path('app/public/' . $newPhoto);
+        if (file_exists($fullPath)) {
+            chmod($fullPath, 0644); // read for everyone
+        }
+
+        // Delete old one
+        if ($existingPhoto && \Storage::disk('public')->exists($existingPhoto)) {
+            Storage::disk('public')->delete($existingPhoto);
+        }
+
+        $profileData['profile_photo'] = $newPhoto;
+        $this->photo_preview = $newPhoto;
+    }
+ else {
+        $profileData['profile_photo'] = $existingPhoto;
+    }
+
+    $user->profile()->updateOrCreate(
+        ['user_id' => $user->id],
+        $profileData
+    );
+
+    $this->dispatch('profile-updated', name: $user->name);
+
+    $this->dispatch('toast', [
+        'type' => 'success',
+        'message' => 'Profile updated successfully!',
+    ]);
+
+    $this->redirect(request()->header('Referer') ?? route('profile.show'), navigate: true);
+}
+
+
+
 
     public function resendVerificationNotification(): void
     {
@@ -144,8 +170,9 @@ new class extends Component {
                 @if ($profile_photo)
                     <img src="{{ $profile_photo->temporaryUrl() }}" class="w-20 h-20 mt-2 rounded-full" />
                 @elseif ($photo_preview)
-                    <img src="{{ asset('storage/' . $photo_preview) }}" class="w-20 h-20 mt-2 rounded-full" />
+                    <img src="{{ url('storage/' . $photo_preview) }}" class="w-20 h-20 mt-2 rounded-full" />
                 @endif
+
 
             </div>
 
