@@ -14,17 +14,28 @@
         <table class="w-full table-auto border border-collapse border-gray-300">
             <thead class="bg-gray-100">
                 <tr>
-                    <th class="border border-gray-300 px-4 py-2 text-black text-left w-[30%]">Name</th>
-                    <th class="border border-gray-300 px-4 py-2 text-black text-left w-[30%]">Email</th>
-                    <th class="border border-gray-300 px-4 py-2 text-black text-left w-[30%]">Roles</th>
-                    <th class="border border-gray-300 px-4 py-2 text-black text-center w-[10%]">Status</th>
-                    <th class="border border-gray-300 px-4 py-2 text-black text-center w-[10%]">Action</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-left ">Name</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-left ">Photo</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-left ">Email</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-left ">Roles</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-center ">Status</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-center ">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
                     <tr class="hover:bg-gray-50">
                         <td class="border border-gray-300 px-4 py-2 text-black">{{ $user->name }}</td>
+                        <td class="border border-gray-300 px-4 py-2 text-black">
+                            @if ($user->profile && $user->profile->profile_photo)
+                                <img src="{{ asset('storage/' . $user->profile->profile_photo) }}" class="w-10 h-10 rounded-full" alt="{{ $user->name }}">
+                            @else
+                                <span class=" w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+                                    {{ $user->initials() }}
+                                </span>
+                            @endif
+
+                        </td>
                         <td class="border border-gray-300 px-4 py-2 text-black">{{ $user->email }}</td>
                         <td class="border border-gray-300 px-4 py-2">
                             @if ($user->roles->count())

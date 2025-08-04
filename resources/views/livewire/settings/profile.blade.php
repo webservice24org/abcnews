@@ -67,7 +67,11 @@ new class extends Component {
     $user->save();
 
     // Apply news-style logic to profile photo
-    $profileData = collect($validated)->except(['name', 'email'])->toArray();
+    $profileData = collect($validated)
+    ->except(['name', 'email'])
+    ->filter(fn ($val) => $val !== '') // Removes empty strings
+    ->toArray();
+
 
     $existingPhoto = $user->profile?->profile_photo;
 
@@ -158,15 +162,22 @@ new class extends Component {
                 </div>
             @endif
 
-            <flux:input wire:model="address" :label="__('Address')" type="text" />
             <flux:textarea wire:model="about" :label="__('About You')" />
+            @error('about') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+
             <flux:input wire:model="dob" :label="__('Date of Birth')" type="date" />
+            @error('dob') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+
             <flux:input wire:model="nid_number" :label="__('NID Number')" type="number" />
+            @error('nid_number') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+
             <flux:input wire:model="mobile_number" :label="__('Mobile Number')" type="text" />
+            @error('mobile_number') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
 
             <div>
                 <label class="block text-sm text-black font-medium mb-1">Profile Picture</label>
                 <input type="file" wire:model="profile_photo" class="w-full border rounded p-2" />
+                @error('profile_photo') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 @if ($profile_photo)
                     <img src="{{ $profile_photo->temporaryUrl() }}" class="w-20 h-20 mt-2 rounded-full" />
                 @elseif ($photo_preview)
