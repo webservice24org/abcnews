@@ -39,7 +39,9 @@
             @endif
             <div class="hidden md:flex items-start gap-3 bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition mt-2">
             @if ($ad && $ad->ad_image)
-                <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+                <a href="{{ $ad->ad_url ?? '#' }}" target="_blank">
+                    <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+                </a>
             @elseif ($ad && $ad->ad_code)
                 {!! $ad->ad_code !!}
             @else
@@ -70,7 +72,9 @@
         </div>
         <div class="md:hidden text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition ">
             @if ($ad && $ad->ad_image)
+            <a href="{{ $ad->ad_url ?? '#' }}" target="_blank">
                 <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+            </a>
             @elseif ($ad && $ad->ad_code)
                 {!! $ad->ad_code !!}
             @else

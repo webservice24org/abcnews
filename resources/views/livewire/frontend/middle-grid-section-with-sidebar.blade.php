@@ -80,11 +80,13 @@
     {{-- Bottom Ad --}}
     <div class="flex items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-2">
          @if ($ad && $ad->ad_image)
+         <a href="{{ $ad->ad_url ?? '#' }}" target="_blank">
             <img src="{{ asset('storage/' . $ad->ad_image) }}" alt="Ad" class="object-fill w-full">
+            </a>
         @elseif ($ad && $ad->ad_code)
             {!! $ad->ad_code !!}
         @else
-            <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill w-full">
+            <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill w-full">
         @endif
     </div>
 </section>

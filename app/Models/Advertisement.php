@@ -10,7 +10,7 @@ class Advertisement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'ad_name', 'ad_image', 'ad_code', 'is_global', 'status',
+        'ad_name', 'ad_image', 'ad_code','ad_url', 'is_global', 'status',
     ];
 
     public function categories()

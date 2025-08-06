@@ -35,7 +35,7 @@ class MiddleGridSectionWithSidebar extends Component
             $this->ad = Advertisement::whereHas('categories', function ($query) use ($category) {
                     $query->where('categories.id', $category->id);
                 })
-                ->where('ad_name', 'Categoty Home Section Footer')
+                ->where('ad_name', 'Category Home Section Footer')
                 ->where('status', true)
                 ->latest()
                 ->first();

@@ -14,7 +14,7 @@ class AdvertisementForm extends Component
 {
     use WithFileUploads;
 
-    public $ad_name, $ad_image, $ad_code, $is_global = false, $status = true;
+    public $ad_name, $ad_image, $ad_code, $ad_url, $is_global = false, $status = true;
     public $selectedCategories = [];
     public $selectedSubCategories = [];
     public $adId;
@@ -54,6 +54,7 @@ class AdvertisementForm extends Component
             $this->ad_name = $ad->ad_name;
             $this->existing_ad_image = $ad->ad_image;
             $this->ad_code = $ad->ad_code;
+            $this->ad_url = $ad->ad_url;
             $this->is_global = $ad->is_global;
             $this->status = $ad->status;
             $this->existing_ad_image = $ad->ad_image;
@@ -69,6 +70,7 @@ class AdvertisementForm extends Component
             'ad_name' => 'required|string|max:255',
             'ad_image' => 'nullable|image|max:1024',
             'ad_code' => 'nullable|string',
+            'ad_url' => 'nullable|string',
             'selectedCategories' => 'array',
             'selectedSubCategories' => 'array',
         ]);
@@ -91,6 +93,7 @@ class AdvertisementForm extends Component
             $ad->update([
                 'ad_name' => $this->ad_name,
                 'ad_code' => $this->ad_code,
+                'ad_url' => $this->ad_url,
                 'is_global' => $this->is_global,
                 'status' => $this->status,
             ]);
@@ -99,6 +102,7 @@ class AdvertisementForm extends Component
                 'ad_name' => $this->ad_name,
                 'ad_image' => $this->ad_image ? $this->ad_image->store('ads', 'public') : null,
                 'ad_code' => $this->ad_code,
+                'ad_url' => $this->ad_url,
                 'is_global' => $this->is_global,
                 'status' => $this->status,
             ]);

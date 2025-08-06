@@ -13,6 +13,10 @@
             </select>
 
         </div>
+        <div>
+            <label class="font-bold text-black">Ad Url</label>
+            <input type="text" wire:model="ad_url" class="text-black w-full p-2 border rounded">
+        </div>
 
         <div>
             <label class="font-bold text-black">Ad Image</label>
