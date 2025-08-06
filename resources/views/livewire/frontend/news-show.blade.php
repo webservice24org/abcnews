@@ -110,7 +110,26 @@
             @endif
 
             <div class="hidden md:flex  items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-2">
-                <img src="{{ asset('storage/ads/national-categoryad.png') }}" alt="add" class="object-fill">
+                 @php
+                    $globalBelowGridAd = \App\Models\Advertisement::where('ad_name', 'Single Page Below Article')
+                        ->where('is_global', 1)
+                        ->where('status', 1)
+                        ->first();
+                @endphp                            
+
+                @if ($globalBelowGridAd)
+                    @if ($globalBelowGridAd->ad_image)
+                        <a href="{{ $globalBelowGridAd->ad_url ?? '#' }}" target="_blank">
+                            <img src="{{ asset('storage/' . $globalBelowGridAd->ad_image) }}" alt="{{$globalBelowGridAd->ad_name}}" class="object-fill">
+                        </a>
+                    @elseif ($globalBelowGridAd->ad_code)
+                        {!! $globalBelowGridAd->ad_code !!}
+                    @endif
+
+                @else
+                    {{-- Fallback image --}}
+                    <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill">
+                @endif
             </div>
 
             <div class="mt-2 text-black">
@@ -125,11 +144,38 @@
 
         {{-- Sidebar --}}
         <div class="md:col-span-4">
+            <livewire:frontend.news-archive-search />
             <livewire:frontend.popular-news-sidebar />
             <livewire:frontend.latest-news-sidebar />
-            <livewire:frontend.news-archive-search />
+
+             @php
+
+                $globalSideTwoAd = \App\Models\Advertisement::where('ad_name', 'Single Page Sidebar One')
+                    ->where('is_global', 1)
+                    ->where('status', 1)
+                    ->first();
+            @endphp
+
+            <div class="text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition my-4">
+                
+
+                @if ($globalSideTwoAd)
+                    {{-- Global ad --}}
+                    @if ($globalSideTwoAd->ad_image)
+                        <a href="{{ $globalSideTwoAd->ad_url ?? '#' }}" target="_blank">
+                            <img src="{{ asset('storage/' . $globalSideTwoAd->ad_image) }}" alt="{{$globalSideTwoAd->ad_name}}" class="object-fill">
+                        </a>
+                    @elseif ($globalSideTwoAd->ad_code)
+                        {!! $globalSideTwoAd->ad_code !!}
+                    @endif
+
+                @else
+                    {{-- Fallback image --}}
+                    <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill">
+                @endif
 
 
+            </div>
         </div>
 
         

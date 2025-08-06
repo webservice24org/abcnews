@@ -21,21 +21,27 @@ class AdvertisementForm extends Component
     public $existing_ad_image = null;
 
     public $widgetOptions = [
-        'Home Header Bottom',
-        'Home Right Sidebar One',
-        'Home Right Sidebar Two',
-        'Home Above Live',
-        'Home Above National',
-        'Home Above Entertainment',
-        'Home Above Photo Gallery',
+        'Home Right Sidebar One',        
         'Single Page Below Article',
         'Single Page Sidebar One',
-        'Single Page Sidebar Two',
-        'Categoty Below Menu',
-        'Categoty Sidebar One',
-        'Categoty Sidebar Two',
-        'Categoty Before Footer',
-        'Categoty Home Section Footer',
+        'Category Sidebar One',
+        'Category Sidebar Two',
+        'Category Below Grid',
+        'Sub Category Sidebar One',
+        'Sub Category Sidebar Two',
+        'Sub Category Below Grid',
+        'Category Home Section Footer',
+        'Category Global Sidebar One',
+        'Category Global Sidebar Two',
+        'Category Global Below Grid',
+        'Sub Category Global Sidebar One',
+        'Sub Category Global Sidebar Two',
+        'Sub Category Global Below Grid',
+        'Global Header Bottom',
+        'Global Before Footer',
+        'Global Below Grid',
+        'Global Sidebar One',
+        'Global Sidebar Two',
     ];
 
     public function mount($id = null)
@@ -57,39 +63,6 @@ class AdvertisementForm extends Component
     }
 
 
-   
-
-    /*
-    public function save()
-    {
-        $this->validate([
-            'ad_name' => 'required|string|max:255',
-            'ad_image' => 'nullable|image|max:1024', 
-            'ad_code' => 'nullable|string',
-            'selectedCategories' => 'array',
-            'selectedSubCategories' => 'array',
-        ]);
-
-        $ad = Advertisement::create([
-            'ad_name' => $this->ad_name,
-            'ad_image' => $this->ad_image ? $this->ad_image->store('ads', 'public') : null,
-            'ad_code' => $this->ad_code,
-            'is_global' => $this->is_global,
-            'status' => $this->status,
-        ]);
-
-        $ad->categories()->sync($this->selectedCategories);
-        $ad->subcategories()->sync($this->selectedSubCategories);
-
-       $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Advertisement saved successfully!',
-        ]);
-
-        $this->reset();
-
-    }
-        */
     public function save()
     {
         $this->validate([
@@ -100,18 +73,18 @@ class AdvertisementForm extends Component
             'selectedSubCategories' => 'array',
         ]);
 
-        // Check if editing or creating new
+        
         if ($this->adId) {
             $ad = Advertisement::findOrFail($this->adId);
 
-            // If new image is uploaded, delete old one
+           
             if ($this->ad_image && is_object($this->ad_image)) {
                 if ($ad->ad_image && Storage::disk('public')->exists($ad->ad_image)) {
                     Storage::disk('public')->delete($ad->ad_image);
                 }
 
                 $ad->ad_image = $this->ad_image->store('ads', 'public');
-                $ad->save(); // Save the new image path
+                $ad->save(); 
             }
 
 

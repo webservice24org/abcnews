@@ -15,11 +15,13 @@ class Advertisement extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'advertisement_category');
+        return $this->belongsToMany(Category::class, 'advertisement_category', 'advertisement_id', 'category_id');
     }
+
 
     public function subcategories()
     {
-        return $this->belongsToMany(SubCategory::class, 'advertisement_sub_category');
+        return $this->belongsToMany(SubCategory::class, 'advertisement_sub_category', 'advertisement_id', 'sub_category_id');
     }
+
 }

@@ -12,7 +12,5 @@
         </div>
     @endforeach
 
-    <div class="flex text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition">
-        <img src="{{ asset('storage/ads/latest-post-ad.png') }}" alt="add" class="object-cover mx-auto">
-    </div>
+
 </div>

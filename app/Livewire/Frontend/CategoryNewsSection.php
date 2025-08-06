@@ -16,7 +16,7 @@ class CategoryNewsSection extends Component
     public function mount(string $slug)
     {
         $this->slug = $slug;
-        $this->category = Category::where('slug', $slug)->firstOrFail();
+        $this->category = Category::with('advertisements')->where('slug', $slug)->firstOrFail();
     }
 
     public function render()
@@ -31,7 +31,7 @@ class CategoryNewsSection extends Component
         $topLeft = $allNews->first();
         $topRight = $allNews->slice(1, 5);
 
-        // Get IDs of topLeft and topRight to exclude
+        
         $excludedIds = $allNews->pluck('id')->toArray();
 
         $paginatedNews = $this->category
@@ -39,7 +39,7 @@ class CategoryNewsSection extends Component
             ->where('status', 'published')
             ->whereNotIn('id', $excludedIds) 
             ->latest()
-            ->paginate(6);
+            ->paginate(9);
 
         return view('livewire.frontend.category-news-section', [
             'topLeft' => $topLeft,

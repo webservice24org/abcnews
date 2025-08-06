@@ -37,5 +37,33 @@
     {{-- Right 4-column: Sidebar --}}
     <div class="md:col-span-4">
         <livewire:frontend.popular-news-sidebar />
+         @php
+
+            $globalSideTwoAd = \App\Models\Advertisement::where('ad_name', 'Single Page Sidebar One')
+                ->where('is_global', 1)
+                ->where('status', 1)
+                ->first();
+        @endphp
+
+        <div class="text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition my-4">
+            
+
+            @if ($globalSideTwoAd)
+                {{-- Global ad --}}
+                @if ($globalSideTwoAd->ad_image)
+                    <a href="{{ $globalSideTwoAd->ad_url ?? '#' }}" target="_blank">
+                        <img src="{{ asset('storage/' . $globalSideTwoAd->ad_image) }}" alt="{{$globalSideTwoAd->ad_name}}" class="object-fill">
+                    </a>
+                @elseif ($globalSideTwoAd->ad_code)
+                    {!! $globalSideTwoAd->ad_code !!}
+                @endif
+
+            @else
+                {{-- Fallback image --}}
+                <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill">
+            @endif
+
+
+        </div>
     </div>
 </div>

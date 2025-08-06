@@ -39,15 +39,16 @@ class SubCategory extends Model
     {
         return $this->belongsToMany(
             NewsPost::class,
-            'subcategory_news_post',  // ✅ pivot table name
-            'subcategory_id',         // ✅ FK on pivot table referencing this model
-            'news_post_id'            // ✅ FK on pivot table referencing NewsPost
+            'subcategory_news_post',  
+            'subcategory_id',         
+            'news_post_id'            
         );
     }
 
-    public function advertisements()
+    
+    public function ads()
     {
-        return $this->belongsToMany(SubCategory::class, 'advertisement_sub_category');
+        return $this->belongsToMany(Advertisement::class, 'advertisement_sub_category', 'sub_category_id', 'advertisement_id');
     }
 
 

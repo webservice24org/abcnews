@@ -38,10 +38,12 @@ class Category extends Model
         return $this->hasMany(SubCategory::class);
     }
 
+    // Category.php
     public function advertisements()
     {
-        return $this->belongsToMany(Advertisement::class, 'advertisement_category');
+        return $this->belongsToMany(Advertisement::class, 'advertisement_category', 'category_id', 'advertisement_id');
     }
+
 
 }
 

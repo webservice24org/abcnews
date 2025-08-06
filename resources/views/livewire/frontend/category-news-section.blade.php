@@ -63,7 +63,43 @@
                         <div class="flex-1">
                             
                             <div class="flex text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition ">
-                                <img src="{{ asset('storage/ads/cate-vertical.png') }}" alt="add" class="object-cover">
+                                @php
+                                    $catSideOne = $category->advertisements->filter(fn($ad) =>
+                                        $ad->ad_name === 'Category Sidebar One' && $ad->status == 1
+                                    )->first();
+
+                                    $globalSideOne = \App\Models\Advertisement::where('ad_name', 'Category Global Sidebar One')
+                                        ->where('is_global', 1)
+                                        ->where('status', 1)
+                                        ->first();
+                                @endphp
+
+                                
+                                @if ($catSideOne)
+                                    @if ($catSideOne->ad_image)
+                                        <a href="{{ $catSideOne->ad_url ?? '#' }}" target="_blank">
+                                            <img src="{{ asset('storage/' . $catSideOne->ad_image) }}" alt="{{$catSideOne->ad_name}}" class="object-fill">
+                                        </a>
+                                    @elseif ($catSideOne->ad_code)
+                                        {!! $catSideOne->ad_code !!}
+                                    @endif
+
+                                @elseif ($globalSideOne)
+                                    @if ($globalSideOne->ad_image)
+                                        <a href="{{ $globalSideOne->ad_url ?? '#' }}" target="_blank">
+                                            <img src="{{ asset('storage/' . $globalSideOne->ad_image) }}" alt="{{$globalSideOne->ad_name}}" class="object-fill">
+                                        </a>
+                                    @elseif ($globalSideOne->ad_code)
+                                        {!! $globalSideOne->ad_code !!}
+                                    @endif
+
+                                @else
+                                    <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill">
+                                @endif
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -100,17 +136,86 @@
                     @endif
 
                     <div class="hidden md:flex  items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-1">
-                        <img src="{{ asset('storage/ads/Advertisement.png') }}" alt="add" class="object-fill">
+                       @php
+                            $catSideBelowGrid = $category->advertisements->filter(fn($ad) =>
+                                $ad->ad_name === 'Category Below Grid' && $ad->status == 1
+                            )->first();
+
+                            $globalBelowGridAd = \App\Models\Advertisement::where('ad_name', 'Category Global Below Grid')
+                                ->where('is_global', 1)
+                                ->where('status', 1)
+                                ->first();
+                        @endphp
+
+                       
+                        @if ($catSideBelowGrid)
+                            @if ($catSideBelowGrid->ad_image)
+                                <a href="{{ $catSideBelowGrid->ad_url ?? '#' }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $catSideBelowGrid->ad_image) }}" alt="{{$catSideBelowGrid->ad_name}}" class="object-fill">
+                                </a>
+                            @elseif ($catSideBelowGrid->ad_code)
+                                {!! $catSideBelowGrid->ad_code !!}
+                            @endif
+
+                        @elseif ($globalBelowGridAd)
+                            @if ($globalBelowGridAd->ad_image)
+                                <a href="{{ $globalBelowGridAd->ad_url ?? '#' }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $globalBelowGridAd->ad_image) }}" alt="{{$globalBelowGridAd->ad_name}}" class="object-fill">
+                                </a>
+                            @elseif ($globalBelowGridAd->ad_code)
+                                {!! $globalBelowGridAd->ad_code !!}
+                            @endif
+
+                        @else
+                            {{-- Fallback image --}}
+                            <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill">
+                        @endif
+
                     </div>
                 </div>
 
                 {{-- Right Sidebar --}}
                 <div class="md:col-span-4">
-                    <div>
-                        @livewire('frontend.popular-news-sidebar')
-                        <livewire:frontend.news-archive-search />
-                    </div>
-                </div>
+                    <livewire:frontend.popular-news-sidebar />
+                        @php
+                            $catSideTwo = $category->advertisements->filter(fn($ad) =>
+                                $ad->ad_name === 'Category Sidebar Two' && $ad->status == 1
+                            )->first();
+
+                            $globalSideTwoAd = \App\Models\Advertisement::where('ad_name', 'Category Global Sidebar Two')
+                                ->where('is_global', 1)
+                                ->where('status', 1)
+                                ->first();
+                        @endphp
+
+                        <div class="text-center bg-white border border-gray-200 p-1 shadow-sm hover:shadow-md transition my-4">
+                            @if ($catSideTwo)
+                                @if ($catSideTwo->ad_image)
+                                    <a href="{{ $catSideTwo->ad_url ?? '#' }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $catSideTwo->ad_image) }}" alt="{{$catSideTwo->ad_name}}" class="object-fill">
+                                    </a>
+                                @elseif ($catSideTwo->ad_code)
+                                    {!! $catSideTwo->ad_code !!}
+                                @endif
+
+                            @elseif ($globalSideTwoAd)
+                                {{-- Global ad --}}
+                                @if ($globalSideTwoAd->ad_image)
+                                    <a href="{{ $globalSideTwoAd->ad_url ?? '#' }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $globalSideTwoAd->ad_image) }}" alt="{{$globalSideTwoAd->ad_name}}" class="object-fill">
+                                    </a>
+                                @elseif ($globalSideTwoAd->ad_code)
+                                    {!! $globalSideTwoAd->ad_code !!}
+                                @endif
+
+                            @else
+                                {{-- Fallback image --}}
+                                <img src="{{ asset('storage/fallback-ad/ad-450-456.png') }}" alt="Fallback Ad" class="object-fill">
+                            @endif
+                        </div>
+                    <br>
+                    <livewire:frontend.news-archive-search />
+            </div>
             </div>
         </div>
     @else
