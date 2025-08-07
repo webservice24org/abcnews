@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('news_title');
             $table->string('slug')->unique();
-            $table->text('news_description');
+            $table->longtext('news_description');
             $table->foreignId('division_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('district_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('upazila_id')->nullable()->constrained()->nullOnDelete();

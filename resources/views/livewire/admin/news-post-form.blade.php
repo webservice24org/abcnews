@@ -24,17 +24,28 @@
                     <input type="text" wire:model.lazy="slug" class="w-full border p-2 rounded text-black" />
                 </div>
 
-                
-                <div>
-                    <input type="hidden" id="livewireComponentId" value="{{ $this->getId() }}">
-
-                    <div wire:ignore.self>
                     
-                        <textarea wire:model.lazy="news_description" id="news_description_editor" class="w-full border p-2 rounded text-black" rows="6"></textarea>
+                    <div class=" rounded text-black">
+                        <livewire:jodit-text-editor 
+                            wire:model.live="news_description" 
+                            :buttons="[
+                                'bold', 'italic', 'ul', 'ol', 'left', 'center', 'right', 'font', 'fontsize', 'paragraph',
+                                'table', 'link', 'brush', 'undo', 'redo', 'image'
+                            ]"
+                            :config="[
+                                'height' => 600,
+                                'uploader' => [
+                                    'insertImageAsBase64URI' => true
+                                ],
+                                'image' => [
+                                    'editSrc' => true,
+                                    'useImageTitle' => true,
+                                    'useImageAlt' => true
+                                ]
+                            ]"
+                        />
+
                     </div>
-
-
-                </div>
 
 
             <!-- Accordion for SEO Meta -->
@@ -225,49 +236,8 @@
         });
     </script>
 
-    <script>
-        document.addEventListener('livewire:load', () => {
-            const componentId = document.getElementById('livewireComponentId').value;
-            window.initTinyEditor('news_description_editor', componentId, 'news_description');
-        });
-
-        Livewire.hook('message.processed', (message, component) => {
-            const componentId = document.getElementById('livewireComponentId').value;
-            // Re-init only if the element still exists (prevent errors)
-            if (document.getElementById('news_description_editor')) {
-                window.initTinyEditor('news_description_editor', componentId, 'news_description');
-            }
-        });
-    </script>
-
-    <script>
-        window.initTinyEditor = function (elementId, componentId, wireModel) {
-            tinymce.init({
-                selector: '#' + elementId,
-                plugins: 'paste lists link image code fullscreen',
-                toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | fullscreen | code',
-                menubar: false,
-                branding: false,
-                height: 300,
-
-                // Strip unwanted HTML tags during paste
-                paste_preprocess: function (plugin, args) {
-                    const allowedTags = ['b', 'i', 'u', 'strong', 'em'];
-                    args.content = args.content.replace(/<(\/?)(\w+)([^>]*)>/gi, function (match, slash, tagName) {
-                        return allowedTags.includes(tagName.toLowerCase()) ? match : '';
-                    });
-                },
-
-                setup: function (editor) {
-                    editor.on('change', function () {
-                        @this.set(wireModel, editor.getContent());
-                    });
-                }
-            });
-        }
 
 
-    </script>
 
 
 

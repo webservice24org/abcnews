@@ -28,12 +28,12 @@ class MiddleGridSection extends Component
         $middleNews = $allNews->slice(0, 1)->first();
         $rightNews = $allNews->slice(7, 6);
 
-        // 🟨 Advertisement logic
+       
         if ($category) {
             $this->ad = Advertisement::whereHas('categories', function ($query) use ($category) {
                     $query->where('categories.id', $category->id);
                 })
-                ->where('ad_name', 'Categoty Home Section Footer')
+                ->where('ad_name', 'Category Home Section Footer')
                 ->where('status', true)
                 ->latest()
                 ->first();
