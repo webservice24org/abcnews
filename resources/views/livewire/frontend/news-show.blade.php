@@ -32,6 +32,7 @@
 
 
             {{-- Title --}}
+            <h1 class="text-xl font-bold text-red-500">{{ $news->top_title }}</h1>
             <h1 class="text-3xl font-bold text-black">{{ $news->news_title }}</h1>
 
             {{-- Author & Date --}}

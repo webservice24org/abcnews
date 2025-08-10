@@ -50,7 +50,7 @@ class NewsPostForm extends Component
 
     public $editing = false;
     // Form Fields
-    public $news_title, $slug, $news_description;
+    public $news_title, $top_title, $slug, $news_description;
     public $meta_title, $meta_description;
     public $division_id, $district_id, $upazila_id;
     public $category_id, $subcategory_id;
@@ -138,6 +138,7 @@ public $allSubcategories;
             $this->selected_user_id = $post->user_id;
             $this->newsPostId = $post->id;
             $this->news_title = $post->news_title;
+            $this->top_title = $post->top_title;
             $this->slug = $post->slug;
             $this->news_description = $post->news_description;
             $this->meta_title = $post->meta_title;
@@ -242,6 +243,7 @@ public $allSubcategories;
 
         $data = [
             'news_title' => $this->news_title,
+            'top_title' => $this->top_title,
             'slug' => $this->slug,
             'news_description' => $this->news_description,
             'meta_title' => $this->meta_title,

@@ -15,17 +15,22 @@
             <!-- Left Column -->
             <div class="lg:col-span-8 p-6 bg-white rounded shadow space-y-4">
                 <div>
-                    <label class="block font-medium text-sm text-black">News Title</label>
+                    <label class="block font-medium text-sm text-black">Top Title</label>
+                    <input type="text" wire:model.lazy="top_title" class="w-full border p-2 rounded text-black" />
+                </div>
+                <div>
+                    <label class="block font-medium text-sm text-black">News Title <span class="text-red-500">*</span></label> 
                     <input type="text" wire:model.lazy="news_title" class="w-full border p-2 rounded text-black" />
                 </div>
 
                 <div>
-                    <label class="block font-medium text-sm text-black">Slug</label>
+                    <label class="block font-medium text-sm text-black">Slug <span class="text-red-500">*</span></label>
                     <input type="text" wire:model.lazy="slug" class="w-full border p-2 rounded text-black" />
                 </div>
 
                     
                     <div class=" rounded text-black">
+                        <label class="block font-medium text-sm text-black">News Description <span class="text-red-500">*</span></label> 
                         <livewire:jodit-text-editor 
                             wire:model.live="news_description" 
                             :buttons="[
@@ -33,7 +38,7 @@
                                 'table', 'link', 'brush', 'undo', 'redo', 'image'
                             ]"
                             :config="[
-                                'height' => 600,
+                                'height' => 700,
                                 'uploader' => [
                                     'insertImageAsBase64URI' => true
                                 ],
@@ -110,7 +115,7 @@
             </div>
 
             <div class="bg-white p-4 rounded shadow">
-                <h2 class="font-semibold text-lg mb-3 text-black bg-amber-100">Categories</h2>
+                <h2 class="font-semibold text-lg mb-3 text-black bg-amber-100">Categories <span class="text-red-500">*</span></h2>
 
                 <div class="space-y-2 max-h-80 overflow-y-auto">
                     @foreach ($this->categoryTree as $category)
@@ -168,7 +173,7 @@
                 </div>
             </div>
             <div class="mb-4">
-                <label for="user_id" class="block text-sm font-medium text-black">Select User (optional)</label>
+                <label for="user_id" class="block text-sm font-medium text-black">Select User (optional) <span class="text-red-500">*</span></label>
                 <select wire:model="selected_user_id" id="user_id" class="mt-1 block w-full p-2 text-black border-gray-300 rounded-md shadow-sm">
                     <option value="">Default (Authenticated User)</option>
                     @foreach ($users as $user)
@@ -182,7 +187,7 @@
 
             <!-- Image Upload -->
             <div>
-                <label class="block font-medium text-sm text-black">Thumbnail</label>
+                <label class="block font-medium text-sm text-black">Thumbnail <span class="text-red-500">*</span></label>
                 <input type="file" wire:model="news_thumbnail" class="w-full text-black border p-2 shadow-sm"  />
                 @if ($news_thumbnail)
                     <img src="{{ $news_thumbnail->temporaryUrl() }}" class="mt-2 w-32 h-20 object-cover border rounded" />
@@ -194,7 +199,7 @@
             <!-- Make sure Alpine.js is loaded in your layout -->
             <div class="space-y-2" x-data="{ status: @entangle('status') }">
                 <!-- Status -->
-                <label class="text-black">Status</label>
+                <label class="text-black">Status <span class="text-red-500">*</span></label>
                 <select x-model="status" wire:model="status" class="w-full border p-2 rounded text-black">
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>

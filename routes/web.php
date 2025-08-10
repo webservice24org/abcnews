@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+
+//use App\Livewire\Admin\Dashboard;
 use App\Livewire\Users\PermissionManager;
 use App\Livewire\Users\RolePermissionManager;
 use App\Livewire\Users\UserList;
@@ -72,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    
+
     Route::get('users/all-users', UserList::class)->name('users.index');
     Route::view('users/roles', 'roles.index')->name('roles.index');
     Route::get('users/permissions', PermissionManager::class)->name('permissions.index');
