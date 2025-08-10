@@ -3,6 +3,8 @@
         <livewire:admin.dashboard-summary />
         <livewire:admin.recent-activity />
 
+        <livewire:admin.visitor-summary />
+
     </div>
 </x-layouts.app>
 
