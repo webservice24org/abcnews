@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Models\User;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -27,5 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-users', function ($user) {
             return $user->hasAnyRole(['Super Admin', 'Admin']);
         });
+        Gate::define('viewPulse', fn ($user) => $user->isAdmin());
+
     }
 }

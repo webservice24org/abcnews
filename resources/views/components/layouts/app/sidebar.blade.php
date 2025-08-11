@@ -408,6 +408,13 @@
                                 {{ __('Social Connections') }}
                             </flux:navlist.item>
 
+                            <flux:navlist.item 
+                                icon="sparkles"  {{-- use an icon like "activity" or "pulse" --}}
+                                :href="route('pulse')" 
+                                :current="request()->routeIs('pulse*')">
+                                {{ __('Performance Monitor') }}
+                            </flux:navlist.item>
+
 
                         </flux:navlist.group>
                     </div>
@@ -474,7 +481,7 @@
                 </flux:navlist.group>
             </flux:navlist>
 
-
+            
 
             <flux:spacer />
 

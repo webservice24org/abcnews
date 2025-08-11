@@ -40,6 +40,11 @@ class User extends Authenticatable
     return $this->hasMany(NewsPost::class);
 }
 
+// In User model
+public function isAdmin()
+{
+    return $this->hasAnyRole(['Super Admin', 'Admin']);
+}
 
 
     /**
