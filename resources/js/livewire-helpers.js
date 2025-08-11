@@ -67,6 +67,7 @@ window.showToast = function (type = 'success', message = 'Success!') {
     });
 };
 
+ 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.Livewire) {
         window.Livewire.on('confirm-delete', (id) => {

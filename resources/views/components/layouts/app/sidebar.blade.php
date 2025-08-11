@@ -462,6 +462,17 @@
             </flux:navlist>
 
 
+            <flux:navlist variant="outline">
+                <flux:navlist.group class="grid">
+                    <flux:navlist.item 
+                        icon="sparkles" 
+                        :href="route('admin.clear.cache')" 
+                        :current="request()->routeIs('admin.clear.cache')" 
+                        wire:navigate>
+                        {{ __('Clear Cache') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+            </flux:navlist>
 
 
 
@@ -637,6 +648,7 @@
 @fluxScripts
 @livewireScripts
 @stack('scripts')
+
 
         
     </body>

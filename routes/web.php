@@ -29,6 +29,7 @@ use App\Livewire\Admin\VideoPostForm;
 use App\Livewire\Admin\VideoPostList;
 use App\Livewire\Admin\PhotoNewsForm;
 use App\Livewire\Admin\PhotoNewsList;
+use App\Livewire\Admin\ClearCache;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -123,9 +124,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/photo-news', PhotoNewsList::class)->name('admin.photo-news.index');
     Route::get('admin/photo-news/edit/{id}', PhotoNewsForm::class)->name('admin.photo-news.edit');
 
+    Route::get('/admin/clear-cache', ClearCache::class)
+    ->name('admin.clear.cache');
 
     
 });
+
 
 
 
