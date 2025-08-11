@@ -48,8 +48,17 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
  
+@php
+    $customCode = Cache::remember('custom_code', 3600, function () {
+        return \App\Models\CustomCode::first();
+    });
+@endphp
 
-
+@if ($customCode && $customCode->custom_css)
+    <style>
+        {!! $customCode->custom_css !!}
+    </style>
+@endif
 </head>
 <body class="bg-white text-gray-800">
 
@@ -86,7 +95,17 @@
     </div>
 
 
-
+@if ($customCode && $customCode->custom_js)
+    <script>
+        {!! $customCode->custom_js !!}
+    </script>
+@endif
     
 </body>
 </html>
+
+
+
+
+
+

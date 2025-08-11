@@ -55,7 +55,7 @@ window.confirmRestore = function (eventName, id) {
 
 
 // Toast with SweetAlert2
-window.showToast = function (type = 'success', message = 'Success!') {
+window.showToast = function (type = 'success', message = 'Successfully saved!') {
     Swal.fire({
         toast: true,
         position: 'top-end',

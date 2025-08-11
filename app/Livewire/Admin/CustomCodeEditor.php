@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Livewire\Admin;
+
+
+use Livewire\Component;
+use App\Models\CustomCode;
+
+class CustomCodeEditor extends Component
+{
+    public $custom_css;
+    public $custom_js;
+
+    public function mount()
+    {
+        $code = CustomCode::first();
+        $this->custom_css = $code->custom_css ?? '';
+        $this->custom_js = $code->custom_js ?? '';
+    }
+
+    public function save()
+    {
+        $code = CustomCode::first() ?: new CustomCode();
+
+        $code->custom_css = $this->custom_css;
+        $code->custom_js = $this->custom_js;
+        $code->save();
+
+        session()->flash('message', 'Custom CSS/JS saved successfully!');
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.custom-code-editor');
+    }
+}

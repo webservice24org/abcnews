@@ -342,7 +342,9 @@
                     'admin.site-settings',
                     'admin.site-info',
                     'admin.site-connections',
-                    'admin.social-connections'
+                    'admin.social-connections',
+                    'pulse',
+                    'admin.custom-code'
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -414,7 +416,9 @@
                                 :current="request()->routeIs('pulse*')">
                                 {{ __('Performance Monitor') }}
                             </flux:navlist.item>
-
+                            <flux:navlist.item icon="tag" :href="route('admin.custom-code')" :current="request()->routeIs('admin.custom-code')">
+                                {{ __('Custom CSS/JS Editor') }}
+                            </flux:navlist.item>
 
                         </flux:navlist.group>
                     </div>
@@ -482,6 +486,7 @@
             </flux:navlist>
 
             
+
 
             <flux:spacer />
 
@@ -653,7 +658,7 @@
 {{ $slot }}
 
 @fluxScripts
-@livewireScripts
+
 @stack('scripts')
 
 

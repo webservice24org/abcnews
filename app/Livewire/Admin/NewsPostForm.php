@@ -280,6 +280,7 @@ public $allSubcategories;
             'type' => 'success',
             'message' => $this->newsPostId ? 'Post updated successfully!' : 'Post created successfully!',
         ]);
+        
 
         // Then redirect after short delay
         return redirect()->route('news.index');
