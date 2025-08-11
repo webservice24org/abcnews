@@ -11,10 +11,11 @@ class RecentActivity extends Component
 {
     public $recentPosts;
     public $postsPerMonth = [];
+    public $mostViewedPosts = [];
 
     public function mount()
     {
-        // Recent posts
+        $this->mostViewedPosts = NewsPost::orderByDesc('view_count')->take(8)->get(['news_title', 'slug', 'view_count', 'created_at']);
         $this->recentPosts = NewsPost::latest()->take(8)->get(['news_title', 'slug', 'created_at']);
 
         // Posts per month (last 6 months)
