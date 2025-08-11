@@ -130,7 +130,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
 Route::get('news/{slug}', NewsShow::class)->where('slug', '^(?!categories$).+')->name('news.show');
 
 

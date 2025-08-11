@@ -9,13 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class RecentActivity extends Component
 {
-    public $mostViewedPosts;
     public $recentPosts;
     public $postsPerMonth = [];
 
     public function mount()
     {
-        $this->mostViewedPosts = NewsPost::orderByDesc('view_count')->take(8)->get(['news_title', 'slug', 'view_count']);
+        // Recent posts
         $this->recentPosts = NewsPost::latest()->take(8)->get(['news_title', 'slug', 'created_at']);
 
         // Posts per month (last 6 months)
