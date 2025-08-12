@@ -1,6 +1,9 @@
 
-<header class="bg-red-600 h-[50px] md:h-[100px] sticky top-0 z-50"
-        x-data="{ open: false, showSearch: false, showSlideMenu: false }">
+<header 
+    class="h-[50px] md:h-[100px] sticky top-0 z-50" 
+    style="background-color: {{ $color->header_bg ?? '#ff0000' }};"
+    x-data="{ open: false, showSearch: false, showSlideMenu: false }">
+
 
     <nav class="max-w-7xl mx-auto border-b border-gray-200 w-full h-full">
         <div class="px-4 flex justify-between items-center h-full">

@@ -21,7 +21,7 @@
             <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill">
         @endif
     </div>
-    <footer class="mt-5 border-t border-white pt-10 pb-10 bg-red-600 text-white">
+    <footer class="mt-5 border-t border-white pt-10 pb-1 text-white" style="background-color: {{ $color->footer_bg ?? '#e7000b' }};">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
 
             {{-- Top Row: Logo and Social Icons --}}

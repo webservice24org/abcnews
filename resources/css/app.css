@@ -106,3 +106,21 @@ html {
     color: rgb(18, 18, 18);
 }
 
+:root {
+  --primary-color: #22c55e;          /* green */
+  --footer-bg: #16a34a;
+  --section-header-bg: #4ade80;
+}
+
+/* Use in custom CSS */
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.footer {
+  background-color: var(--footer-bg);
+}
+
+.section-header {
+  background-color: var(--section-header-bg);
+}

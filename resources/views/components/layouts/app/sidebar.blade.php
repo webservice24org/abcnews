@@ -344,7 +344,8 @@
                     'admin.site-connections',
                     'admin.social-connections',
                     'pulse',
-                    'admin.custom-code'
+                    'admin.custom-code',
+                    'theme.color.picker'
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -419,6 +420,9 @@
                             <flux:navlist.item icon="tag" :href="route('admin.custom-code')" :current="request()->routeIs('admin.custom-code')">
                                 {{ __('Custom CSS/JS Editor') }}
                             </flux:navlist.item>
+                             <flux:navlist.item icon="home" :href="route('theme.color.picker')" :current="request()->routeIs('theme.color.picker')">
+            {{ __('Theme Color Picker') }}
+        </flux:navlist.item>
 
                         </flux:navlist.group>
                     </div>
