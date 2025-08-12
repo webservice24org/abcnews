@@ -1,12 +1,12 @@
 <section class="mb-10">
     
-    <div class="flex justify-between items-center border-b-3 border-red-700 mb-4">
-        <h2 class="text-2xl font-bold text-white bg-red-600 p-2 inline-block">{{ $title }}</h2>
+    <div class="flex justify-between items-center border-b-3 mb-4" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        <h2 class="text-2xl font-bold p-2 inline-block" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">{{ $title }}</h2>
 
         {{-- Read More Button --}}
         
         @if (!empty($categorySlug))
-            <a href="{{ route('category.show', ['slug' => $categorySlug]) }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
+            <a href="{{ route('category.show', ['slug' => $categorySlug]) }}" class="text-sm hover:bg-red-700 px-4 py-1 rounded shadow-sm transition" style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}">আরও দেখুন</a>
         @endif
 
     </div>
@@ -18,7 +18,7 @@
                 <div class="flex gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                     <img src="{{ asset('storage/' . $news->news_thumbnail) }}" class="w-20 h-16 object-cover rounded" alt="{{ $news->news_title }}">
                     <div>
-                        <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md text-black hover:text-blue-600">
+                        <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md news_title">
                             {{ $news->news_title }}
                         </a>
                         
@@ -39,7 +39,7 @@
                         @endforeach
                     </p>
 
-                    <a href="{{ route('news.show', $middleNews->slug) }}" class="text-2xl font-bold leading-snug hover:text-blue-600">
+                    <a href="{{ route('news.show', $middleNews->slug) }}" class="text-2xl font-bold leading-snug news_title">
                         {{ $middleNews->news_title }}
                     </a>
 
@@ -60,7 +60,7 @@
                 <div class="flex gap-3 @if (!$loop->last) border-b border-gray-200 @endif">
                     <img src="{{ asset('storage/' . $news->news_thumbnail) }}" class="w-20 h-16 object-cover rounded" alt="{{ $news->news_title }}">
                     <div>
-                        <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md text-black hover:text-blue-600">
+                        <a href="{{ route('news.show', $news->slug) }}" class="font-semibold text-md news_title">
                             {{ $news->news_title }}
                         </a>
                         

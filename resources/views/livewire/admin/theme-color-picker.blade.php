@@ -1,5 +1,5 @@
 <div class="space-y-4 p-6 bg-white rounded shadow">
-    <h2 class="text-xl font-semibold mb-4 text-black">Theme Color Picker</h2>
+    <h2 class="text-xl font-semibold mb-4 text-black">Change website colors</h2>
 
     @foreach($colors as $field => $value)
         <div class="flex items-center space-x-4">
@@ -9,7 +9,7 @@
         </div>
     @endforeach
 
-    <button wire:click="save" class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Save Colors</button>
+    <button wire:click="save" class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:cursor-pointer">Save Colors</button>
 
 </div>
 

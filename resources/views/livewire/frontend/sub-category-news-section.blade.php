@@ -1,14 +1,15 @@
 <section class="mb-10">
     {{-- Subcategory Name with Parent Category --}}
-    <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
+    <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        {{-- Subcategory Name --}}
         {{-- Parent Category Name with link --}}
         <a href="{{ route('category.show', ['slug' => $subcategory->category->slug]) }}"
-        class="text-2xl font-bold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 pb-2 ps-2 pt-2 pr-4 transition">
+        class="text-2xl font-bold  px-3 py-1 pb-2 ps-2 pt-2 pr-4 transition" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">
             {{ $subcategory->category->name }}
         </a>
 
         {{-- Subcategory Name --}}
-        <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">
+        <h2 class="text-2xl font-bold pb-2 ps-2 pt-2 pr-4" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">
             {{ $subcategory->name }}
         </h2>
     </div>
@@ -23,7 +24,7 @@
                         <div>
                             <img src="{{ asset('storage/' . $topLeft->news_thumbnail) }}" class="w-full h-auto rounded mb-3">
                             <a href="{{ route('news.show', $topLeft->slug) }}">
-                                <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
+                                <h2 class="text-2xl font-bold news_title mb-2">{{ $topLeft->news_title }}</h2>
                             </a>
                             <p class="text-sm text-gray-600 mb-2">
                                {{ \App\Helpers\DateHelper::formatBanglaDateTime($topLeft->created_at) }}
@@ -41,7 +42,7 @@
                         <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-24 h-20 object-cover rounded">
                         <div class="flex-1">
                             <a href="{{ route('news.show', $item->slug) }}">
-                                <h4 class="text-md font-semibold text-black hover:text-blue-700 ">
+                                <h4 class="text-md font-semibold news_title ">
                                     {{ $item->news_title }}
                                 </h4>
                             </a>

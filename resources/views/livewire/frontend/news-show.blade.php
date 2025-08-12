@@ -16,14 +16,14 @@
 
                 @foreach ($news->categories as $cat)
                     <span>/</span>
-                    <a href="{{ route('category.show', $cat->slug) }}" class="hover:text-red-600">
+                    <a href="{{ route('category.show', $cat->slug) }}" class="news_title font-bold" >
                         {{ $cat->name }}
                     </a>
                 @endforeach
 
                 @foreach ($news->subcategories as $sub)
                     <span>/</span>
-                    <a href="{{ route('subcategory.show', $sub->slug) }}" class="hover:text-red-600">
+                    <a href="{{ route('subcategory.show', $sub->slug) }}" class="news_title">
                         {{ $sub->name }}
                     </a>
                 @endforeach
@@ -32,7 +32,7 @@
 
 
             {{-- Title --}}
-            <h1 class="text-xl font-bold text-red-500">{{ $news->top_title }}</h1>
+            <h1 class="text-xl font-bold " style="color:#8b0000;">{{ $news->top_title }}</h1>
             <h1 class="text-3xl font-bold text-black">{{ $news->news_title }}</h1>
 
             {{-- Author & Date --}}
@@ -184,7 +184,7 @@
     
     @if($relatedPosts->isNotEmpty())
         <section class="mt-10 bg-white shadow rounded p-4">
-            <h3 class="text-xl font-bold text-black border-b border-red-600 pb-2 mb-6">
+            <h3 class="text-xl font-bold  border-b-3 p-2 mb-6" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }}; border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
                 {{ $primaryCategory->name ?? 'সংবাদ' }} নিয়ে আরও পড়ুন
             </h3>
 
@@ -195,7 +195,7 @@
                             <img src="{{ asset('storage/' . $post->news_thumbnail) }}"
                                 alt="{{ $post->news_title }}"
                                 class="w-full h-40 object-cover rounded mb-2">
-                            <h4 class="text-md font-semibold text-black hover:text-blue-600 leading-snug">
+                            <h4 class="text-md font-semibold news_title leading-snug">
                                 {{ \Illuminate\Support\Str::limit($post->news_title, 70) }}
                             </h4>
                             <p class="text-xs text-gray-500 mt-1">

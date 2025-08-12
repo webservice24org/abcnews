@@ -47,18 +47,33 @@
     @livewireStyles
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
- 
-@php
-    $customCode = Cache::remember('custom_code', 3600, function () {
-        return \App\Models\CustomCode::first();
-    });
-@endphp
-
-@if ($customCode && $customCode->custom_css)
     <style>
-        {!! $customCode->custom_css !!}
-    </style>
-@endif
+    .news_title {
+        transition: all 0.3s ease;
+        color: {{ $color->title_color ?? '#e7000b' }};
+        text-decoration: none;
+        padding-bottom: 4px; /* space between text and underline */
+        line-height: 1.5; /* line height for better readability */
+    }
+    .news_title:hover {
+        color: {{ $color->title_hover_color ?? '#e7000b' }};
+        text-decoration: underline solid; /* solid underline */
+        text-underline-offset: 4px; /* distance between text and underline */
+    }
+</style>
+
+ 
+    @php
+        $customCode = Cache::remember('custom_code', 3600, function () {
+            return \App\Models\CustomCode::first();
+        });
+    @endphp
+
+    @if ($customCode && $customCode->custom_css)
+        <style>
+            {!! $customCode->custom_css !!}
+        </style>
+    @endif
 </head>
 <body class="bg-white text-gray-800">
 
@@ -84,8 +99,9 @@
             x-show="showTopBtn"
             @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
             x-transition
-            class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-red-600 text-white shadow-lg hover:bg-red-700 transition"
+            class="fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg hover:cursor-pointer transition"
             title="Go to Top"
+            style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}"
         >
            
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

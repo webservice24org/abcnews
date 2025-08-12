@@ -30,7 +30,7 @@
     </div>
 
     <button wire:click="searchNews"
-            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition">
+            class=" hover:cursor-pointer text-white px-4 py-2 rounded transition" style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}">
         অনুসন্ধান করুন
     </button>
 </div>

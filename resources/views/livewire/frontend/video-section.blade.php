@@ -1,9 +1,9 @@
 <section class="mb-10">
    
-    <div class="flex justify-between items-center border-b-3 border-red-700 mb-4">
-        <h2 class="text-2xl font-bold text-white bg-red-600 p-2 inline-block">ভিডিও</h2>       
+    <div class="flex justify-between items-center border-b-3 mb-4" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        <h2 class="text-2xl font-bold p-2 inline-block" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">ভিডিও</h2>       
         
-        <a href="{{ route('videos.all') }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
+        <a href="{{ route('videos.all') }}" class="text-sm hover:bg-red-700 px-4 py-1 rounded shadow-sm transition" style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}">আরও দেখুন</a>
        
 
     </div>
@@ -25,7 +25,7 @@
                     </div>
                 </a>
                 <a href="{{ route('video.show', $last->id) }}" class="hover:text-red-500">
-                    <h3 class="mt-2 text-2xl font-semibold hover:text-red-500 text-black">{{ $last->video_title }}</h3>
+                    <h3 class="mt-2 text-2xl font-semibold news_title">{{ $last->video_title }}</h3>
                 </a>
             </div>
 
@@ -42,7 +42,7 @@
                             </div>
                         </a>
                         <a href="{{ route('video.show', $video->id) }}">
-                            <h4 class="text-md font-medium hover:text-red-500 text-black">{{ $video->video_title }}</h4>
+                            <h4 class="text-md font-medium news_title">{{ $video->video_title }}</h4>
                         </a>
                     </div>
                 @endforeach

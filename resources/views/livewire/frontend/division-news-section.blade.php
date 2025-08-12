@@ -4,7 +4,7 @@
     <div class="mb-4">
         {{-- Breadcrumb --}}
         <div class="flex items-center text-sm text-gray-500 mb-2 bg-gray-100 p-2">
-            <a href="{{ route('home') }}" class="hover:text-red-600 flex items-center gap-1">
+            <a href="{{ route('home') }}" class="hover:text-red-600 flex items-center gap-1" >
                 {{-- Home Icon --}}
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,7 +22,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M17.657 16.657L13.414 12.414A4 4 0 1116.657 9.657l4.243 4.243a4 4 0 01-5.657 5.657z" />
             </svg>
-            <h2 class="text-2xl font-bold text-white bg-red-600 px-4 py-1 rounded">
+            <h2 class="text-2xl font-boldpx-4 py-1 rounded" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">
                 {{ $division->name }}
             </h2>
         </div>
@@ -50,7 +50,7 @@
                 <div class="md:col-span-6">
                     <img src="{{ asset('storage/' . $topLeft->news_thumbnail) }}" class="w-full h-auto rounded mb-3">
                     <a href="{{ route('news.show', $topLeft->slug) }}">
-                        <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
+                        <h2 class="text-2xl font-bold news_title mb-2">{{ $topLeft->news_title }}</h2>
                     </a>
                     <p class="text-sm text-gray-600 mb-2">
                         {{ \App\Helpers\DateHelper::formatBanglaDateTime($topLeft->created_at) }}
@@ -67,7 +67,7 @@
                             <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-24 h-20 object-cover rounded">
                             <div class="flex-1">
                                 <a href="{{ route('news.show', $item->slug) }}">
-                                    <h4 class="text-md font-semibold text-black hover:text-blue-700">
+                                    <h4 class="text-md font-semibold news_title">
                                         {{ $item->news_title }}
                                     </h4>
                                 </a>
@@ -113,7 +113,7 @@
                             <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-32 h-24 object-cover rounded">
                             <div class="flex-1">
                                 <a href="{{ route('news.show', $item->slug) }}">
-                                    <h3 class="text-lg font-bold text-black hover:text-blue-700">
+                                    <h3 class="text-lg font-bold news_title">
                                         {{ $item->news_title }}
                                     </h3>
                                 </a>

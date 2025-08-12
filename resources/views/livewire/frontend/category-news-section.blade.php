@@ -1,7 +1,7 @@
 <section class="mb-10">
     {{-- Category Name with Inline Subcategories --}}
-    <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
-        <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">
+    <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        <h2 class="text-2xl font-bold pb-2 ps-2 pt-2 pr-4" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">
             {{ $category->name }}
         </h2>
 
@@ -9,7 +9,7 @@
             @foreach($category->subcategories as $subcategory)
                 @if (!empty($subcategory->slug))
                     <a href="{{ route('subcategory.show', ['subcategory' => $subcategory->slug]) }}"
-                    class="text-sm px-3 py-1 bg-gray-100 border border-gray-300 rounded hover:bg-red-600 hover:text-white transition">
+                    class="text-sm px-3 py-1 bg-gray-100 border border-gray-300 rounded transition" style="background-color: {{ $color->cat_btn_bg ?? '#e7000b' }}; color: {{ $color->cat_btn_color ?? '#fff' }};">
                         {{ $subcategory->name }}
                     </a>
                 @endif
@@ -28,7 +28,7 @@
                         <div>
                             <img src="{{ asset('storage/' . $topLeft->news_thumbnail) }}" class="w-full h-auto rounded mb-3">
                             <a href="{{ route('news.show', $topLeft->slug) }}">
-                                <h2 class="text-2xl font-bold text-black hover:text-blue-700 mb-2">{{ $topLeft->news_title }}</h2>
+                                <h2 class="text-2xl font-bold news_title mb-2">{{ $topLeft->news_title }}</h2>
                             </a>
                             <p class="text-sm text-gray-600 mb-2">
                                 {{ \App\Helpers\DateHelper::formatBanglaDateTime($topLeft->created_at) }}
@@ -47,7 +47,7 @@
                             <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-24 h-20 object-cover rounded">
                             <div class="flex-1">
                                 <a href="{{ route('news.show', $item->slug) }}">
-                                    <h4 class="text-md font-semibold text-black hover:text-blue-700 ">
+                                    <h4 class="text-md font-semibold news_title ">
                                         {{ $item->news_title }}
                                     </h4>
                                 </a>
@@ -115,7 +115,7 @@
                             <img src="{{ asset('storage/' . $item->news_thumbnail) }}" class="w-32 h-24 object-cover rounded">
                             <div class="flex-1">
                                 <a href="{{ route('news.show', $item->slug) }}">
-                                    <h3 class="text-lg font-bold text-black hover:text-blue-700">
+                                    <h3 class="text-lg font-bold news_title">
                                         {{ $item->news_title }}
                                     </h3>
                                 </a>

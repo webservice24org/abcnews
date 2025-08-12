@@ -1,8 +1,8 @@
 <section class="mt-20 ">
-    <div class="flex justify-between items-center border-b-3 border-red-700 mb-4">
-        <h2 class="text-2xl font-bold text-white bg-red-600 p-2 inline-block">ফটো নিউজ</h2>       
+    <div class="flex justify-between items-center border-b-3 mb-4" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        <h2 class="text-2xl font-bold p-2 inline-block" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">ফটো নিউজ</h2>       
         
-        <a href="{{ route('photo-news.index') }}" class="text-sm text-white bg-red-600 hover:bg-red-700 px-4 py-1 rounded shadow-sm transition">আরও দেখুন</a>
+        <a href="{{ route('photo-news.index') }}" class="text-sm hover:bg-red-700 px-4 py-1 rounded shadow-sm transition" style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}">আরও দেখুন</a>
        
 
     </div>
@@ -64,7 +64,7 @@
                         </template>
                     </div>
                 </div>
-                <h2 class="text-xl font-bold mb-2 text-red-600">{{ $first->title }}</h2>
+                <h2 class="text-xl font-bold mb-2 news_title">{{ $first->title }}</h2>
             @endif
 
         </div>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="p-2">
-                        <h4 class="text-sm font-semibold text-gray-800 hover:text-red-500">{{ $news->title }}</h4>
+                        <h4 class="text-sm font-semibold news_title">{{ $news->title }}</h4>
                     </div>
                 </a>
             @endforeach
