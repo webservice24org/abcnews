@@ -32,6 +32,7 @@ use App\Livewire\Admin\PhotoNewsList;
 use App\Livewire\Admin\ClearCache;
 use App\Livewire\Admin\CustomCodeEditor;
 use App\Livewire\Admin\ThemeColorPicker;
+use App\Livewire\Admin\Pages\PageList;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -130,6 +131,10 @@ Route::middleware(['auth'])->group(function () {
     ->name('admin.clear.cache');
     Route::get('/custom-code', CustomCodeEditor::class)->name('admin.custom-code');
    Route::get('/admin/theme-color-picker', ThemeColorPicker::class)->name('theme.color.picker');
+
+   Route::get('/admin/pages', PageList::class)->name('pages.index');
+    //Route::get('/pages/{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
+    //Route::get('/pages/{id}', [PageController::class, 'show'])->name('pages.show');
     
 });
 
