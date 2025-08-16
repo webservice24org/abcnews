@@ -1,26 +1,31 @@
-<div>
+<div class="p-6 bg-white shadow rounded space-y-4">
     <div class="mb-4 flex justify-between items-center">
-        <input type="text" wire:model="search" placeholder="Search pages..."
-               class="border px-3 py-2 rounded w-1/3">
+        <!-- Left: Title -->
+        <div class="title">
+            <h2 class="text-black text-lg font-semibold">Page list</h2>
+        </div>
 
-        @if (session()->has('message'))
-            <span class="text-green-600">{{ session('message') }}</span>
-        @endif
+        <!-- Right: Search -->
+        <div class="search">
+            <input type="text" wire:model="search" placeholder="Search pages..."
+                class="border px-3 py-2 rounded text-black w-64">
+        </div>
     </div>
+
 
     <table class="w-full border-collapse border">
         <thead>
             <tr class="bg-gray-100 text-left">
-                <th class="border p-2">Title</th>
-                <th class="border p-2">Thumbnail</th>
-                <th class="border p-2">Status</th>
-                <th class="border p-2">Actions</th>
+                <th class="border p-2 text-black">Title</th>
+                <th class="border p-2 text-black">Thumbnail</th>
+                <th class="border p-2 text-black">Status</th>
+                <th class="border p-2 text-black">Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($pages as $page)
                 <tr>
-                    <td class="border p-2">{{ $page->title }}</td>
+                    <td class="border p-2 text-black">{{ $page->title }}</td>
                     <td class="border p-2">
                         @if($page->page_thumbnail)
                             <img src="{{ asset('storage/' . $page->page_thumbnail) }}" 
@@ -30,22 +35,44 @@
                         @endif
                     </td>
                     <td class="border p-2">
-                        <span class="{{ $page->status ? 'text-green-600' : 'text-red-600' }}">
-                            {{ $page->status ? 'Active' : 'Inactive' }}
-                        </span>
+                        <button 
+                            wire:click="toggleStatus({{ $page->id }})"
+                            class="px-3 py-1 rounded text-white 
+                                {{ $page->status === 'published' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }}">
+                            {{ $page->status === 'published' ? 'Active' : 'Inactive' }}
+                        </button>
                     </td>
+
                     <td class="border p-2 flex gap-2">
-                        <a href="" title="Edit">
+                        <a href="{{ route('pages.edit', $page->id) }}" title="Edit">
                             <flux:icon name="pencil-square" class="w-5 h-5 text-blue-600" />
                         </a>
-                        <a href="" title="View">
+                        <a href="{{ route('page.show', $page->slug) }}" target="__blank" title="View">
                             <flux:icon name="eye" class="w-5 h-5 text-gray-600" />
                         </a>
-                        <button wire:click="deletePage({{ $page->id }})" 
-                                onclick="return confirm('Are you sure you want to delete this page?')" 
-                                title="Delete">
-                            <flux:icon name="trash" class="w-5 h-5 text-red-600" />
+                        <button
+                            x-data
+                            @click.prevent="
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: 'This page will be permanently deleted!',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#d33',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $wire.deletePage({{ $page->id }});
+                                    }
+                                })
+                            "
+                            class="text-red-600 hover:text-red-800"
+                            title="Delete"
+                        >
+                            <flux:icon name="trash" class="w-5 h-5" />
                         </button>
+
                     </td>
                 </tr>
             @empty

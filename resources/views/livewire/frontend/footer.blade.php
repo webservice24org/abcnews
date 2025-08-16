@@ -41,6 +41,21 @@
                 </div>
             </div>
 
+            {{-- Footer Menu --}}
+            <div class="mt-6">
+                <ul class="flex flex-wrap gap-4 text-sm">
+                    @foreach ($pages as $page)
+                        <li>
+                            <a href="{{ route('page.show', $page->slug) }}" 
+                            class="hover:underline">
+                                {{ $page->title }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+
             {{-- Bottom Row: Copyright and Developer --}}
             <div class="flex flex-col md:flex-row justify-between items-center text-sm text-white border-t border-white pt-4">
                 <div>

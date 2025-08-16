@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Page extends Model
 {
-    protected $fillable = ['title', 'slug', 'description', 'page_thumbnail', 'status'];
+    protected $fillable = ['title', 'slug', 'description', 'page_thumbnail', 'status', 'layout_type'];
 
     // Auto-generate slug if not set
     protected static function boot()

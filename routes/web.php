@@ -54,6 +54,7 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\AllPhotoNews;
  use App\Livewire\Frontend\UserNews;
  
+use App\Livewire\Frontend\PageShow;
 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
@@ -133,8 +134,9 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/admin/theme-color-picker', ThemeColorPicker::class)->name('theme.color.picker');
 
    Route::get('/admin/pages', PageList::class)->name('pages.index');
-    //Route::get('/pages/{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
-    //Route::get('/pages/{id}', [PageController::class, 'show'])->name('pages.show');
+   
+    Route::get('/admin/pages/edit/{id}', \App\Livewire\Admin\Pages\PageEdit::class)->name('pages.edit');
+    //Route::get('/admin/pages/create', \App\Livewire\Admin\Pages\PageEdit::class)->name('pages.create');
     
 });
 
@@ -176,7 +178,7 @@ Route::get('/photo-news', AllPhotoNews::class)->name('photo-news.index');
 
 Route::get('/all-news/user/{user}', UserNews::class)->name('news.user');
 
-
+Route::get('/page/{slug}', PageShow::class)->name('page.show');
 
 
 require __DIR__.'/auth.php';

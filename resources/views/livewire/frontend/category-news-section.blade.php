@@ -215,7 +215,7 @@
                         </div>
                     <br>
                     <livewire:frontend.news-archive-search />
-            </div>
+                </div>
             </div>
         </div>
     @else

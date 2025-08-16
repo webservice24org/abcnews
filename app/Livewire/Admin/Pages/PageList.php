@@ -19,8 +19,24 @@ class PageList extends Component
         $page = Page::findOrFail($id);
         $page->delete();
 
-        session()->flash('message', 'Page deleted successfully.');
         $this->dispatch('pageDeleted');
+        $this->dispatch('toast', [
+            'type' => 'success',
+            'message' => 'Page deleted successfully!',
+        ]);
+    }
+
+    public function toggleStatus($id)
+    {
+        $page = Page::findOrFail($id);
+
+        $page->status = $page->status === 'published' ? 'draft' : 'published';
+        $page->save();
+
+        $this->dispatch('toast', [
+            'type' => 'success',
+            'message' => "Page status changed to {$page->status}!",
+        ]);
     }
 
     public function render()
@@ -32,3 +48,4 @@ class PageList extends Component
         return view('livewire.admin.pages.page-list', compact('pages'));
     }
 }
+
