@@ -11,11 +11,17 @@
         <div class="prose max-w-none">
             {!! $page->description !!}
         </div>
+
+        {{-- Show contact form only on contact-us page --}}
+        @if($page->slug === 'contact-us')
+            <div class="mt-6">
+                <livewire:frontend.contact-form />
+            </div>
+        @endif
     </div>
 
     <div class="col-span-1">
        <livewire:frontend.popular-news-sidebar />
        <livewire:frontend.news-archive-search />
-    
     </div>
 </div>

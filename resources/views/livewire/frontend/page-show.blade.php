@@ -1,4 +1,4 @@
-<div class="bg-white p-6 shadow rounded space-y-4">
+<div class="bg-white p-6 shadow rounded space-y-4"> 
     @if($page->page_thumbnail)
         <img src="{{ asset('storage/' . $page->page_thumbnail) }}" 
              alt="{{ $page->title }}" 
@@ -10,4 +10,11 @@
     <div class="prose max-w-none">
         {!! $page->description !!}
     </div>
+
+    {{-- Show contact form only if page is contact-us --}}
+    @if($page->slug === 'contact-us')
+        <div class="mt-6">
+            <livewire:frontend.contact-form />
+        </div>
+    @endif
 </div>

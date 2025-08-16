@@ -517,6 +517,45 @@
                 </div>
             </flux:navlist>
 
+             @php
+                $contactRoutes = [
+                    'contacts.index',
+                ];
+                $iscontactOpen = collect($contactRoutes)->contains(fn($route) => request()->routeIs($route));
+            @endphp
+
+            <flux:navlist variant="outline">
+                <div x-data="{ open: {{ $iscontactOpen ? 'true' : 'false' }} }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        <span>{{ __('Contact Manager') }}</span>
+                        <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <svg x-show="open" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition>
+                        <flux:navlist.group class="pl-4 mt-1">
+
+                            <flux:navlist.item
+                                icon="list-bullet"
+                                :href="route('contacts.index')"
+                                :current="request()->routeIs('contacts.index')"
+                                wire:navigate
+                                class="{{ request()->routeIs('contacts.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Contact List') }}
+                            </flux:navlist.item>
+
+                        </flux:navlist.group>
+                    </div>
+                </div>
+            </flux:navlist>
+
+            
+            
             <flux:navlist variant="outline">
                 <flux:navlist.group class="grid">
                     <flux:navlist.item 
