@@ -34,6 +34,7 @@ use App\Livewire\Admin\CustomCodeEditor;
 use App\Livewire\Admin\ThemeColorPicker;
 use App\Livewire\Admin\ContactList;
 use App\Livewire\Admin\ContactReply;
+use App\Livewire\Admin\SubscriberList;
 use App\Livewire\Admin\Pages\PageList;
 use App\Livewire\Admin\Pages\PageEdit;
 
@@ -141,12 +142,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pages/edit/{id}', PageEdit::class)->name('pages.edit');
     //Route::get('/admin/pages/create', \App\Livewire\Admin\Pages\PageEdit::class)->name('pages.create');
 
-    // Contact list
     Route::get('/admin/contacts', ContactList::class)->name('contacts.index');
-
-    // Reply to contact
-    //Route::get('/contacts/reply/{contact}', ContactReply::class)->name('contacts.reply');
     Route::get('/contacts/{contact}/reply', ContactReply::class)->name('contacts.reply');
+    Route::get('/admin/subscribers', SubscriberList::class)->name('admin.subscribers');
     
 });
 

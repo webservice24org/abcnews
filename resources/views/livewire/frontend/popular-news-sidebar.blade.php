@@ -12,7 +12,8 @@
         </div>
     @endforeach
 
-    
+    <livewire:frontend.subscriber-form />
+
     <livewire:frontend.division-map />
 
 </div>

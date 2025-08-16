@@ -520,6 +520,7 @@
              @php
                 $contactRoutes = [
                     'contacts.index',
+                    'admin.subscribers',
                 ];
                 $iscontactOpen = collect($contactRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -547,6 +548,14 @@
                                 wire:navigate
                                 class="{{ request()->routeIs('contacts.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                                 {{ __('Contact List') }}
+                            </flux:navlist.item>
+                            <flux:navlist.item
+                                icon="list-bullet"
+                                :href="route('admin.subscribers')"
+                                :current="request()->routeIs('admin.subscribers')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.subscribers') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Subscriber List') }}
                             </flux:navlist.item>
 
                         </flux:navlist.group>
