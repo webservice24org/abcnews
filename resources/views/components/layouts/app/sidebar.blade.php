@@ -82,6 +82,7 @@
                 'news.drafts',
                 'news.scheduled',
                 'posts.trashed',
+                'admin.newsletter',
             ];
             $isNewsOpen = collect($newsRoutes)->contains(fn($route) => request()->routeIs($route));
         @endphp
@@ -147,6 +148,14 @@
                             wire:navigate
                             class="{{ request()->routeIs('posts.trashed') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                             {{ __('Trashed') }}
+                        </flux:navlist.item>
+                        <flux:navlist.item
+                            icon="newspaper"
+                            :href="route('admin.newsletter')"
+                            :current="request()->routeIs('admin.newsletter')"
+                            wire:navigate
+                            class="{{ request()->routeIs('admin.newsletter') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                            {{ __('News Letter') }}
                         </flux:navlist.item>
 
                     </flux:navlist.group>
@@ -477,9 +486,6 @@
             </flux:navlist>
 
 
-            
-
-            
             @php
                 $pageRoutes = [
                     'pages.index',

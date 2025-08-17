@@ -86,6 +86,12 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6 bg-white shadow-md dark:bg-zinc-800 dark:shadow-zinc-700 p-6 rounded-lg">
+    @if(request()->get('verified') === '0')
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+            Your account has been created. Please verify your email to log in.
+        </div>
+    @endif
+
 
     <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
 

@@ -2,24 +2,23 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 new class extends Component {
     use WithFileUploads;
 
     public string $name = '';
     public string $email = '';
-
     public string $address = '';
     public string $about = '';
     public ?string $dob = '';
     public string $nid_number = '';
     public string $mobile_number = '';
-    public $profile_photo;
+    public $profile_photo; 
     public ?string $photo_preview = null;
 
     public function mount(): void
@@ -36,87 +35,71 @@ new class extends Component {
             $this->nid_number = $profile->nid_number ?? '';
             $this->mobile_number = $profile->mobile_number ?? '';
             $this->photo_preview = $profile->profile_photo ?? null;
-
         }
     }
 
     public function updateProfileInformation(): void
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    $validated = $this->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-        'address' => 'nullable|string|max:255',
-        'about' => 'nullable|string|max:1000',
-        'dob' => 'nullable|date',
-        'nid_number' => 'nullable|string|max:30',
-        'mobile_number' => 'nullable|string|max:20',
-        'profile_photo' => 'nullable|image|max:2048',
-    ]);
+        $validated = $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'address' => 'nullable|string|max:255',
+            'about' => 'nullable|string|max:1000',
+            'dob' => 'nullable|date',
+            'nid_number' => 'nullable|string|max:30',
+            'mobile_number' => 'nullable|string|max:20',
+            'profile_photo' => 'nullable|image|max:2048',
+        ]);
 
-    $user->fill([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-    ]);
+        // Update basic user info
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
 
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
-
-    $user->save();
-
-    // Apply news-style logic to profile photo
-    $profileData = collect($validated)
-    ->except(['name', 'email'])
-    ->filter(fn ($val) => $val !== '') // Removes empty strings
-    ->toArray();
-
-
-    $existingPhoto = $user->profile?->profile_photo;
-
-    if ($this->profile_photo) {
-    // Store the image publicly
-        $newPhoto = $this->profile_photo->store('profile_photos', 'public');
-
-        // Set visibility (important!)
-        Storage::disk('public')->setVisibility($newPhoto, 'public');
-
-        // Set 644 permission on file system (if needed)
-        $fullPath = storage_path('app/public/' . $newPhoto);
-        if (file_exists($fullPath)) {
-            chmod($fullPath, 0644); // read for everyone
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null; 
         }
 
-        // Delete old one
-        if ($existingPhoto && \Storage::disk('public')->exists($existingPhoto)) {
-            Storage::disk('public')->delete($existingPhoto);
+        $user->save();
+
+        // Prepare profile data
+        $profileData = collect($validated)
+            ->except(['name', 'email'])
+            ->filter(fn($val) => $val !== '')
+            ->toArray();
+
+        $existingPhoto = $user->profile?->profile_photo;
+
+        if ($this->profile_photo) {
+            
+            $newPhoto = $this->profile_photo->store('profile_photos', 'public');
+
+            
+            if ($existingPhoto && Storage::disk('public')->exists($existingPhoto)) {
+                Storage::disk('public')->delete($existingPhoto);
+            }
+
+            $profileData['profile_photo'] = $newPhoto;
+            $this->photo_preview = $newPhoto;
+        } else {
+            $profileData['profile_photo'] = $existingPhoto;
         }
 
-        $profileData['profile_photo'] = $newPhoto;
-        $this->photo_preview = $newPhoto;
+       
+        $user->profile()->updateOrCreate(['user_id' => $user->id], $profileData);
+
+        
+        $this->dispatch('toast', [
+            'type' => 'success',
+            'message' => 'Profile updated successfully!',
+        ]);
+
+        
+        $this->redirect(request()->header('Referer') ?? route('profile.show'), navigate: true);
     }
- else {
-        $profileData['profile_photo'] = $existingPhoto;
-    }
-
-    $user->profile()->updateOrCreate(
-        ['user_id' => $user->id],
-        $profileData
-    );
-
-    $this->dispatch('profile-updated', name: $user->name);
-
-    $this->dispatch('toast', [
-        'type' => 'success',
-        'message' => 'Profile updated successfully!',
-    ]);
-
-    $this->redirect(request()->header('Referer') ?? route('profile.show'), navigate: true);
-}
-
-
-
 
     public function resendVerificationNotification(): void
     {
@@ -134,17 +117,16 @@ new class extends Component {
 ?>
 
 
+
 <section class="w-full">
     @include('partials.settings-heading')
 
-    
-        <x-settings.layout :heading="__('Profile')" :subheading="__('Update your profile and contact information')">
+    <x-settings.layout :heading="__('Profile')" :subheading="__('Update your profile and contact information')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
-
             <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
 
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
+            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                 <div>
                     <flux:text class="mt-4">
                         {{ __('Your email address is unverified.') }}
@@ -163,28 +145,18 @@ new class extends Component {
             @endif
 
             <flux:textarea wire:model="about" :label="__('About You')" />
-            @error('about') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-
             <flux:input wire:model="dob" :label="__('Date of Birth')" type="date" />
-            @error('dob') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-
-            <flux:input wire:model="nid_number" :label="__('NID Number')" type="number" />
-            @error('nid_number') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-
+            <flux:input wire:model="nid_number" :label="__('NID Number')" type="text" />
             <flux:input wire:model="mobile_number" :label="__('Mobile Number')" type="text" />
-            @error('mobile_number') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
 
             <div>
                 <label class="block text-sm text-black font-medium mb-1">Profile Picture</label>
                 <input type="file" wire:model="profile_photo" class="w-full border rounded p-2" />
-                @error('profile_photo') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 @if ($profile_photo)
                     <img src="{{ $profile_photo->temporaryUrl() }}" class="w-20 h-20 mt-2 rounded-full" />
                 @elseif ($photo_preview)
-                    <img src="{{ url('storage/' . $photo_preview) }}" class="w-20 h-20 mt-2 rounded-full" />
+                    <img src="{{ asset('storage/' . $photo_preview) }}" class="w-20 h-20 mt-2 rounded-full" />
                 @endif
-
-
             </div>
 
             <div class="flex items-center gap-4">
@@ -197,17 +169,16 @@ new class extends Component {
                 </x-action-message>
             </div>
         </form>
-        
-                <livewire:settings.delete-user-form />
-        
+@if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+        <livewire:settings.delete-user-form />
+        @endif
     </x-settings.layout>
-    
 </section>
 
 @push('scripts')
 <script>
     window.Livewire.on('toast', ({ type, message }) => {
-        showToast(type, message); // You must have showToast() implemented globally
+        showToast(type, message); 
     });
 </script>
 @endpush

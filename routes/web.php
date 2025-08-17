@@ -35,6 +35,7 @@ use App\Livewire\Admin\ThemeColorPicker;
 use App\Livewire\Admin\ContactList;
 use App\Livewire\Admin\ContactReply;
 use App\Livewire\Admin\SubscriberList;
+use App\Livewire\Admin\NewsletterSender;
 use App\Livewire\Admin\Pages\PageList;
 use App\Livewire\Admin\Pages\PageEdit;
 
@@ -57,8 +58,12 @@ use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\SinglePhotoNews;
  use App\Livewire\Frontend\AllPhotoNews;
  use App\Livewire\Frontend\UserNews;
+ use App\Livewire\Frontend\SubscriberForm;
  
 use App\Livewire\Frontend\PageShow;
+
+use Illuminate\Support\Facades\URL;
+use App\Models\User;
 
 Route::get('/', HomePage::class)->name('home');
 //Route::get('/news/{slug}', NewsShow::class)->name('news.show');
@@ -145,12 +150,35 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/contacts', ContactList::class)->name('contacts.index');
     Route::get('/contacts/{contact}/reply', ContactReply::class)->name('contacts.reply');
     Route::get('/admin/subscribers', SubscriberList::class)->name('admin.subscribers');
+
+    Route::get('/admin/newsletter', NewsletterSender::class)->name('admin.newsletter');
     
 });
 
 
 
 
+
+Route::get('/subscriber/verify-email/{id}/{hash}', function ($id, $hash) {
+    $user = User::findOrFail($id);
+
+    // Validate hash
+    if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
+        abort(403, 'Invalid or expired verification link.');
+    }
+
+    // Mark verified if not already
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+    }
+
+    return redirect()->route('login')->with('status', 'Your email has been verified successfully!');
+})->middleware('signed')->name('subscriber.verification.verify');
+
+
+
+Route::get('/unsubscribe/{email}', SubscriberForm::class . '@unsubscribe')
+    ->name('unsubscribe');
 
 Route::get('news/{slug}', NewsShow::class)->where('slug', '^(?!categories$).+')->name('news.show');
 

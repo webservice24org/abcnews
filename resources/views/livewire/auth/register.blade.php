@@ -35,11 +35,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
         
         event(new Registered($user));
 
-        
-        Auth::login($user);
+        $this->redirect(route('login', absolute: false) . '?verified=0');
+        //Auth::login($user);
 
         
-        $this->redirectIntended(route('home', absolute: false), navigate: true);
+        //$this->redirectIntended(route('home', absolute: false), navigate: true);
     }
 
 }; ?>

@@ -8,6 +8,8 @@ use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriberStatusMail;
 
+use Illuminate\Support\Facades\URL;
+
 class SubscriberForm extends Component
 {
     public $name;
@@ -20,24 +22,39 @@ class SubscriberForm extends Component
             'email' => 'required|email|unique:subscribers,email',
         ]);
 
-        // Save subscriber as inactive by default
         $subscriber = Subscriber::create([
-            'name'   => $this->name,
-            'email'  => $this->email,
-            'status' => 'inactive', 
+            'name'      => $this->name,
+            'email'     => $this->email,
+            'status'    => 'inactive',
+            'is_agree'  => 1, // make sure default is yes
         ]);
 
-        // Send confirmation email
         Mail::to($subscriber->email)->send(new SubscriberStatusMail(
-            $subscriber, 
-            'inactive', 
+            $subscriber,
+            'inactive',
             'Thank you for subscribing! Your subscription has been received. After review, we will activate it and notify you.'
         ));
 
         $this->reset();
 
         session()->flash('success', 'Your subscription is received! We will notify you once it is active!');
-        
+    }
+
+    // ✅ New method
+    public function unsubscribe($email)
+    {
+        $subscriber = Subscriber::where('email', $email)->first();
+
+        if ($subscriber) {
+            $subscriber->update([
+                'is_agree' => 0,
+                'status'   => 'inactive'
+            ]);
+
+            return view('livewire.frontend.unsubscribe-success', ['subscriber' => $subscriber]);
+        }
+
+        return view('livewire.frontend.unsubscribe-notfound');
     }
 
     public function render()

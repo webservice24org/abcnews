@@ -18,6 +18,7 @@
                     <th class="border border-gray-300 px-4 py-2 text-black text-left ">Photo</th>
                     <th class="border border-gray-300 px-4 py-2 text-black text-left ">Email</th>
                     <th class="border border-gray-300 px-4 py-2 text-black text-left ">Roles</th>
+                    <th class="border border-gray-300 px-4 py-2 text-black text-center ">Verification</th>
                     <th class="border border-gray-300 px-4 py-2 text-black text-center ">Status</th>
                     <th class="border border-gray-300 px-4 py-2 text-black text-center ">Action</th>
                 </tr>
@@ -51,6 +52,18 @@
                             @endif
                         </td>
                         <td class="border border-gray-300 px-4 py-2 text-center">
+                            @if ($user->hasVerifiedEmail())
+                                <span class="px-2 py-1 text-xs bg-green-600 text-white rounded">
+                                    Verified
+                                </span>
+                            @else
+                               <span class="px-2 py-1 text-xs bg-red-600 text-white rounded">
+                                    need Verified
+                                </span>
+                            @endif
+                        </td>
+
+                        <td class="border border-gray-300 px-4 py-2 text-center">
                             @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                 <button wire:click="toggleStatus({{ $user->id }})"
                                         class="px-3 py-1 rounded text-sm 
@@ -63,6 +76,7 @@
                                 </span>
                             @endif
                         </td>
+                        
 
                         <td class="border border-gray-300 px-4 py-2 text-center">
                             @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))

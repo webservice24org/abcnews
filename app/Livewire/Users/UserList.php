@@ -5,6 +5,7 @@ namespace App\Livewire\Users;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserList extends Component
 {
@@ -39,15 +40,15 @@ class UserList extends Component
             'newPassword' => 'required|min:6|same:newPasswordConfirmation',
         ]);
 
-        $user = \App\Models\User::create([
+        $user = User::create([
             'name' => $this->newName,
             'email' => $this->newEmail,
-            'password' => bcrypt($this->newPassword),
+            'password' => Hash::make($this->newPassword),
             'is_active' => false, 
         ]);
 
 
-        $roleNames = \Spatie\Permission\Models\Role::whereIn('id', $this->newSelectedRoles)->pluck('name');
+        $roleNames = Role::whereIn('id', $this->newSelectedRoles)->pluck('name');
         $user->syncRoles($roleNames);
 
         $this->dispatch('toast', type: 'success', message: 'User created successfully.');
@@ -150,6 +151,8 @@ class UserList extends Component
         $this->dispatch('toast', type: 'success', message: 'User status updated.');
         $this->loadUsers();
     }
+
+    
 
 }
 
