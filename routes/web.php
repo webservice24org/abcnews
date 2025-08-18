@@ -38,6 +38,9 @@ use App\Livewire\Admin\SubscriberList;
 use App\Livewire\Admin\NewsletterSender;
 use App\Livewire\Admin\Pages\PageList;
 use App\Livewire\Admin\Pages\PageEdit;
+use App\Livewire\Admin\Google\AnalyticsDashboard;
+use App\Livewire\Admin\DashboardSummary;
+use App\Livewire\Frontend\UnsubscribePage;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -152,6 +155,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/subscribers', SubscriberList::class)->name('admin.subscribers');
 
     Route::get('/admin/newsletter', NewsletterSender::class)->name('admin.newsletter');
+
+    Route::get('/admin/analytics', AnalyticsDashboard::class)->name('admin.analytics');
     
 });
 
@@ -177,10 +182,10 @@ Route::get('/subscriber/verify-email/{id}/{hash}', function ($id, $hash) {
 
 
 
-//Route::get('/unsubscribe/{email}', SubscriberForm::class . '@unsubscribe')->name('unsubscribe');
-
     Route::get('/unsubscribe/{email}', \App\Livewire\Frontend\UnsubscribePage::class)
     ->name('unsubscribe');
+
+    
 
 
 Route::get('news/{slug}', NewsShow::class)->where('slug', '^(?!categories$).+')->name('news.show');

@@ -354,7 +354,8 @@
                     'admin.social-connections',
                     'pulse',
                     'admin.custom-code',
-                    'theme.color.picker'
+                    'theme.color.picker',
+                    'admin.analytics'
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -421,7 +422,7 @@
                             </flux:navlist.item>
 
                             <flux:navlist.item 
-                                icon="sparkles"  {{-- use an icon like "activity" or "pulse" --}}
+                                icon="sparkles" 
                                 :href="route('pulse')" 
                                 :current="request()->routeIs('pulse*')">
                                 {{ __('Performance Monitor') }}
@@ -430,8 +431,11 @@
                                 {{ __('Custom CSS/JS Editor') }}
                             </flux:navlist.item>
                              <flux:navlist.item icon="home" :href="route('theme.color.picker')" :current="request()->routeIs('theme.color.picker')">
-            {{ __('Theme Color Picker') }}
-        </flux:navlist.item>
+                                {{ __('Theme Color Picker') }}
+                            </flux:navlist.item> 
+                            <flux:navlist.item icon="home" :href="route('admin.analytics')" :current="request()->routeIs('admin.analytics')">
+                                {{ __('Google Analytics') }}
+                            </flux:navlist.item>
 
                         </flux:navlist.group>
                     </div>
