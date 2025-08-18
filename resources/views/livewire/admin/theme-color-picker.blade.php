@@ -1,4 +1,4 @@
-<div class="space-y-4 p-6 bg-white rounded shadow">
+<div class="space-y-4 p-6 bg-gray-300 rounded shadow">
     <h2 class="text-xl font-semibold mb-4 text-black">Change website colors</h2>
 
     @foreach($colors as $field => $value)

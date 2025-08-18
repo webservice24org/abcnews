@@ -41,6 +41,8 @@ use App\Livewire\Admin\Pages\PageEdit;
 use App\Livewire\Admin\Google\AnalyticsDashboard;
 use App\Livewire\Admin\DashboardSummary;
 use App\Livewire\Frontend\UnsubscribePage;
+use App\Livewire\Admin\Google\AnalyticsSettings;
+use App\Livewire\Admin\Google\AnalyticsConfig;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -148,7 +150,7 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/admin/pages', PageList::class)->name('pages.index');
    
     Route::get('/admin/pages/edit/{id}', PageEdit::class)->name('pages.edit');
-    //Route::get('/admin/pages/create', \App\Livewire\Admin\Pages\PageEdit::class)->name('pages.create');
+   
 
     Route::get('/admin/contacts', ContactList::class)->name('contacts.index');
     Route::get('/contacts/{contact}/reply', ContactReply::class)->name('contacts.reply');
@@ -157,6 +159,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/newsletter', NewsletterSender::class)->name('admin.newsletter');
 
     Route::get('/admin/analytics', AnalyticsDashboard::class)->name('admin.analytics');
+    Route::get('/admin/analytics-settings', AnalyticsSettings::class)->name('admin.analytics-settings');
     
 });
 

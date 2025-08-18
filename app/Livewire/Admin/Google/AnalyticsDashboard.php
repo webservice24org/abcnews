@@ -6,6 +6,7 @@ use Livewire\Component;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
 use Carbon\Carbon;
+use App\Models\AnalyticsConfig;
 
 class AnalyticsDashboard extends Component
 {
@@ -32,8 +33,24 @@ class AnalyticsDashboard extends Component
         $this->darkMode = !$this->darkMode;
     }
 
+    private function loadAnalyticsConfig()
+    {
+        $config = AnalyticsConfig::first();
+        if ($config) {
+            // Set GA property ID dynamically
+            config(['analytics.property_id' => $config->property_id]);
+
+            // Save service account JSON dynamically
+            $path = storage_path('app/analytics/service-account-credentials.json');
+            file_put_contents($path, $config->service_account_json);
+        }
+    }
+
     public function loadAnalytics()
     {
+        // Always reload GA config dynamically before fetching data
+        $this->loadAnalyticsConfig();
+
         $period = Period::days(30);
 
         // Visitors + PageViews
@@ -105,6 +122,9 @@ class AnalyticsDashboard extends Component
     // Livewire listener to refresh active users every 10s
     public function refreshRealtime()
     {
+        // Reload GA config dynamically in case it's changed
+        $this->loadAnalyticsConfig();
+
         $realtime = Analytics::getRealtime(
             period: Period::create(Carbon::today(), Carbon::today()),
             metrics: ['activeUsers']
