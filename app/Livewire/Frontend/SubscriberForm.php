@@ -26,7 +26,7 @@ class SubscriberForm extends Component
             'name'      => $this->name,
             'email'     => $this->email,
             'status'    => 'inactive',
-            'is_agree'  => 1, // make sure default is yes
+            'is_agree'  => 1, 
         ]);
 
         Mail::to($subscriber->email)->send(new SubscriberStatusMail(
@@ -40,22 +40,8 @@ class SubscriberForm extends Component
         session()->flash('success', 'Your subscription is received! We will notify you once it is active!');
     }
 
-    // ✅ New method
-    public function unsubscribe($email)
-    {
-        $subscriber = Subscriber::where('email', $email)->first();
+    
 
-        if ($subscriber) {
-            $subscriber->update([
-                'is_agree' => 0,
-                'status'   => 'inactive'
-            ]);
-
-            return view('livewire.frontend.unsubscribe-success', ['subscriber' => $subscriber]);
-        }
-
-        return view('livewire.frontend.unsubscribe-notfound');
-    }
 
     public function render()
     {

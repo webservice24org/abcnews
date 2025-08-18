@@ -177,8 +177,11 @@ Route::get('/subscriber/verify-email/{id}/{hash}', function ($id, $hash) {
 
 
 
-Route::get('/unsubscribe/{email}', SubscriberForm::class . '@unsubscribe')
+//Route::get('/unsubscribe/{email}', SubscriberForm::class . '@unsubscribe')->name('unsubscribe');
+
+    Route::get('/unsubscribe/{email}', \App\Livewire\Frontend\UnsubscribePage::class)
     ->name('unsubscribe');
+
 
 Route::get('news/{slug}', NewsShow::class)->where('slug', '^(?!categories$).+')->name('news.show');
 
