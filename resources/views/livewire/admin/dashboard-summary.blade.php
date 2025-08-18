@@ -47,4 +47,12 @@
             <h2 class="text-2xl font-bold text-gray-800">{{ $inactiveUsers }}</h2>
         </div>
     </div>
+    <div class="flex items-center p-5 bg-white rounded shadow hover:shadow-lg transition">
+        <x-flux::icon name="user-group" class="w-10 h-10 text-red-600" />
+        <div class="ml-4">
+            <p class="text-gray-500">Subscribers</p>
+            <h2 class="text-2xl font-bold text-gray-800">{{ $subscribers }}</h2>
+            <a href="{{route('admin.subscribers')}}" class="bg-red-500 text-white p-1 rounded">view all</a>
+        </div>
+    </div>
 </div>
