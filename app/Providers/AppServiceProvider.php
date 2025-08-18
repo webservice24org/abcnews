@@ -8,6 +8,7 @@ use App\Models\SocialConnection;
 use App\Models\ColorSetting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use DevRabiul\LivewireDoctor\LivewireDoctor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with(compact('siteSetting', 'siteInfo', 'social', 'color'));
         });
+        // Register Livewire Doctor
+       // LivewireDoctor::register();
     }
 }

@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use WireComments\Traits\Commentable;
+use LakM\Commenter\Concerns\Commentable;
+use LakM\Commenter\Contracts\CommentableContract;
+
 use App\Models\{
     Category, SubCategory, Tag, Division, District, Upazila, User
 };
 
-class NewsPost extends Model
+class NewsPost extends Model implements CommentableContract
 {
     use SoftDeletes;
-     use Commentable;
+    use Commentable;
+     
 
     protected $fillable = [
         'news_title',

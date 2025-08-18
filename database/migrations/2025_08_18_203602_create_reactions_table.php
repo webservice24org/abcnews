@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use LakM\Commenter\Models\Comment;
 
 return new class extends Migration
 {
@@ -11,8 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->string('guest_id')->nullable();
+        Schema::create('reactions', function (Blueprint $table) {
+           $table->id();
+           $table->morphs('owner');
+           $table->foreignIdFor(Comment::class);
+
+           $table->string('type');
+           $table->timestamps();
         });
     }
 
@@ -21,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('guest_id');
-        });
+        Schema::dropIfExists('reactions');
     }
 };

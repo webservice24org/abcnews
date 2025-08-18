@@ -42,10 +42,10 @@
     @endif
 
 
-
+    
     @include('partials.head')
-    @livewireStyles
-
+    
+@commentsStyles
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
     .news_title {
@@ -74,6 +74,7 @@
             {!! $customCode->custom_css !!}
         </style>
     @endif
+   
 </head>
 <body class="bg-white text-gray-800">
 
@@ -117,6 +118,7 @@
     </script>
 @endif
     
+@commentsScripts
 </body>
 </html>
 

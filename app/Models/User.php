@@ -12,11 +12,13 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\UserProfile;
 use App\Models\NewsPost;
+use LakM\Commenter\Concerns\Commenter;
+use LakM\Commenter\Contracts\CommenterContract;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, CommenterContract
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, Commenter;
 
     /**
      * The attributes that are mass assignable.

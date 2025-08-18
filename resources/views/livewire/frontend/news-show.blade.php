@@ -138,7 +138,10 @@
                     <h2 class="text-3xl">মন্তব্য করুন <span class="ml-2 text-red-500"><i class="fa-solid fa-comment"></i></span></h2>
                     <a href="{{ route('login') }}" class="text-md font-bold bg-red-500 p-2 text-white rounded">Login to comment</a>
                 </div>
-                <livewire:comments :model="$news" :emojis="['👍', '👎', '❤️', '😂', '😯', '😢', '😡']" />
+                <div>
+                         <x-commenter::index :model="$news" />
+                </div>
+
             </div>
 
         </div>
