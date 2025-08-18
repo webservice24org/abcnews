@@ -355,7 +355,8 @@
                     'pulse',
                     'admin.custom-code',
                     'theme.color.picker',
-                    'admin.analytics'
+                    'admin.analytics',
+                    'admin.analytics-settings'
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -435,6 +436,9 @@
                             </flux:navlist.item> 
                             <flux:navlist.item icon="home" :href="route('admin.analytics')" :current="request()->routeIs('admin.analytics')">
                                 {{ __('Google Analytics') }}
+                            </flux:navlist.item>
+                            <flux:navlist.item icon="tag" :href="route('admin.analytics-settings')" :current="request()->routeIs('admin.analytics-settings')">
+                                {{ __('Google Settings') }}
                             </flux:navlist.item>
 
                         </flux:navlist.group>

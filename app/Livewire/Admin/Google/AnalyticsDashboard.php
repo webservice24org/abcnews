@@ -19,7 +19,7 @@ class AnalyticsDashboard extends Component
     public $deviceBreakdown = [];
     public $activeUsersNow = 0;
 
-    public $darkMode = false; // Dark mode toggle
+    public $darkMode = false; 
 
     protected $listeners = ['refreshRealtime'];
 
@@ -37,10 +37,10 @@ class AnalyticsDashboard extends Component
     {
         $config = AnalyticsConfig::first();
         if ($config) {
-            // Set GA property ID dynamically
+            
             config(['analytics.property_id' => $config->property_id]);
 
-            // Save service account JSON dynamically
+            
             $path = storage_path('app/analytics/service-account-credentials.json');
             file_put_contents($path, $config->service_account_json);
         }
@@ -48,17 +48,17 @@ class AnalyticsDashboard extends Component
 
     public function loadAnalytics()
     {
-        // Always reload GA config dynamically before fetching data
+        
         $this->loadAnalyticsConfig();
 
         $period = Period::days(30);
 
-        // Visitors + PageViews
+        
         $analyticsData = Analytics::fetchTotalVisitorsAndPageViews($period);
         $this->visitors = $analyticsData->sum('visitors');
         $this->pageViews = $analyticsData->sum('pageViews');
 
-        // Sessions (GA4)
+       
         $sessionsData = Analytics::get(
             period: $period,
             metrics: ['sessions'],
@@ -66,7 +66,7 @@ class AnalyticsDashboard extends Component
         );
         $this->sessions = collect($sessionsData)->sum('sessions');
 
-        // Daily stats for trend chart
+       
         $byDate = collect($analyticsData)->keyBy(fn ($r) => Carbon::parse($r['date'])->format('Y-m-d'));
         $bySessions = collect($sessionsData)->keyBy('date');
 
@@ -81,7 +81,7 @@ class AnalyticsDashboard extends Component
                 ];
             })->values();
 
-        // Top Pages
+        
         $this->topPages = Analytics::fetchMostVisitedPages($period, 5)
             ->map(fn ($r) => [
                 'url' => $r['url'],
@@ -89,7 +89,7 @@ class AnalyticsDashboard extends Component
                 'pageViews' => $r['pageViews'],
             ])->toArray();
 
-        // Top Countries
+        
         $countries = Analytics::get(
             period: $period,
             metrics: ['totalUsers'],
@@ -103,7 +103,7 @@ class AnalyticsDashboard extends Component
                 'totalUsers' => (int) ($r['totalUsers'] ?? 0),
             ])->toArray();
 
-        // Device breakdown
+       
         $devices = Analytics::get(
             period: $period,
             metrics: ['totalUsers'],
@@ -115,14 +115,14 @@ class AnalyticsDashboard extends Component
                 'totalUsers' => (int) ($r['totalUsers'] ?? 0),
             ])->toArray();
 
-        // Realtime active users
+        
         $this->refreshRealtime();
     }
 
-    // Livewire listener to refresh active users every 10s
+   
     public function refreshRealtime()
     {
-        // Reload GA config dynamically in case it's changed
+        
         $this->loadAnalyticsConfig();
 
         $realtime = Analytics::getRealtime(
