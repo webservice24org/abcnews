@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\UserProfile;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use LakM\Commenter\Concerns\Commenter;
 use LakM\Commenter\Contracts\CommenterContract;
 
@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail, CommenterContract
 
     public function newsPosts()
 {
-    return $this->hasMany(NewsPost::class);
+    return $this->hasMany(Post::class);
 }
 
 // In User model

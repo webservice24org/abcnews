@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +22,7 @@ trait HandlesNewsDeletion
     {
         $this->deletePermission(); 
 
-        $post = NewsPost::find($id);
+        $post = Post::find($id);
 
         if (!$post) {
             $this->dispatch('toast', [
@@ -49,7 +49,7 @@ trait HandlesNewsDeletion
     {
         
 
-        $post = NewsPost::withTrashed()->find($id);
+        $post = Post::withTrashed()->find($id);
 
         if (!$post) {
             $this->dispatch('toast', [
@@ -73,7 +73,7 @@ trait HandlesNewsDeletion
     {
         $this->deletePermission(); 
 
-        $post = NewsPost::withTrashed()->find($id);
+        $post = Post::withTrashed()->find($id);
 
         if (!$post) {
             $this->dispatch('toast', [

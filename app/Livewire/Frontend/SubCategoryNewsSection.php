@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Models\SubCategory;
 use Livewire\Component;
 use Livewire\WithPagination;

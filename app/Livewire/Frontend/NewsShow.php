@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\Component;
 
 class NewsShow extends Component
@@ -15,7 +15,7 @@ class NewsShow extends Component
     public function mount($slug)
     {
         $this->slug = $slug;
-        $this->news = NewsPost::where('slug', $slug)
+        $this->news = Post::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 

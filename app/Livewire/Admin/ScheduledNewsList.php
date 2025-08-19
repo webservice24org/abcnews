@@ -4,7 +4,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Traits\HandlesNewsDeletion;
 
 class ScheduledNewsList extends Component
@@ -18,7 +18,7 @@ class ScheduledNewsList extends Component
 
     public function render()
     {
-        $scheduledNews = NewsPost::where('status', 'scheduled')
+        $scheduledNews = Post::where('status', 'scheduled')
             ->orderBy('scheduled_at', 'asc')
             ->paginate(10);
 

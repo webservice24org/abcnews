@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -15,11 +15,11 @@ class RecentActivity extends Component
 
     public function mount()
     {
-        $this->mostViewedPosts = NewsPost::orderByDesc('view_count')->take(8)->get(['news_title', 'slug', 'view_count', 'created_at']);
-        $this->recentPosts = NewsPost::latest()->take(8)->get(['news_title', 'slug', 'created_at']);
+        $this->mostViewedPosts = Post::orderByDesc('view_count')->take(8)->get(['news_title', 'slug', 'view_count', 'created_at']);
+        $this->recentPosts = Post::latest()->take(8)->get(['news_title', 'slug', 'created_at']);
 
         // Posts per month (last 6 months)
-        $data = NewsPost::select(
+        $data = Post::select(
             DB::raw('COUNT(*) as total'),
             DB::raw('MONTH(created_at) as month')
         )

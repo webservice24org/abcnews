@@ -37,7 +37,7 @@ class Division extends Model
 
     public function newsPosts()
     {
-        return $this->hasMany(NewsPost::class);
+        return $this->hasMany(Post::class);
     }
 
     

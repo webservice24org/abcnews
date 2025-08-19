@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Models\User;
 use App\Models\Subscriber;
 
@@ -19,9 +19,9 @@ class DashboardSummary extends Component
 
     public function mount()
     {
-        $this->totalPosts = NewsPost::count();
-        $this->totalDrafted = NewsPost::where('status', 'draft')->count();
-        $this->scheduledPosts = NewsPost::where('scheduled_at', 1)->count();
+        $this->totalPosts = Post::count();
+        $this->totalDrafted = Post::where('status', 'draft')->count();
+        $this->scheduledPosts = Post::where('scheduled_at', 1)->count();
         $this->activeUsers = User::where('is_active', true)->count();
         $this->inactiveUsers = User::where('is_active', false)->count();
         $this->subscribers = Subscriber::where('status', 'active')->count();

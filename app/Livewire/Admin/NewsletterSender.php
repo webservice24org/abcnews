@@ -4,10 +4,10 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Subscriber;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriberNewsMail;
-use App\Models\NewsletterLog;
+use App\Models\News\PostletterLog;
 
 use Livewire\WithPagination;
 
@@ -36,7 +36,7 @@ class NewsletterSender extends Component
             'selectedNews'        => 'required|array',
         ]);
 
-        $newsItems = NewsPost::whereIn('id', $this->selectedNews)->get();
+        $newsItems = Post::whereIn('id', $this->selectedNews)->get();
 
         $subscribers = Subscriber::whereIn('id', $this->selectedSubscribers)
                                 ->where('is_agree', 1)
@@ -63,7 +63,7 @@ class NewsletterSender extends Component
     public function render()
     {
 
-        $newsPosts = NewsPost::where('status', 'published')->paginate(20);
+        $newsPosts = Post::where('status', 'published')->paginate(20);
 
         return view('livewire.admin.newsletter-sender', [
             'newsPosts' => $newsPosts,

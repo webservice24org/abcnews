@@ -130,11 +130,11 @@ public $allSubcategories;
         $this->editing = $id ? true : false;
         $this->checkPermission();
         if ($id) {
-            $this->post = NewsPost::with('subcategories')->findOrFail($id);
+            $this->post = Post::with('subcategories')->findOrFail($id);
             $this->selected_subcategories = $this->post->subcategories->pluck('id')->toArray();
             $this->allSubcategories = SubCategory::all();
             $this->editing = true;
-            $post = NewsPost::with('tags')->findOrFail($id);
+            $post = Post::with('tags')->findOrFail($id);
             $this->selected_user_id = $post->user_id;
             $this->newsPostId = $post->id;
             $this->news_title = $post->news_title;
@@ -261,7 +261,7 @@ public $allSubcategories;
 
         ];
 
-        $post = NewsPost::updateOrCreate(['id' => $this->newsPostId], $data);
+        $post = Post::updateOrCreate(['id' => $this->newsPostId], $data);
 
         $post->categories()->sync($this->selected_categories);
         $post->subcategories()->sync($this->selected_subcategories ?? []);

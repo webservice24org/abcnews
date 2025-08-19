@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\Component;
 
 class PopularNewsSidebar extends Component
 {
     public function render()
     {
-        $popularNews = NewsPost::where('status', 'published')
+        $popularNews = Post::where('status', 'published')
             ->orderByDesc('view_count')
             ->take(5)
             ->get();

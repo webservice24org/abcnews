@@ -4,7 +4,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Traits\HandlesNewsDeletion;
 
 class DraftNewsList extends Component
@@ -18,7 +18,7 @@ class DraftNewsList extends Component
 
     public function render()
     {
-        $draftNews = NewsPost::where('status', 'draft')
+        $draftNews = Post::where('status', 'draft')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

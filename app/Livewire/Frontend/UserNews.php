@@ -5,7 +5,7 @@ namespace App\Livewire\Frontend;
 use Livewire\Component;
 
 use App\Models\User;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\WithPagination;
 
 class UserNews extends Component
@@ -22,7 +22,7 @@ class UserNews extends Component
     public function render()
     {
         // Get all posts by this user
-        $allNews = NewsPost::with(['categories', 'user'])
+        $allNews = Post::with(['categories', 'user'])
             ->where('user_id', $this->user->id)
             ->where('status', 'published')
             ->latest()
@@ -34,7 +34,7 @@ class UserNews extends Component
 
         $excludedIds = $allNews->pluck('id')->toArray();
 
-        $gridNews = NewsPost::with(['categories', 'user'])
+        $gridNews = Post::with(['categories', 'user'])
             ->where('user_id', $this->user->id)
             ->where('status', 'published')
             ->whereNotIn('id', $excludedIds)

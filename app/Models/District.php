@@ -4,7 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use App\Models\News\Post;
+use App\Models\Division;
+use App\Models\Upazila;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class District extends Model
@@ -13,19 +17,23 @@ class District extends Model
 
     protected $fillable = ['division_id', 'name', 'slug'];
 
-    public function division()
+    public function division(): BelongsTo
     {
         return $this->belongsTo(Division::class);
     }
 
-    public function upazilas()
+    public function upazilas(): HasMany
     {
         return $this->hasMany(Upazila::class);
     }
 
-    public function newsPosts()
+    public function newsPosts(): HasMany
     {
-        return $this->hasMany(NewsPost::class);
+        return $this->hasMany(
+            Post::class,
+            'district_id',  // foreign key in news_posts table
+            'id'            // local key in districts table
+        );
     }
 
     protected static function boot()
@@ -52,5 +60,4 @@ class District extends Model
             'slug'   => 'slug',
         ];
     }
-    
 }

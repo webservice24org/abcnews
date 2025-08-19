@@ -48,6 +48,7 @@ use App\Http\Controllers\Frontend\NewsPrintController;
 
 
 
+
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\CategoryNewsSection;
@@ -161,7 +162,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/analytics', AnalyticsDashboard::class)->name('admin.analytics');
     Route::get('/admin/analytics-settings', AnalyticsSettings::class)->name('admin.analytics-settings');
     
+    
 });
+
+
 
 
 

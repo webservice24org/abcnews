@@ -5,7 +5,7 @@ namespace App\Livewire\Frontend;
 use Livewire\Component;
 
 use App\Models\District;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\WithPagination;
 
 class DistrictNewsSection extends Component
@@ -21,7 +21,7 @@ class DistrictNewsSection extends Component
         $this->district = District::with(['division', 'upazilas'])->where('slug', $slug)->firstOrFail();
 
         // Get first 6 items (topLeft + topRight)
-        $topItems = NewsPost::whereHas('upazila.district', function ($q) use ($slug) {
+        $topItems = Post::whereHas('upazila.district', function ($q) use ($slug) {
                 $q->where('slug', $slug);
             })
             ->where('status', 'published')
@@ -40,7 +40,7 @@ class DistrictNewsSection extends Component
             ->pluck('id')
             ->toArray();
 
-        $gridNews = NewsPost::where('district_id', $this->district->id)
+        $gridNews = Post::where('district_id', $this->district->id)
             ->where('status', 'published')
             ->whereNotIn('id', $excludedIds)
             ->latest()

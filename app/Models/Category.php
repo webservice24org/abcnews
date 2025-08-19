@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Models\SubCategory;
 use App\Models\Advertisement;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 use Illuminate\Support\Str;
 
 class Category extends Model
@@ -19,7 +18,7 @@ class Category extends Model
         'name', 'slug',
     ];
 
-    public static function booted()
+    protected static function booted()
     {
         static::saving(function ($category) {
             if (empty($category->slug)) {
@@ -28,22 +27,29 @@ class Category extends Model
         });
     }
 
-    public function newsPosts()
+    public function newsPosts(): BelongsToMany
     {
-        return $this->belongsToMany(NewsPost::class, 'category_news_post');
+        return $this->belongsToMany(
+            Post::class,
+            'category_news_post',
+            'category_id',
+            'news_post_id'
+        );
     }
 
-    public function subcategories()
+    public function subcategories(): HasMany
     {
         return $this->hasMany(SubCategory::class);
     }
 
-    // Category.php
-    public function advertisements()
+    public function advertisements(): BelongsToMany
     {
-        return $this->belongsToMany(Advertisement::class, 'advertisement_category', 'category_id', 'advertisement_id');
+        return $this->belongsToMany(
+            Advertisement::class,
+            'advertisement_category',
+            'category_id',
+            'advertisement_id'
+        );
     }
-
-
 }
 

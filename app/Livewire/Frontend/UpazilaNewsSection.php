@@ -3,7 +3,7 @@
 namespace App\Livewire\Frontend;
 
 use App\Models\Upazila;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,7 +20,7 @@ class UpazilaNewsSection extends Component
         $this->upazila = Upazila::with(['district.division'])->where('slug', $slug)->firstOrFail();
 
         // Fetch first 6 posts for top section
-        $topItems = NewsPost::where('upazila_id', $this->upazila->id)
+        $topItems = Post::where('upazila_id', $this->upazila->id)
             ->where('status', 'published')
             ->latest()
             ->take(6)
@@ -38,7 +38,7 @@ class UpazilaNewsSection extends Component
             ->pluck('id')
             ->toArray();
 
-        $gridNews = NewsPost::where('upazila_id', $this->upazila->id)
+        $gridNews = Post::where('upazila_id', $this->upazila->id)
             ->where('status', 'published')
             ->whereNotIn('id', $excludedIds)
             ->latest()

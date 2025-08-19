@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\Component;
 
 class LatestNewsSidebar extends Component
 {
     public function render()
     {
-        $latestNews = NewsPost::where('status', 'published')
+        $latestNews = Post::where('status', 'published')
             ->latest()
             ->take(5)
             ->get();

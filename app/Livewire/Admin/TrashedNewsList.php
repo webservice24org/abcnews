@@ -4,7 +4,7 @@ namespace App\Livewire\Admin;
 
 
 use Livewire\Component;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Traits\HandlesNewsDeletion;
@@ -34,7 +34,7 @@ class TrashedNewsList extends Component
 
     public function render()
     {
-        $trashedNews = NewsPost::onlyTrashed()->latest()->paginate(10);
+        $trashedNews = Post::onlyTrashed()->latest()->paginate(10);
 
         return view('livewire.admin.trashed-news-list', compact('trashedNews'));
     }

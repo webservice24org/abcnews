@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Models\SiteSetting;
 use App\Models\SiteInfo;
 use Illuminate\Support\Str;
@@ -16,7 +16,7 @@ class NewsPrintController extends Controller
     public function downloadPdf($slug)
     {
         return view('layouts.news-print', [
-            'news' => NewsPost::where('slug', $slug)->firstOrFail(),
+            'news' => Post::where('slug', $slug)->firstOrFail(),
             'siteSetting' => SiteSetting::first(),
             'siteInfo' => SiteInfo::first(),
         ]);

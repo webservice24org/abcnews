@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,7 +22,7 @@ class NewsArchivePage extends Component
     {
         $parsedDate = Carbon::parse($this->date)->startOfDay();
 
-        $newsList = NewsPost::where('status', 'published')
+        $newsList = Post::where('status', 'published')
             ->whereDate('created_at', $parsedDate)
             ->orderBy('created_at', 'desc')
             ->paginate(12);

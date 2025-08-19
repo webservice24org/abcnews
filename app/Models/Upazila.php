@@ -39,7 +39,7 @@ class Upazila extends Model
 
     public function newsPosts()
     {
-        return $this->hasMany(NewsPost::class);
+        return $this->hasMany(Post::class);
     }
 
     public function slugConfig(): array

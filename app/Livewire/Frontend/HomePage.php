@@ -1,7 +1,7 @@
 <?php
 namespace App\Livewire\Frontend;
 
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use App\Models\Category;
 use Livewire\Component;
 
@@ -11,12 +11,12 @@ class HomePage extends Component
     {
         
 
-        $leadNews = NewsPost::where('status', 'published')
+        $leadNews = Post::where('status', 'published')
             ->where('is_lead', true)
             ->latest()
             ->first();
 
-        $subLeadNews = NewsPost::where('status', 'published')
+        $subLeadNews = Post::where('status', 'published')
             ->where('is_sub_lead', true)
             ->latest()
             ->take(5)

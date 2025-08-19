@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Carbon\Carbon;
 
 class PublishScheduledNews extends Command
@@ -26,7 +26,7 @@ class PublishScheduledNews extends Command
         $now = Carbon::now();
 
         // Fetch only due scheduled posts
-        $scheduledPosts = NewsPost::where('status', 'scheduled')
+        $scheduledPosts = Post::where('status', 'scheduled')
             ->whereNotNull('scheduled_at')
             ->where('scheduled_at', '<=', $now)
             ->get();

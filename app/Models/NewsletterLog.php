@@ -22,6 +22,6 @@ class NewsletterLog extends Model
 
     public function news()
     {
-        return $this->belongsTo(NewsPost::class, 'news_id');
+        return $this->belongsTo(Post::class, 'news_id');
     }
 }

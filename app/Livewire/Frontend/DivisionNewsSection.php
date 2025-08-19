@@ -3,7 +3,7 @@
 namespace App\Livewire\Frontend;
 
 use App\Models\Division;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,7 +20,7 @@ class DivisionNewsSection extends Component
         $this->division = Division::with('districts')->where('slug', $slug)->firstOrFail();
 
         // Get first 6 posts (1 for topLeft, 5 for topRight)
-        $topItems = NewsPost::whereHas('district.division', function ($q) use ($slug) {
+        $topItems = Post::whereHas('district.division', function ($q) use ($slug) {
                 $q->where('slug', $slug);
             })
             ->where('status', 'published')
@@ -40,7 +40,7 @@ class DivisionNewsSection extends Component
             ->pluck('id')
             ->toArray();
 
-        $gridNews = NewsPost::whereHas('district.division', function ($q) {
+        $gridNews = Post::whereHas('district.division', function ($q) {
                 $q->where('id', $this->division->id);
             })
             ->where('status', 'published')

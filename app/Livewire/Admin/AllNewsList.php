@@ -5,7 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\HandlesNewsDeletion;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 
 
 class AllNewsList extends Component
@@ -21,7 +21,7 @@ class AllNewsList extends Component
 
     public function render()
     {
-        $newsPosts = NewsPost::where('status', 'published')
+        $newsPosts = Post::where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

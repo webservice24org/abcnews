@@ -3,7 +3,7 @@
 namespace App\Livewire\Frontend;
 
 use Livewire\Component;
-use App\Models\NewsPost;
+use App\Models\News\Post;
 
 class SearchResults extends Component
 {
@@ -19,7 +19,7 @@ class SearchResults extends Component
         $results = [];
 
         if (strlen($this->query) > 1) {
-            $results = NewsPost::where('status', 'published')
+            $results = Post::where('status', 'published')
                 ->where(function ($query) {
                     $query->where('news_title', 'like', '%' . $this->query . '%')
                         ->orWhere('news_description', 'like', '%' . $this->query . '%');
