@@ -139,7 +139,8 @@
                     <a href="{{ route('login') }}" class="text-md font-bold bg-red-500 p-2 text-white rounded">Login to comment</a>
                 </div>
                 <div>
-                         <x-commenter::index :model="$news" />
+                    <x-commenter::index :model="$news" />
+
                 </div>
 
             </div>

@@ -12,9 +12,9 @@ return [
     /**
      * Available themes default,github
      */
-    'theme' => 'default',
+    'theme' => 'modern',
 
-    'primary_color' => '#000000',
+    'primary_color' => 'green',
 
     'secondary_color' => '#000000',
 
@@ -193,7 +193,7 @@ return [
         'debug' => false,
         'modules' => [
             'toolbar' => [
-                [['header' => [1, 2, true]]],
+                [['header' => [1, 2,3, true]]],
                 ['bold', 'italic', 'underline'],
                 ['link', 'code-block'],
             ],

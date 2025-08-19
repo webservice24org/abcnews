@@ -42,10 +42,10 @@
     @endif
 
 
-    
+    @commenterStyles
     @include('partials.head')
     
-@commentsStyles
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
     .news_title {
@@ -87,6 +87,7 @@
 
     <livewire:frontend.footer />
 
+    @commenterScripts
 
     @livewireScripts
 
@@ -118,7 +119,7 @@
     </script>
 @endif
     
-@commentsScripts
+
 </body>
 </html>
 
