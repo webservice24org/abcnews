@@ -1,4 +1,4 @@
-<div>
+<div class="text-black">
     <x-slot:linearNavigation>
         <x-filament::breadcrumbs :breadcrumbs="[
                 route('admin.comments.dashboard') => 'Dashboard',
@@ -16,7 +16,7 @@
     <x-slot:header>
         <h1>Replies of Comment Id &rarr; {{$comment->getKey()}}</h1>
     </x-slot:header>
-    <div>
+    <div class="mt-4 text-black">
         {{$this->table}}
     </div>
 </div>

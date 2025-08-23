@@ -22,7 +22,7 @@
              @click="show=false; $dispatch('sidebar-opened', {status: false})"
              class="flex justify-between items-center cursor-pointer z-10"
         >
-            <a wire:navigate href="/"><x-comments-admin-panel::icons.home /></a>
+            <a wire:navigate href="/" class="text-black"><x-comments-admin-panel::icons.home /></a>
             <x-comments-admin-panel::icons.close/>
         </div>
 

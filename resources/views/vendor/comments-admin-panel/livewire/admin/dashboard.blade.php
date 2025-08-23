@@ -7,7 +7,7 @@
         </h1>
     </x-slot:header>
 
-    <div class="flex gap-x-12 gap-y-4 flex-wrap">
+    <div class="flex gap-x-12 gap-y-4 flex-wrap text-black">
         @foreach($models as $key => $model)
             <div class="flex flex-col gap-y-4 rounded border w-full lg:w-auto lg:min-w-96 p-2 shadow">
                 <div class="flex justify-between">

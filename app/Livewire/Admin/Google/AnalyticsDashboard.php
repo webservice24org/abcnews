@@ -83,11 +83,12 @@ class AnalyticsDashboard extends Component
 
         
         $this->topPages = Analytics::fetchMostVisitedPages($period, 5)
-            ->map(fn ($r) => [
-                'url' => $r['url'],
-                'pageTitle' => $r['pageTitle'],
-                'pageViews' => $r['pageViews'],
-            ])->toArray();
+    ->map(fn ($r) => [
+        'url' => $r['pagePath'] ?? null, // ✅ GA4 key
+        'pageTitle' => $r['pageTitle'] ?? 'N/A',
+        'pageViews' => $r['pageViews'] ?? 0,
+    ])->toArray();
+
 
         
         $countries = Analytics::get(

@@ -13,8 +13,8 @@
                 "insertImageAsBase64URI": true
             },
             "toolbarButtonSize": "large",
-            "showCharsCounter": false,
-            "showWordsCounter": false,
+            "showCharsCounter": true,
+            "showWordsCounter": true,
             "showXPathInStatusbar": false,
             "defaultActionOnPaste": "insert_clear_html",
             "buttons": buttons
