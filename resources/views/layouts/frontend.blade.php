@@ -45,22 +45,27 @@
     @commenterStyles
     @include('partials.head')
     
-
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-    .news_title {
-        transition: all 0.3s ease;
-        color: {{ $color->title_color ?? '#e7000b' }};
-        text-decoration: none;
-        padding-bottom: 4px; /* space between text and underline */
-        line-height: 1.5; /* line height for better readability */
-    }
-    .news_title:hover {
-        color: {{ $color->title_hover_color ?? '#e7000b' }};
-        text-decoration: underline solid; /* solid underline */
-        text-underline-offset: 4px; /* distance between text and underline */
-    }
-</style>
+        .news_title {
+            transition: all 0.3s ease;
+            color: {{ $color->title_color ?? '#e7000b' }};
+            text-decoration: none;
+            padding-bottom: 4px; /* space between text and underline */
+            line-height: 1.5; /* line height for better readability */
+        }
+        .news_title:hover {
+            color: {{ $color->title_hover_color ?? '#e7000b' }};
+            text-decoration: underline solid; /* solid underline */
+            text-underline-offset: 4px; /* distance between text and underline */
+        }
+    </style>
+
+    @if($theme === 'theme2')
+        @vite('resources/css/theme2.css')
+    @endif
+
 
  
     @php
@@ -81,9 +86,20 @@
         
     <livewire:frontend.frontend-menu />
 
-    <main class="max-w-7xl mx-auto px-4 py-4">
-        {{ $slot }}
-    </main>
+    @if($theme === 'theme1')
+        <main class="max-w-7xl mx-auto px-4 py-4">
+            {{ $slot }}
+        </main>
+    @elseif($theme === 'theme2')
+        <main class="max-w-5xl mx-auto px-4 py-4">
+            {{ $slot }}
+        </main>
+    @else
+        <main class="max-w-6xl mx-auto px-4 py-4">
+            {{ $slot }}
+        </main>
+    @endif
+
 
     <livewire:frontend.footer />
 

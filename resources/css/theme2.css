@@ -1,0 +1,28 @@
+h1,h2,h3,h4,h5,h6, p, span, a, li, button, input, textarea {
+    font-family: "Kalpurush"!important;
+}
+.block{
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+}
+.block h2, .rightBlock h2, .footerBlock h2, .culBlock h2 a {
+    
+    font-size: 35px;
+    font-weight: bold!important;
+    line-height: 50px;
+    color: rgb(20, 20, 20);
+    padding-bottom: 5px;
+}
+
+.rightBlock h2, .footerBlock h2, .culBlock h2 a{
+    font-size: 22.5px!important;
+    line-height: 42.5px!important;
+}
+.leadBlock:hover h2, .rightBlock:hover h2, .footerBlock:hover h2, .culBlock:hover h2 a {
+    text-decoration: underline;
+}
+
+.section {
+    margin-top: 120px;
+    margin-bottom: 40px;
+}

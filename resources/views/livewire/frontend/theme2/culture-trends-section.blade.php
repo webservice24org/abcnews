@@ -1,0 +1,41 @@
+<div class="section">
+    {{-- Section Title --}}
+    @if($title)
+        <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800">{{ $title }}</h2>
+            <a href="{{ route('category.show', $categorySlug) }}"
+               class="text-blue-600 text-sm hover:underline">
+                আরও দেখুন →
+            </a>
+        </div>
+    @endif
+
+   @if($categorySlug === 'culture-trends')
+    @if($posts->count())
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach ($posts as $post)
+                <div class="single_post flex flex-col overflow-hidden p-2 md:p-0 culBlock">
+                    <a href="{{ route('news.show', $post->slug) }}">
+                        <img
+                            src="{{ $post->news_thumbnail ? asset('storage/' . $post->news_thumbnail) : ($defaultImage ?? '') }}"
+                            alt="{{ $post->news_title }}"
+                            class="w-full h-48 object-cover"
+                        >
+                    </a>
+                    <h2 class="text-base font-semibold leading-tight mt-2">
+                        <a href="{{ route('news.show', $post->slug) }}">
+                            {{ $post->news_title }}
+                        </a>
+                    </h2>
+                    <p class="text-gray-500 text-sm mt-1">
+                        {{ \App\Helpers\DateHelper::formatBanglaDateTime($post->created_at, false) }}
+                    </p>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p class="text-gray-500 text-sm">এই বিভাগে কোনো খবর পাওয়া যায়নি।</p>
+    @endif
+@endif
+
+</div>

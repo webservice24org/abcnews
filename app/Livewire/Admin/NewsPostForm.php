@@ -5,9 +5,10 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\{
-    NewsPost, Division, District, Upazila,
+    Division, District, Upazila,
     Category, SubCategory, Tag, User
 };
+use App\Models\News\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
