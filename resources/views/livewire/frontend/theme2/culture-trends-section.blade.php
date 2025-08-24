@@ -1,8 +1,11 @@
 <div class="section">
     {{-- Section Title --}}
     @if($title)
-        <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200">
+        <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200 sectionHeader">
+            <a href="{{ route('category.show', $categorySlug) }}"
+               class="text-black hoverEffect">
             <h2 class="text-2xl font-bold text-gray-800">{{ $title }}</h2>
+            </a>
             <a href="{{ route('category.show', $categorySlug) }}"
                class="text-blue-600 text-sm hover:underline">
                 আরও দেখুন →
@@ -10,7 +13,7 @@
         </div>
     @endif
 
-   @if($categorySlug === 'culture-trends')
+   
     @if($posts->count())
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($posts as $post)
@@ -36,6 +39,6 @@
     @else
         <p class="text-gray-500 text-sm">এই বিভাগে কোনো খবর পাওয়া যায়নি।</p>
     @endif
-@endif
+
 
 </div>

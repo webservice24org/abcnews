@@ -1,7 +1,10 @@
 <div class="section">
     {{-- Section header --}}
-    <div class="flex items-center justify-between mb-6 pb-2">
+    <div class="flex items-center justify-between mb-6 pb-2 sectionHeader">
+        <a href="{{ route('category.show', $categorySlug) }}"
+               class="text-black hoverEffect">
         <h2 class="text-2xl font-bold text-gray-800">{{ $title }}</h2>
+        </a>
         <a href="{{ route('category.show', $categorySlug) }}"
            class="text-blue-600 text-sm hover:underline">
             আরও দেখুন →

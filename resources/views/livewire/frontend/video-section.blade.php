@@ -1,5 +1,5 @@
-<section class="mb-10">
-   
+<section class="video-section">
+   @if($theme === 'theme1')
     <div class="flex justify-between items-center border-b-3 mb-4" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
         <h2 class="text-2xl font-bold p-2 inline-block" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">ভিডিও</h2>       
         
@@ -7,6 +7,21 @@
        
 
     </div>
+    @elseif($theme === 'theme2')
+    <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200 sectionHeader" >
+         <a href="{{ route('videos.all') }}" class="text-black hoverEffect">
+            <h2 class="text-2xl font-bold text-gray-800">ভিডিও</h2>       
+        </a>
+        <a href="{{ route('videos.all') }}" class="text-blue-600 text-sm hover:underline" >আরও দেখুন →</a>
+       
+
+    </div>
+    @else
+        <div class="theme3">
+            <p>theme three content</p>
+
+        </div>
+    @endif
 
 
      @php
@@ -15,22 +30,20 @@
     @endphp
     @if ($videos->count())
         <div class="grid md:grid-cols-2 gap-4">
-            {{-- Left Column: Latest video --}}
-            <div class="relative group">
+            <div class="relative group videoBlock">
                 <a href="{{ route('video.show', $last->id) }}">
-                    <img src="{{ asset('storage/' . $last->thumbnail) }}" class="w-full h-full object-cover rounded">
+                    <img src="{{ asset('storage/' . $last->thumbnail) }}" class="w-full object-cover rounded">
 
                     <div class="absolute inset-0 flex justify-center items-center  group-hover:bg-opacity-70 transition">
                         <i class="fas fa-play-circle text-red-500 text-5xl"></i>
                     </div>
                 </a>
-                <a href="{{ route('video.show', $last->id) }}" class="hover:text-red-500">
-                    <h3 class="mt-2 text-2xl font-semibold news_title">{{ $last->video_title }}</h3>
+                <a href="{{ route('video.show', $last->id) }}">
+                    <h2 class="mt-2 font-semibold">{{ $last->video_title }}</h2>
                 </a>
             </div>
 
-            {{-- Right Column: Next 6 videos --}}
-           <div class="grid grid-cols-3 gap-4">
+           <div class="grid grid-cols-3 gap-4 rightVideoBlock">
                 @foreach ($others as $video)
                     <div class="space-y-2">
                         <a href="{{ route('video.show', $video->id) }}">
@@ -42,7 +55,7 @@
                             </div>
                         </a>
                         <a href="{{ route('video.show', $video->id) }}">
-                            <h4 class="text-md font-medium news_title">{{ $video->video_title }}</h4>
+                            <h2 class="text-md font-medium">{{ $video->video_title }}</h2>
                         </a>
                     </div>
                 @endforeach

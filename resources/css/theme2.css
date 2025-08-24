@@ -1,28 +1,41 @@
-h1,h2,h3,h4,h5,h6, p, span, a, li, button, input, textarea {
+h1,h2,h3,h4,h5,h6, p, span, a, li, div, button, input, textarea {
     font-family: "Kalpurush"!important;
 }
 .block{
     transition: transform 0.3s, box-shadow 0.3s;
     
 }
-.block h2, .rightBlock h2, .footerBlock h2, .culBlock h2 a {
+.block h2, .rightBlock h2, .footerBlock h2, .culBlock h2 a, .videoBlock a h2 {
     
     font-size: 35px;
     font-weight: bold!important;
     line-height: 50px;
     color: rgb(20, 20, 20);
     padding-bottom: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.rightBlock h2, .footerBlock h2, .culBlock h2 a{
+.rightBlock h2, .footerBlock h2, .culBlock h2 a, .rightVideoBlock a h2 {
     font-size: 22.5px!important;
     line-height: 42.5px!important;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-.leadBlock:hover h2, .rightBlock:hover h2, .footerBlock:hover h2, .culBlock:hover h2 a {
-    text-decoration: underline;
+.leadBlock:hover h2, .rightBlock:hover h2, .footerBlock:hover h2, .culBlock:hover h2 a, .rightVideoBlock a h2:hover, .videoBlock a h2:hover {
+    text-decoration: underline!important;
 }
+
 
 .section {
     margin-top: 120px;
     margin-bottom: 40px;
+}
+
+.video-section {
+    margin-top: 120px!important;
+    padding-bottom: 148px;
+}
+
+.sectionHeader a.hoverEffect:hover h2 {
+    color: #ff0000!important;
+    text-decoration: underline!important;
 }

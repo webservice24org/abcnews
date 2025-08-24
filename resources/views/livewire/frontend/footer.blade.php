@@ -16,9 +16,7 @@
                 {!! $globalBelowGridAd->ad_code !!}
             @endif
 
-        @else
-            {{-- Fallback image --}}
-            <img src="{{ asset('storage/fallback-ad/home-section-below.png') }}" alt="Fallback Ad" class="object-fill">
+        
         @endif
     </div>
     <footer class="mt-5 border-t border-white pt-10 pb-1 text-white" style="background-color: {{ $color->footer_bg ?? '#e7000b' }};">

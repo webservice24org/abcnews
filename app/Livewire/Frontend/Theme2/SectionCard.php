@@ -10,7 +10,6 @@ class SectionCard extends Component
     public string $title;
     public string $categorySlug;
 
-    // View data
     public $bigNews = null;
     public $smallNews = [];
 
@@ -19,7 +18,7 @@ class SectionCard extends Component
         $this->title = $title;
         $this->categorySlug = $categorySlug;
 
-        // Find category
+       
         $category = Category::where('slug', $this->categorySlug)->first();
 
         if (! $category) {
@@ -28,7 +27,7 @@ class SectionCard extends Component
             return;
         }
 
-        // Pull max 5 posts via pivot: 1 big + 4 small (handles <5 automatically)
+        
         $posts = $category->newsPosts()
             ->where('status', 'published')
             ->latest()

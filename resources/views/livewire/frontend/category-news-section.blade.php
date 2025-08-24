@@ -219,7 +219,7 @@
             </div>
         </div>
     @else
-        <p class="text-center text-xl text-gray-500">No news found in <span class="text-red-600">{{ $category->name }}</span> Sub Category.</p>
+        <p class="text-center text-xl text-gray-500">No news found in <span class="text-red-600">{{ $category->name }}</span> Category.</p>
     @endif
 
     
