@@ -34,10 +34,8 @@ class ContactReply extends Component
         $this->contact->status = 'replied';
         $this->contact->save();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Reply sent successfully!'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Reply sent successfully!');
+
         return redirect()->route('contacts.index');
     }
 

@@ -37,7 +37,7 @@ class TagManager extends Component
 
         $this->reset('name', 'slug');
 
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Tag added successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'Tag added successfully.');  
     }
 
     public function editTag($id)
@@ -63,7 +63,7 @@ class TagManager extends Component
 
         $this->reset('editingTagId', 'editingName', 'editingSlug');
 
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Tag updated successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'Tag updated successfully.');
     }
 
     public function confirmDeleteTag($id)
@@ -75,7 +75,7 @@ class TagManager extends Component
     {
         Tag::findOrFail($id)->delete();
 
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Tag deleted successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'Tag deleted successfully.');
     }
 
     public function render()

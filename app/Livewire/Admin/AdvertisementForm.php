@@ -111,10 +111,7 @@ class AdvertisementForm extends Component
         $ad->categories()->sync($this->selectedCategories);
         $ad->subcategories()->sync($this->selectedSubCategories);
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => $this->adId ? 'Advertisement updated successfully!' : 'Advertisement saved successfully!',
-        ]);
+        $this->dispatch('toast', type: 'success', message: $this->adId ? 'Advertisement updated successfully!' : 'Advertisement saved successfully!');
 
         $this->reset();
         $this->adId = null;

@@ -23,7 +23,7 @@ class SubCategoryManager extends Component
     public $editingSlug; 
     public $editingCategoryId;
 
-
+    public string $filter = 'active';
 
 
 
@@ -32,8 +32,6 @@ class SubCategoryManager extends Component
         'slug' => 'nullable|string|max:255|unique:sub_categories,slug',
         'category_id' => 'required|exists:categories,id',
     ];
-
-        
 
 
     public function saveSubCategory()
@@ -72,7 +70,7 @@ class SubCategoryManager extends Component
 
         $sub->update([
             'name' => $this->editingName,
-            'slug' => $this->editingSlug, // may be null, handled in model
+            'slug' => $this->editingSlug, 
             'category_id' => $this->editingCategoryId,
         ]);
 
@@ -93,10 +91,38 @@ class SubCategoryManager extends Component
         $this->dispatch('toast', ['type' => 'success', 'message' => 'Sub-category deleted successfully.']);
     }
 
+    public function toggleStatus($id)
+    {
+        $subcategory = SubCategory::findOrFail($id);
+
+        if ($subcategory->category->status == 0 && $subcategory->status == 0) {
+            $this->dispatch('toast', type: 'error', message: 'Parent category is inactive!');
+            return;
+        }
+
+        $subcategory->status = !$subcategory->status;
+        $subcategory->save();
+
+        $this->dispatch('toast', type: 'success', message: 'Subcategory status updated successfully!');
+    }
+
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;            
+        $this->resetPage();                 
+    }
+
     public function render()
     {
+        $query = SubCategory::with('category')->latest();
+
+        if ($this->filter === 'active') {
+            $query->where('status', 1);
+        } elseif ($this->filter === 'inactive') {
+            $query->where('status', 0);
+        }
         return view('livewire.admin.sub-category-manager', [
-            'subCategories' => SubCategory::with('category')->latest()->paginate(10),
+            'subCategories' => $query->paginate(10),
             'categories' => Category::all(),
         ]);
     }

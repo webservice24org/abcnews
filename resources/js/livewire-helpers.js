@@ -53,7 +53,7 @@ window.confirmRestore = function (eventName, id) {
     });
 };
 
-
+/*
 // Toast with SweetAlert2
 window.showToast = function (type = 'success', message = 'Successfully saved!') {
     Swal.fire({
@@ -66,7 +66,24 @@ window.showToast = function (type = 'success', message = 'Successfully saved!') 
         timerProgressBar: true,
     });
 };
+*/
+window.showToast = function (type = 'success', message = 'Action completed successfully!') {
+   
+    type = type || 'success';
+    message = message || 'Action completed successfully!';
 
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: type,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        extendedTimeOut: "1000",
+        
+    });
+};
  
 document.addEventListener("DOMContentLoaded", function () {
     if (window.Livewire) {

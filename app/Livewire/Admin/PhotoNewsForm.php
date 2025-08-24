@@ -86,7 +86,7 @@ class PhotoNewsForm extends Component
             ]);
         }
 
-        session()->flash('success', 'Photo news created successfully!');
+        $this->dispatch('toast', type: 'success', message: 'Photo news created successfully!');
         return redirect()->route('admin.photo-news.index');
     }
 
@@ -149,8 +149,7 @@ class PhotoNewsForm extends Component
                 }
             }
         }
-
-        session()->flash('success', 'Photo news updated successfully!');
+        $this->dispatch('toast', type: 'success', message: 'Photo news updated successfully!');
         return redirect()->route('admin.photo-news.index');
     }
 

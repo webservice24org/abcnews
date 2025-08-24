@@ -1,12 +1,6 @@
 <div class="p-4 bg-white shadow rounded">
     <h2 class="text-xl font-bold text-gray-700 mb-4">Create Photo News</h2>
 
-    @if (session()->has('success'))
-        <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <form wire:submit.prevent="{{ $photoNewsId ? 'updateOrCreate' : 'save' }}">
 
 

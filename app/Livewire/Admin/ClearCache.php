@@ -14,10 +14,7 @@ class ClearCache extends Component
         Artisan::call('route:clear');
         Artisan::call('view:clear');
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Cache cleared successfully!'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Cache cleared successfully!');
     }
 
     public function render()

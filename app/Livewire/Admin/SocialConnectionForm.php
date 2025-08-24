@@ -42,10 +42,7 @@ class SocialConnectionForm extends Component
             ]
         );
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Social links updated successfully!',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Social links updated successfully!');
     }
 
     public function render()

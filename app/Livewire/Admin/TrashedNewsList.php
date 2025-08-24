@@ -24,14 +24,6 @@ class TrashedNewsList extends Component
     protected $paginationTheme = 'tailwind';
 
 
-    
-
-   
-
-   
-
-    
-
     public function render()
     {
         $trashedNews = Post::onlyTrashed()->latest()->paginate(10);

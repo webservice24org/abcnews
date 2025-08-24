@@ -7,7 +7,7 @@ use App\Models\Subscriber;
 use App\Models\News\Post;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriberNewsMail;
-use App\Models\News\PostletterLog;
+use App\Models\NewsletterLog;
 
 use Livewire\WithPagination;
 

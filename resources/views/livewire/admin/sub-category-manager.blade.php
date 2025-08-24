@@ -44,6 +44,24 @@
     @endif
 
 
+    @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+    <div class="flex gap-4 mb-4">
+        <button wire:click="setFilter('all')"
+            class="px-4 py-2 rounded {{ $filter === 'all' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black' }}">
+            Show All
+        </button>
+        <button wire:click="setFilter('active')"
+            class="px-4 py-2 rounded {{ $filter === 'active' ? 'bg-green-600 text-white' : 'bg-gray-200 text-black' }}">
+            Active Sub Categories
+        </button>
+        <button wire:click="setFilter('inactive')"
+            class="px-4 py-2 rounded {{ $filter === 'inactive' ? 'bg-red-600 text-white' : 'bg-gray-200 text-black' }}">
+            Inactive Sub Categories
+        </button>
+    </div>
+    @endif
+
+
 
 
 
@@ -53,7 +71,8 @@
                 <th class="border px-4 py-2 text-left text-black">Sl</th>
                 <th class="border px-4 py-2 text-left text-black">Category</th>
                 <th class="border px-4 py-2 text-left text-black">Sub-Category</th>
-                <th class="border px-4 py-2 text-left text-black">Slig</th>
+                <th class="border px-4 py-2 text-left text-black">Slug</th>
+                <th class="border px-4 py-2 text-left text-black">Status</th>
                 <th class="border px-4 py-2 text-left text-black">Action</th>
             </tr>
         </thead>
@@ -64,6 +83,13 @@
                     <td class="border px-4 py-2 text-black">{{ $sub->category->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $sub->name }}</td>
                     <td class="border px-4 py-2 text-black">{{ $sub->slug }}</td>
+                    <td class="border px-4 py-2">
+                        <button wire:click="toggleStatus({{ $sub->id }})"
+                            class="px-3 py-1 rounded text-sm 
+                                {{ $sub->status ? 'bg-green-500 text-white' : 'bg-red-500 text-white' }}">
+                            {{ $sub->status ? 'Active' : 'Inactive' }}
+                        </button>
+                    </td>
                     <td class="border px-4 py-2">
                         @if(auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                             <button wire:click="editSubCategory({{ $sub->id }})" class="text-white mr-2 px-3 py-1 bg-yellow-500 hover:bg-yellow-60 rounded text-sm">Edit</button>
@@ -83,14 +109,19 @@
     </div>
 </div>
 
+
+
+
 @push('scripts')
+
 <script>
-    window.Livewire.on('confirm-delete', (id) => {
+     window.Livewire.on('confirm-delete', (id) => {
         confirmDelete('deleteConfirmed', id);
     });
 
-    window.Livewire.on('toast', ({ type, message }) => {
-        showToast(type, message);
-    });
+   window.Livewire.on('toast', ({ type, message }) => {
+            showToast(type, message);
+        });
 </script>
 @endpush
+

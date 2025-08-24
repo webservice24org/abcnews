@@ -37,11 +37,8 @@ class DivisionManager extends Component
         ]);
 
         $this->reset('name', 'slug');
+        $this->dispatch('toast', type: 'success', message: 'Division added successfully.');
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Division added successfully.'
-        ]);
     }
 
     public function editDivision($id)
@@ -67,10 +64,7 @@ class DivisionManager extends Component
 
         $this->reset('editingDivisionId', 'editingName', 'editingSlug');
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Division updated successfully.'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Division updated successfully.');
     }
 
 
@@ -83,10 +77,7 @@ class DivisionManager extends Component
     {
         Division::findOrFail($id)->delete();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Division deleted successfully.'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Division deleted successfully!');
     }
 
     public function render()

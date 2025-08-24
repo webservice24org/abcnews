@@ -15,6 +15,7 @@ class CategoryManager extends Component
     public int|null $editingCategoryId = null;
     public string $name = '';
     public string $slug = '';
+    public string $filter = 'active'; // 👈 default filter
 
     protected function rules()
     {
@@ -30,32 +31,28 @@ class CategoryManager extends Component
         }
     }
 
-    
+    public function saveCategory()
+    {
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:categories,slug,' . $this->editingCategoryId,
+        ]);
 
-        public function saveCategory()
-        {
-            $this->validate([
-                'name' => 'required|string|max:255',
-                'slug' => 'nullable|string|max:255|unique:categories,slug,' . $this->editingCategoryId,
-            ]);
+        $slug = $this->slug ?: Str::slug($this->name);
 
-            $slug = $this->slug ?: Str::slug($this->name);
+        Category::updateOrCreate(
+            ['id' => $this->editingCategoryId],
+            [
+                'name' => $this->name,
+                'slug' => $slug,
+                'status' => 1, // 👈 default active when created
+            ]
+        );
 
-            Category::updateOrCreate(
-                 ['id' => $this->editingCategoryId],
-                [
-                    'name' => $this->name,
-                    'slug' => $slug,
-                ]
-            );
+        $this->reset(['name', 'slug', 'editingCategoryId']);
 
-            $this->reset(['name', 'slug', 'editingCategoryId']);
-
-            
-            $this->dispatch('toast', ['type' => 'success', 'message' => 'Category added successfully.']);
-
-        }
-
+        $this->dispatch('toast', type: 'success', message: 'Category saved successfully.');
+    }
 
     public function editCategory($id)
     {
@@ -74,13 +71,47 @@ class CategoryManager extends Component
     public function deleteCategory($id)
     {
         Category::findOrFail($id)->delete();
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Category deleted successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'Category deleted successfully.');
+    }
+
+    // 👇 NEW: Toggle status
+    public function toggleStatus($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->status = $category->status ? 0 : 1;
+        $category->save();
+
+        // 👇 Cascade: if category is inactive, set all subs inactive
+        if ($category->status == 0) {
+            $category->subCategories()->update(['status' => 0]);
+        }
+
+        $this->dispatch('toast', 
+            type: 'success', 
+            message: 'Category status updated to ' . ($category->status ? 'Active' : 'Inactive')
+        );
+    }
+
+
+    // 👇 NEW: Switch filter
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+        $this->resetPage(); // reset pagination on filter change
     }
 
     public function render()
     {
+        $query = Category::query();
+
+        if ($this->filter === 'active') {
+            $query->where('status', 1);
+        } elseif ($this->filter === 'inactive') {
+            $query->where('status', 0);
+        }
+
         return view('livewire.admin.category-manager', [
-            'categories' => Category::latest()->paginate(10),
+            'categories' => $query->latest()->paginate(10),
         ]);
     }
 }

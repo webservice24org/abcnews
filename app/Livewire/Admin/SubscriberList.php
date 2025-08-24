@@ -42,11 +42,7 @@ class SubscriberList extends Component
         ));
 
         $this->loadSubscribers();
-        // Toast notification
-        $this->dispatch('toast', [
-            'type'    => 'success',
-            'message' => 'Subscriber status updated successfully!',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Subscriber status updated successfully!');  
     }
     
     public function deleteSubscriber($id)
@@ -55,10 +51,7 @@ class SubscriberList extends Component
         $subscriber->delete();
 
         $this->loadSubscribers();
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Subscriber deleted successfully!'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Subscriber deleted successfully!');
     }
 
     public function render()

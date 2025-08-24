@@ -65,7 +65,7 @@ class VideoPostForm extends Component
         }
 
         $this->reset();
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Video post saved successfully!']);
+        $this->dispatch('toast', type: 'success', message: 'Video post saved successfully.');
     }
 
     public function render()

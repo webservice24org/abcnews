@@ -25,8 +25,7 @@ class CustomCodeEditor extends Component
         $code->custom_css = $this->custom_css;
         $code->custom_js = $this->custom_js;
         $code->save();
-
-        session()->flash('message', 'Custom CSS/JS saved successfully!');
+        $this->dispatch('toast', type: 'success', message: 'Custom CSS/JS saved successfully!');
     }
 
     public function render()

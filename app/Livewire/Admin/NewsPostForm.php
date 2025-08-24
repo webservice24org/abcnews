@@ -275,15 +275,8 @@ public $allSubcategories;
             $tagIds[] = $tag->id;
         }
         $post->tags()->sync($tagIds);
+        $this->dispatch('toast', type: 'success', message: $this->newsPostId ? 'Post updated successfully!' : 'Post created successfully!');
 
-        // Show toast only after success
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => $this->newsPostId ? 'Post updated successfully!' : 'Post created successfully!',
-        ]);
-        
-
-        // Then redirect after short delay
         return redirect()->route('news.index');
     }
 

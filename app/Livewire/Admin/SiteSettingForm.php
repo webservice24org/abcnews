@@ -67,10 +67,7 @@ class SiteSettingForm extends Component
 
         $this->siteSetting->save();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Site settings updated successfully.',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Site settings updated successfully!');
 
     }
 

@@ -36,10 +36,7 @@ class SiteConnectionForm extends Component
 
         $this->siteConnection->save();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Verification codes updated successfully!',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Verification codes updated successfully!');
     }
 
     public function render()

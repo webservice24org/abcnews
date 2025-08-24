@@ -48,10 +48,7 @@ class SiteInfoForm extends Component
         
         $this->siteInfo->save();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Site info updated successfully.',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Site info updated successfully!');
     }
 
     public function render()

@@ -48,10 +48,7 @@ class ThemeColorPicker extends Component
         $this->dispatch('colorsUpdated', $this->colors);
 
         
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Colors updated successfully.'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Theme colors updated successfully!');
     }
 
 

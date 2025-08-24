@@ -54,11 +54,8 @@ class AdList extends Component
         
         $this->ads = Advertisement::with(['categories', 'subCategories'])->get();
 
-        
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Advertisement deleted successfully',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Advertisement deleted successfully');
+
     }
 
 

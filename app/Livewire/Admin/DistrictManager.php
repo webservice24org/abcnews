@@ -39,7 +39,7 @@ class DistrictManager extends Component
         ]);
 
         $this->reset(['division_id', 'name', 'slug']);
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'District added successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'District added successfully.');
     }
 
 
@@ -68,7 +68,7 @@ class DistrictManager extends Component
         ]);
 
         $this->reset(['editingDistrictId', 'editingDivisionId', 'editingName', 'editingSlug']);
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'District updated successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'District updated successfully.');
     }
 
 
@@ -81,11 +81,7 @@ class DistrictManager extends Component
     public function deleteConfirmed($id)
     {
         District::findOrFail($id)->delete();
-
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'District deleted successfully.'
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'District deleted successfully!');
     }
 
     public function render()

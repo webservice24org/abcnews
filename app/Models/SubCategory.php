@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class SubCategory extends Model
 {
-    protected $fillable = ['category_id', 'name', 'slug'];
+    protected $fillable = ['category_id', 'name', 'slug', 'status'];
 
     protected static function booted()
     {

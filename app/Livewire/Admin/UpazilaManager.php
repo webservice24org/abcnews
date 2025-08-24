@@ -34,7 +34,7 @@ class UpazilaManager extends Component
         ]);
 
         $this->reset('district_id', 'name', 'slug');
-        $this->dispatch('toast', ['type' => 'success', 'message' => 'Upazila added successfully.']);
+        $this->dispatch('toast', type: 'success', message: 'Upazila added successfully.');  
     }
 
 
@@ -64,7 +64,7 @@ class UpazilaManager extends Component
     ]);
 
     $this->reset('editingUpazilaId', 'editingName', 'editingDistrictId', 'editingSlug');
-    $this->dispatch('toast', ['type' => 'success', 'message' => 'Upazila updated successfully.']);
+    $this->dispatch('toast', type: 'success', message: 'Upazila updated successfully.');
 }
 
 
@@ -77,10 +77,7 @@ class UpazilaManager extends Component
     {
         Upazila::findOrFail($id)->delete();
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Upazila deleted successfully.',
-        ]);
+        $this->dispatch('toast', type: 'success', message: 'Upazila deleted successfully.');
     }
 
     public function render()

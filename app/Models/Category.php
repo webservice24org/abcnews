@@ -15,14 +15,32 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     protected $fillable = [
-        'name', 'slug',
+        'name',
+        'slug',
+        'status',
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
+    /**
+     * Single booted method: handle slug generation and cascade status change.
+     */
     protected static function booted()
     {
+        // auto-generate slug on saving (create or update)
         static::saving(function ($category) {
-            if (empty($category->slug)) {
+            if (empty($category->slug) && ! empty($category->name)) {
                 $category->slug = Str::slug($category->name);
+            }
+        });
+
+        // cascade status change to subcategories when status field changed
+        static::updated(function ($category) {
+            if ($category->isDirty('status')) {
+                // Use the actual relation name below (subcategories)
+                $category->subcategories()->update(['status' => $category->status]);
             }
         });
     }
@@ -52,4 +70,3 @@ class Category extends Model
         );
     }
 }
-

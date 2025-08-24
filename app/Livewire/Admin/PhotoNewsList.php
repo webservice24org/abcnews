@@ -42,7 +42,8 @@ class PhotoNewsList extends Component
         $this->confirmingDelete = false;
         $this->deleteId = null;
 
-        session()->flash('success', 'Photo News deleted successfully.');
+        $this->dispatch('toast', type: 'success', message: 'Photo News deleted successfully.');
+
     }
 
     public function render()

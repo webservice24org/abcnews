@@ -21,7 +21,8 @@ class ContactList extends Component
     public function deleteContact($id)
     {
         Contact::findOrFail($id)->delete();
-        $this->dispatch('toast', ['type'=>'success','message'=>'Contact deleted successfully!']);
+        $this->dispatch('toast', type: 'success', message: 'Contact deleted successfully!');
+
     }
 
     public function showReplyModal($id)
