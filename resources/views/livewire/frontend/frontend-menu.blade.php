@@ -1,4 +1,4 @@
-
+@if($theme === 'theme1')
 <header 
     class="h-[50px] md:h-[100px] sticky top-0 z-50" 
     style="background-color: {{ $color->header_bg ?? '#ff0000' }};"
@@ -332,3 +332,83 @@
     </div>
 </header>
 
+@elseif($theme === 'theme2')
+<header class="sticky top-0 z-50 shadow-sm" x-data="{ open: false }">
+
+    {{-- Top Row: Logo --}}
+    <div class="h-[70px] md:h-[100px] border-b border-gray-200 bg-red-500">
+        <div class="max-w-5xl mx-auto pt-2">
+            <a href="{{ route('home') }}">
+                @if (!empty($siteSetting) && $siteSetting->header_logo)
+                    <img src="{{ asset('storage/' . $siteSetting->header_logo) }}" alt="Logo" class="h-12 md:h-16 object-contain">
+                @else
+                    <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-12 md:h-16 object-contain">
+                @endif
+            </a>
+        </div>
+    </div>
+
+    {{-- Bottom Row: Desktop Menu --}}
+    <div class="hidden md:flex bg-white border-b  w-full border-gray-200">
+        <nav class="flex space-x-6 max-w-5xl mx-auto px-4 overflow-x-auto">
+                @foreach ($menuTree as $menu)
+                    @php
+                        $url = match($menu->type) {
+                            'category' => $menu->slug ? route('category.show', $menu->slug) : '#',
+                            'subcategory' => $menu->slug ? route('subcategory.show', $menu->slug) : '#',
+                            'division' => $menu->slug ? route('division.show', $menu->slug) : '#',
+                            'custom' => $menu->slug ?: '#',
+                            default => '#',
+                        };
+                    @endphp
+                    <a href="{{ $url }}" class="text-gray-800 hover:text-red-600 font-medium py-3 border-b-2 border-transparent hover:border-red-600 transition">
+                        {{ $menu->title }}
+                    </a>
+                @endforeach
+        </nav>
+    </div>
+
+    {{-- Mobile Header --}}
+    <div class="flex md:hidden justify-between items-center px-4 py-2 bg-white border-b border-gray-200">
+        <a href="{{ route('home') }}">
+            @if (!empty($siteSetting) && $siteSetting->header_logo)
+                <img src="{{ asset('storage/' . $siteSetting->header_logo) }}" alt="Logo" class="h-10 object-contain">
+            @else
+                <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-10 object-contain">
+            @endif
+        </a>
+        <button @click="open = !open" class="text-gray-800 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </div>
+
+    {{-- Mobile Dropdown --}}
+    <div x-show="open" class="md:hidden bg-white px-4 pb-4 space-y-2">
+        @foreach ($menuTree as $menu)
+            @php
+                $url = match($menu->type) {
+                    'category' => $menu->slug ? route('category.show', $menu->slug) : '#',
+                    'subcategory' => $menu->slug ? route('subcategory.show', $menu->slug) : '#',
+                    'division' => $menu->slug ? route('division.show', $menu->slug) : '#',
+                    'custom' => $menu->slug ?: '#',
+                    default => '#',
+                };
+            @endphp
+            <a href="{{ $url }}" class="block text-gray-800 font-medium py-2 border-b border-gray-200">
+                {{ $menu->title }}
+            </a>
+        @endforeach
+    </div>
+
+</header>
+
+
+@else
+        <div class="theme3">
+            <p>theme three content</p>
+
+        </div>
+    @endif
