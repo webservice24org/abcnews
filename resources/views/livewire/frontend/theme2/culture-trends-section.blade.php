@@ -37,7 +37,15 @@
             @endforeach
         </div>
     @else
-        <p class="text-gray-500 text-sm">এই বিভাগে কোনো খবর পাওয়া যায়নি।</p>
+        @php
+            $category = \App\Models\Category::where('slug', $categorySlug)->first();
+        @endphp
+
+        @if(!$category || $category->status == 0)
+            <p class="text-red-500 text-sm">এই বিভাগ বর্তমানে নিষ্ক্রিয়।</p>
+        @else
+            <p class="text-gray-500 text-sm">এই বিভাগে কোনো খবর পাওয়া যায়নি।</p>
+        @endif
     @endif
 
 

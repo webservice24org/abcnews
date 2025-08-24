@@ -40,12 +40,15 @@ class MenuManager extends Component
 
     
 
-    public function mount()
+   public function mount()
     {
-        $this->categories = Category::with('subcategories')->get();
+        $this->categories = Category::with('subcategories')
+                                    ->where('status', 1) // only active categories
+                                    ->get();
         $this->divisions = Division::all();
         $this->loadMenu();
     }
+
 
     public function loadMenu()
     {

@@ -15,7 +15,7 @@ class CultureTrendsSection extends Component
     {
         $this->title = $title;
         $this->categorySlug = $categorySlug;
-        $category = Category::where('slug', $categorySlug)->first();
+        $category = Category::where('slug', $categorySlug)->where('status', 1)->first();
 
         if ($category) {
             $this->posts = $category->newsPosts()

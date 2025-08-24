@@ -13,13 +13,15 @@ class SectionCard extends Component
     public $bigNews = null;
     public $smallNews = [];
 
-    public function mount(string $title, string $categorySlug): void
+   public function mount(string $title, string $categorySlug): void
     {
         $this->title = $title;
         $this->categorySlug = $categorySlug;
 
-       
-        $category = Category::where('slug', $this->categorySlug)->first();
+        
+        $category = Category::where('slug', $this->categorySlug)
+                            ->where('status', 1) 
+                            ->first();
 
         if (! $category) {
             $this->bigNews = null;
@@ -27,16 +29,16 @@ class SectionCard extends Component
             return;
         }
 
-        
         $posts = $category->newsPosts()
-            ->where('status', 'published')
-            ->latest()
-            ->take(5)
-            ->get();
+                        ->where('status', 'published')
+                        ->latest()
+                        ->take(5)
+                        ->get();
 
         $this->bigNews   = $posts->first();
         $this->smallNews = $posts->skip(1)->take(4);
     }
+
 
     public function render()
     {
