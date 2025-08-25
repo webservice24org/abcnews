@@ -26,25 +26,46 @@
 
 
 
-    {{-- Submenu form --}}
-    @if($parentIdForSubmenu === $menu->id && $availableSubcategories)
-        <tr>
-            <td colspan="4" class="pl-{{ ($level + 1) * 6 }} border px-4 py-2">
-                <form wire:submit.prevent="createSubmenu" class="space-x-2">
-                    <select wire:model="selectedSubcategoryId" class="border px-2 py-1 rounded text-black">
-                        <option value="">Select Subcategory</option>
-                        @foreach($availableSubcategories as $sub)
-                            <option value="{{ $sub->id }}">{{ $sub->name }}</option>
-                        @endforeach
-                    </select>
+   {{-- Submenu form (Subcategories) --}}
+@if($parentIdForSubmenu === $menu->id && $availableSubcategories)
+    <tr>
+        <td colspan="4" class="pl-{{ ($level + 1) * 6 }} border px-4 py-2">
+            <form wire:submit.prevent="createSubmenu" class="space-x-2">
+                <select wire:model="selectedSubcategoryId" class="border px-2 py-1 rounded text-black">
+                    <option value="">Select Subcategory</option>
+                    @foreach($availableSubcategories as $sub)
+                        <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                    @endforeach
+                </select>
 
-                    <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
-                        Save
-                    </button>
-                </form>
-            </td>
-        </tr>
-    @endif
+                <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                    Save
+                </button>
+            </form>
+        </td>
+    </tr>
+@endif
+
+{{-- Submenu form (Categories) --}}
+@if($parentIdForSubmenu === $menu->id)
+    <tr>
+        <td colspan="4" class="pl-{{ ($level + 1) * 6 }} border px-4 py-2">
+            <form wire:submit.prevent="createCategorySubmenu" class="space-x-2">
+                <select wire:model="selectedCategoryId" class="border px-2 py-1 rounded text-black">
+                    <option value="">Select Category</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+
+                <button type="submit" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600">
+                    Add Category Submenu
+                </button>
+            </form>
+        </td>
+    </tr>
+@endif
+
 
 
 

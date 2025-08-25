@@ -35,6 +35,8 @@ class MenuManager extends Component
     public $editType;
     public $editSlug;
 
+    public $selectedCategoryId; 
+
     
 
 
@@ -43,7 +45,7 @@ class MenuManager extends Component
    public function mount()
     {
         $this->categories = Category::with('subcategories')
-                                    ->where('status', 1) // only active categories
+                                    ->where('status', 1) 
                                     ->get();
         $this->divisions = Division::all();
         $this->loadMenu();
@@ -163,6 +165,28 @@ class MenuManager extends Component
         ]);
 
         $this->reset(['parentIdForSubmenu', 'selectedSubcategoryId', 'availableSubcategories']);
+        $this->loadMenu();
+    }
+
+
+    public function createCategorySubmenu()
+    {
+        $this->validate([
+            'selectedCategoryId' => 'required|exists:categories,id',
+        ]);
+
+        $category = Category::find($this->selectedCategoryId);
+
+        Menu::create([
+            'title'     => $category->name,
+            'type'      => 'category',
+            'type_id'   => $category->id,
+            'slug'      => $category->slug,
+            'parent_id' => $this->parentIdForSubmenu,
+            'order'     => Menu::where('parent_id', $this->parentIdForSubmenu)->max('order') + 1,
+        ]);
+
+        $this->reset(['selectedCategoryId', 'parentIdForSubmenu']);
         $this->loadMenu();
     }
 

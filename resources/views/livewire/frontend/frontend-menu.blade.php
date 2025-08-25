@@ -379,12 +379,12 @@
         x-effect="updateBar()"
         x-on:mouseleave="hoverIndex = null"
         x-on:resize.window="updateBar()"
-        class="relative flex space-x-3 w-full max-w-5xl mx-auto px-4 overflow-x-auto"
+        class="relative flex space-x-4 w-full max-w-5xl mx-auto px-4 overflow-x-auto"
     >
 
         {{-- Home --}}
         <a href="{{ url('/') }}"
-           class="nav-item relative font-medium py-3 no-underline"
+           class="nav-item relative font-bold py-3 no-underline"
            @mouseenter="hoverIndex = 0"
            :class="currentIndex() === 0 ? 'text-red-600' : 'text-gray-800'">
             মূলপাতা
@@ -416,7 +416,7 @@
                  @mouseleave="open = false"
             >
                 <a href="{{ $url }}"
-                   class="nav-item relative from-neutral-600 font-md py-3 flex items-center no-underline text-gray-800"
+                   class="nav-item relative font-bold py-3 flex items-center no-underline text-gray-800"
                    x-ref="link"
                    :class="currentIndex() === {{ $index + 1 }} ? 'text-red-600' : 'text-gray-800'">
                     {{ $menu->title }}
@@ -430,32 +430,89 @@
                     @endif
                 </a>
 
-                {{-- Dropdown --}}
-                <div x-show="open"
-                     x-transition:enter="transition ease-out duration-200"
-                     x-transition:enter-start="opacity-0 -translate-y-2"
-                     x-transition:enter-end="opacity-100 translate-y-0"
-                     x-transition:leave="transition ease-in duration-150"
-                     x-transition:leave-start="opacity-100 translate-y-0"
-                     x-transition:leave-end="opacity-0 -translate-y-2"
-                     class="fixed bg-white border border-gray-200 rounded shadow-lg min-w-[160px] z-50"
-                     :style="`top: ${top}px; left: ${left}px`"
-                >
-                    @foreach($children as $child)
-                        @php
-                            $childUrl = match($child->type) {
-                                'category' => $child->slug ? route('category.show', $child->slug) : '#',
-                                'subcategory' => $child->slug ? route('subcategory.show', $child->slug) : '#',
-                                'division' => $child->slug ? route('division.show', $child->slug) : '#',
-                                'custom' => $child->slug ?: '#',
-                                default => '#',
-                            };
-                        @endphp
-                        <a href="{{ $childUrl }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap no-underline">
-                            {{ $child->title }}
-                        </a>
-                    @endforeach
-                </div>
+                {{-- Dropdown OR Mega Menu --}}
+                @if($children->isNotEmpty())
+                    @if($menu->title === 'অন্যান্য')
+                        {{-- Mega Menu --}}
+                        <div x-show="open"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-2"
+                            class="fixed bg-white border border-gray-200 rounded shadow-lg w-full max-w-5xl mx-auto p-6 grid grid-cols-4 gap-3 z-50"
+                            :style="`top: ${top}px; left: 328px`"
+                        >
+                            @foreach($children as $child)
+                                @php
+                                    $childUrl = match($child->type) {
+                                        'category' => $child->slug ? route('category.show', $child->slug) : '#',
+                                        'subcategory' => $child->slug ? route('subcategory.show', $child->slug) : '#',
+                                        'division' => $child->slug ? route('division.show', $child->slug) : '#',
+                                        'custom' => $child->slug ?: '#',
+                                        default => '#',
+                                    };
+                                @endphp
+                                <div>
+                                    <a href="{{ $childUrl }}" class="block font-semibold text-gray-800 mb-2 hover:text-red-600 no-underline">
+                                        {{ $child->title }}
+                                    </a>
+
+                                    {{-- if child has subchildren, list them --}}
+                                    @if($child->children && $child->children->isNotEmpty())
+                                        <ul class="space-y-1">
+                                            @foreach($child->children as $subchild)
+                                                @php
+                                                    $subUrl = match($subchild->type) {
+                                                        'category' => $subchild->slug ? route('category.show', $subchild->slug) : '#',
+                                                        'subcategory' => $subchild->slug ? route('subcategory.show', $subchild->slug) : '#',
+                                                        'division' => $subchild->slug ? route('division.show', $subchild->slug) : '#',
+                                                        'custom' => $subchild->slug ?: '#',
+                                                        default => '#',
+                                                    };
+                                                @endphp
+                                                <li>
+                                                    <a href="{{ $subUrl }}" class="text-sm text-gray-600 hover:text-red-500 no-underline">
+                                                        {{ $subchild->title }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        {{-- Normal Dropdown --}}
+                        <div x-show="open"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-2"
+                            class="fixed bg-white border border-gray-200 rounded shadow-lg min-w-[160px] z-50"
+                            :style="`top: ${top}px; left: ${left}px`"
+                        >
+                            @foreach($children as $child)
+                                @php
+                                    $childUrl = match($child->type) {
+                                        'category' => $child->slug ? route('category.show', $child->slug) : '#',
+                                        'subcategory' => $child->slug ? route('subcategory.show', $child->slug) : '#',
+                                        'division' => $child->slug ? route('division.show', $child->slug) : '#',
+                                        'custom' => $child->slug ?: '#',
+                                        default => '#',
+                                    };
+                                @endphp
+                                <a href="{{ $childUrl }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap no-underline">
+                                    {{ $child->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                @endif
+
             </div>
         @endforeach
 
