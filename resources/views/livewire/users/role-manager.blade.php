@@ -6,12 +6,7 @@
 
         <div class="p-6 space-y-4">
 
-            @if (session()->has('success'))
-                <div class="bg-green-100 text-green-700 border border-green-300 px-4 py-2 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
-
+        @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin']))
             <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" class="space-y-4">
                 <div>
                     <input type="text" wire:model="name"
@@ -68,8 +63,9 @@
                     @endif
                 </div>
             </form>
-
+            
             <hr class="border-t border-gray-300" />
+            @endif
 
             <div class="overflow-x-auto">
                 <table class="w-full border border-gray-300 text-sm">
@@ -113,7 +109,7 @@
                                     @endif
                                 </td>
 
-                               
+                               @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin']))
                                 <td class="px-4 py-2 border border-gray-300 space-x-2 w-24 text-right">
                                     <button wire:click="edit({{ $role->id }})"
                                             class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-sm">
@@ -124,6 +120,7 @@
                                         Delete
                                     </button>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

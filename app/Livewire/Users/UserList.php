@@ -140,11 +140,6 @@ class UserList extends Component
         $this->ensureAdmin();
         $user = User::findOrFail($userId);
 
-        // Only allow if current user is admin/super admin
-        if (!auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
-            abort(403, 'Unauthorized');
-        }
-
         $user->is_active = !$user->is_active;
         $user->save();
 

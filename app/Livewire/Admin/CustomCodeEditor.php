@@ -11,6 +11,13 @@ class CustomCodeEditor extends Component
     public $custom_css;
     public $custom_js;
 
+    protected function ensureAdmin()
+    {
+        if (!auth()->user()->hasAnyRole(['Super Admin'])) {
+            abort(403, 'Unauthorized.');
+        }
+    }
+
     public function mount()
     {
         $code = CustomCode::first();
@@ -20,6 +27,7 @@ class CustomCodeEditor extends Component
 
     public function save()
     {
+        $this->ensureAdmin();
         $code = CustomCode::first() ?: new CustomCode();
 
         $code->custom_css = $this->custom_css;

@@ -39,6 +39,12 @@ class MenuManager extends Component
 
     
 
+    protected function ensureAdmin()
+    {
+        if (!auth()->user()->hasAnyRole(['Super Admin'])) {
+            abort(403, 'Unauthorized.');
+        }
+    }
 
     
 
@@ -59,6 +65,7 @@ class MenuManager extends Component
 
     public function addCustomMenu()
     {
+        $this->ensureAdmin();
         $this->validate([
             'customMenuTitle' => 'required|string|max:255',
         ]);
@@ -77,6 +84,7 @@ class MenuManager extends Component
 
     public function addToMenu()
     {
+        $this->ensureAdmin();
         foreach ($this->selectedCategories as $catId) {
             if (!Menu::where('type', 'category')->where('type_id', $catId)->exists()) {
                 $category = Category::find($catId);
@@ -129,6 +137,7 @@ class MenuManager extends Component
 
     public function removeMenu($menuId)
     {
+        $this->ensureAdmin();
         Menu::findOrFail($menuId)->delete();
         $this->loadMenu();
     }
@@ -136,6 +145,7 @@ class MenuManager extends Component
 
     public function showSubmenuForm($parentId)
     {
+        $this->ensureAdmin();
         $this->parentIdForSubmenu = $parentId;
         $this->availableSubcategories = [];
 
@@ -149,6 +159,7 @@ class MenuManager extends Component
 
     public function createSubmenu()
     {
+        $this->ensureAdmin();
         $this->validate([
             'selectedSubcategoryId' => 'required|exists:sub_categories,id',
         ]);
@@ -171,6 +182,7 @@ class MenuManager extends Component
 
     public function createCategorySubmenu()
     {
+        $this->ensureAdmin();
         $this->validate([
             'selectedCategoryId' => 'required|exists:categories,id',
         ]);
@@ -195,6 +207,7 @@ class MenuManager extends Component
 
     public function editMenu($menuId)
     {
+        $this->ensureAdmin();
         $menu = Menu::findOrFail($menuId);
         $this->editingMenuId = $menuId;
         $this->editTitle = $menu->title;
@@ -205,7 +218,9 @@ class MenuManager extends Component
 
 
     public function updateMenu()
-{
+
+    {
+        $this->ensureAdmin();
     $this->validate([
         'editTitle' => 'required|string|max:255',
         'editType' => 'required|string|in:category,subcategory,division,custom',

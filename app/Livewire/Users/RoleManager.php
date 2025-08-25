@@ -11,7 +11,7 @@ class RoleManager extends Component
 {
     protected function ensureAdmin()
     {
-        if (!auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
+        if (!auth()->user()->hasAnyRole(['Super Admin'])) {
             abort(403, 'Unauthorized.');
         }
     }
@@ -24,13 +24,13 @@ class RoleManager extends Component
 
     public function loadRoles()
     {
-        $this->ensureAdmin();
+        
         $this->roles = Role::orderBy('name')->get();
     }
 
     public function mount()
     {
-        $this->ensureAdmin();
+        
         $this->loadRoles();
         $this->loadPermissions();
     }
@@ -38,7 +38,7 @@ class RoleManager extends Component
 
     public function loadPermissions()
     {
-        $this->ensureAdmin();
+        
         $this->permissions = Permission::orderBy('name')->get();
     }
 
@@ -133,6 +133,7 @@ class RoleManager extends Component
     #[\Livewire\Attributes\On('deleteConfirmed')]
     public function deleteConfirmed($id)
     {
+        $this->ensureAdmin();
         Role::findOrFail($id)->delete();
         $this->dispatch('toast', type: 'success', message: 'Role deleted successfully.');
     }

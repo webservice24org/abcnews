@@ -5,7 +5,7 @@
         </div>
 
         <div class="p-6 space-y-4">
-
+            @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin']))
             <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" class="space-y-4">
                 <div>
                     <input type="text" wire:model="name"
@@ -31,8 +31,9 @@
                     @endif
                 </div>
             </form>
-
+            
             <hr class="border-t border-gray-300" />
+            @endif
 
             <div class="overflow-x-auto">
                 <table class="w-full border border-gray-300 text-sm">
@@ -46,6 +47,7 @@
                         @foreach ($permissions as $permission)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 text-black border border-gray-300">{{ $permission->name }}</td>
+                                 @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin']))
                                 <td class="px-4 py-2 border border-gray-300 space-x-2">
                                     <button wire:click="edit({{ $permission->id }})"
                                             class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-sm">
@@ -56,12 +58,15 @@
                                         Delete
                                     </button>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-
+            <div class="p-4">
+                {{ $permissions->links() }} 
+            </div>
         </div>
     </div>
 </div>

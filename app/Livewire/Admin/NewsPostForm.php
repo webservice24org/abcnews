@@ -37,7 +37,7 @@ class NewsPostForm extends Component
             'Subscriber' => ['read news'],
         ];
 
-        $userRoles = $user->getRoleNames(); // Collection of role names
+        $userRoles = $user->getRoleNames(); 
 
         $hasPermission = $userRoles->contains(function ($role) use ($rolePermissions, $action) {
             return isset($rolePermissions[$role]) && in_array($action, $rolePermissions[$role]);

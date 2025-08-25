@@ -3,35 +3,29 @@
 namespace App\Livewire\Users;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Permission;
 
 class PermissionManager extends Component
 {
+    use WithPagination;
+
+    public $name, $permissionId, $isEdit = false;
 
     protected function ensureAdmin()
     {
-        if (!auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
+        if (!auth()->user()->hasAnyRole(['Super Admin'])) {
             abort(403, 'Unauthorized.');
         }
     }
 
-    public $name, $permissionId, $isEdit = false;
-    public $permissions;
-
-    public function mount()
-    {
-        $this->ensureAdmin();
-        $this->loadPermissions();
-    }
-
     public function render()
     {
-        return view('livewire.users.permission-manager');
-    }
+        
 
-    public function loadPermissions()
-    {
-        $this->permissions = Permission::orderBy('name')->get();
+        return view('livewire.users.permission-manager', [
+            'permissions' => Permission::orderBy('name')->paginate(10)
+        ]);
     }
 
     public function store()
@@ -41,6 +35,7 @@ class PermissionManager extends Component
 
         Permission::create(['name' => $this->name]);
         $this->dispatch('toast', type: 'success', message: 'Permission created successfully.');
+
         $this->resetForm();
     }
 
@@ -60,8 +55,7 @@ class PermissionManager extends Component
             'name' => 'required|unique:permissions,name,' . $this->permissionId,
         ]);
 
-        $permission = Permission::findOrFail($this->permissionId);
-        $permission->update(['name' => $this->name]);
+        Permission::findOrFail($this->permissionId)->update(['name' => $this->name]);
 
         $this->dispatch('toast', type: 'success', message: 'Permission updated successfully.');
         $this->resetForm();
@@ -76,9 +70,9 @@ class PermissionManager extends Component
     #[\Livewire\Attributes\On('deleteConfirmed')]
     public function deleteConfirmed($id)
     {
+        $this->ensureAdmin();
         Permission::findOrFail($id)->delete();
         $this->dispatch('toast', type: 'success', message: 'Permission deleted successfully.');
-        $this->loadPermissions();
     }
 
     public function resetForm()
@@ -86,6 +80,7 @@ class PermissionManager extends Component
         $this->name = '';
         $this->permissionId = null;
         $this->isEdit = false;
-        $this->loadPermissions();
+
+        $this->resetPage();
     }
 }
