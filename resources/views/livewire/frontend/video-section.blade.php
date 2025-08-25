@@ -39,27 +39,29 @@
                     </div>
                 </a>
                 <a href="{{ route('video.show', $last->id) }}">
-                    <h2 class="mt-2 font-semibold">{{ $last->video_title }}</h2>
+                    <h2 class="mt-2 font-semibold hover:underline">{{ $last->video_title }}</h2>
                 </a>
             </div>
 
-           <div class="grid grid-cols-3 gap-4 rightVideoBlock">
-                @foreach ($others as $video)
-                    <div class="space-y-2">
-                        <a href="{{ route('video.show', $video->id) }}">
-                            <div class="relative w-full aspect-video overflow-hidden rounded">
-                                <img src="{{ asset('storage/' . $video->thumbnail) }}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 flex justify-center items-center hover:bg-opacity-60 transition">
-                                    <i class="fas fa-play-circle text-red-500 text-2xl"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="{{ route('video.show', $video->id) }}">
-                            <h2 class="text-md font-medium">{{ $video->video_title }}</h2>
-                        </a>
+           <div class="grid grid-cols-2 md:grid-cols-3 gap-4 rightVideoBlock">
+    @foreach ($others as $video)
+        <div class="space-y-2">
+            <a href="{{ route('video.show', $video->id) }}">
+                <div class="relative w-full aspect-video overflow-hidden rounded">
+                    <img src="{{ asset('storage/' . $video->thumbnail) }}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 flex justify-center items-center hover:bg-opacity-60 transition">
+                        <i class="fas fa-play-circle text-red-500 text-2xl"></i>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            </a>
+            <a href="{{ route('video.show', $video->id) }}">
+                <h2 class="hover:underline font-semibold text-sm md:text-base">{{ $video->video_title }}</h2>
+            </a>
+        </div>
+    @endforeach
+</div>
+
+
 
         </div>
     @endif

@@ -11,7 +11,7 @@
                     class="w-full h-60 object-cover">
 
                     <div class="p-4">
-                        <h2 class="font-bold mb-2">{{ $leadNews->news_title }}</h2>
+                        <h2 class="font-bold mb-2 hover:underline">{{ $leadNews->news_title }}</h2>
                         <p class="text-gray-700 mb-2">
                             {{ \Illuminate\Support\Str::words(strip_tags($leadNews->news_description), 40, '...') }}
                         </p>
@@ -37,7 +37,7 @@
                 class="w-24 h-20 object-cover md:w-full md:h-28">
 
                 <div class="p-0 md:p-2">
-                    <h2 class="font-semibold mb-1">{{ $news->news_title }}</h2>
+                    <h2 class="font-semibold mb-1 hover:underline">{{ $news->news_title }}</h2>
                     <span class="text-gray-500 text-sm">
                         {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at, false) }}
                         
@@ -59,7 +59,7 @@
                  class="w-full h-24 object-cover md:hidden">
 
                 <div class="p-2">
-                    <h2 class="font-semibold mb-1">{{ $news->news_title }}</h2>
+                    <h2 class="font-semibold mb-1 hover:underline">{{ $news->news_title }}</h2>
                     <span class="text-gray-500 text-sm">
                         {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at, false) }}
                     </span>
