@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     }
     protected $commands = [
         \App\Console\Commands\TransliterateDistrictSlugs::class,
+        \App\Console\Commands\GenerateLicense::class,
     ];
 
 
