@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 class PhotoNewsImage extends Model
 {
@@ -12,4 +13,16 @@ class PhotoNewsImage extends Model
     {
         return $this->belongsTo(PhotoNews::class);
     }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            ResponseCache::clear();
+        });
+
+        static::deleted(function () {
+            ResponseCache::clear();
+        });
+    }
+
 }

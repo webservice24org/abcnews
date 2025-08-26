@@ -22,7 +22,8 @@
         "mantix/livewire-jodit-text-editor": "^1.6",
         "sohibd/laravelslug": "^1.0",
         "spatie/laravel-analytics": "^5.6",
-        "spatie/laravel-permission": "^6.20"
+        "spatie/laravel-permission": "^6.20",
+        "spatie/laravel-responsecache": "^7.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

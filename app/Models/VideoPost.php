@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 class VideoPost extends Model
 {
@@ -16,4 +17,17 @@ class VideoPost extends Model
         'thumbnail',
         'status',
     ];
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            ResponseCache::clear();
+        });
+
+        static::deleted(function () {
+            ResponseCache::clear();
+        });
+    }
+
+
 }

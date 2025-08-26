@@ -136,7 +136,8 @@
     </script>
 @endif
     
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+@stack('scripts')
 </body>
 </html>
 

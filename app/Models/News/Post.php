@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LakM\Commenter\Concerns\Commentable;
 use LakM\Commenter\Contracts\CommentableContract;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 use App\Models\{
     Category, SubCategory, Tag, Division, District, Upazila, User
@@ -131,5 +132,18 @@ class Post extends Model implements CommentableContract
     {
         return $query->where('status', 'scheduled')->where('scheduled_at', '>', now());
     }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            ResponseCache::clear();
+        });
+
+        static::deleted(function () {
+            ResponseCache::clear();
+        });
+    }
+
+
 }
 
