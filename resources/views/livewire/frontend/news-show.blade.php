@@ -181,6 +181,9 @@
 
 
             </div>
+
+            <livewire:frontend.weather-widget />
+
         </div>
 
         
