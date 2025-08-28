@@ -14,7 +14,7 @@ class MiddleGridSection extends Component
 
     public function render()
     {
-        $category = Category::where('slug', $this->categorySlug)->first();
+        $category = Category::where('slug', $this->categorySlug)->where('status', 1)->first();
 
         $allNews = $category
             ? $category->newsPosts()
@@ -24,11 +24,10 @@ class MiddleGridSection extends Component
                 ->get()
             : collect();
 
-        $leftNews = $allNews->slice(1, 6);
-        $middleNews = $allNews->slice(0, 1)->first();
-        $rightNews = $allNews->slice(7, 6);
+        $leftNews   = $allNews->slice(1, 6);
+        $middleNews = $allNews->first();
+        $rightNews  = $allNews->slice(7, 6);
 
-       
         if ($category) {
             $this->ad = Advertisement::whereHas('categories', function ($query) use ($category) {
                     $query->where('categories.id', $category->id);
@@ -39,13 +38,12 @@ class MiddleGridSection extends Component
                 ->first();
         }
 
-        
-
+        // Pass $allNews so Blade can check empty state
         return view('livewire.frontend.middle-grid-section', compact(
+            'allNews',
             'leftNews',
             'middleNews',
             'rightNews'
         ));
     }
 }
-

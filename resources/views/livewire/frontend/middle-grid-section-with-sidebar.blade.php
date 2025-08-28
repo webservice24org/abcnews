@@ -23,6 +23,11 @@
     </div>
 
     {{-- Main Grid --}}
+    @if (!$middleNews)
+        <p class="text-center text-gray-500 py-6">
+            কোনো পোস্ট পাওয়া যায়নি অথবা ক্যাটাগরিটি সক্রিয় নয়
+        </p>
+    @else
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition p-4">
         {{-- Left Column: 6 small news --}}
         <div class="md:col-span-3 space-y-4">
@@ -76,6 +81,7 @@
             <img src="{{ asset('storage/ads/latest-post-ad.png') }}" alt="Ad" class="object-fill">
         </div>
     </div>
+    @endif
 
     {{-- Bottom Ad --}}
     <div class="flex items-start gap-3 bg-white border border-gray-200 rounded-lg p-1 shadow-sm hover:shadow-md transition mt-2">
