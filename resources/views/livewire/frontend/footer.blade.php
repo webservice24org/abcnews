@@ -33,26 +33,64 @@
                     @endif
                 </div>
 
+                {{-- Footer Menu --}}
+                <div>
+                    <ul class="flex flex-wrap gap-4 text-sm">
+                        @foreach ($pages as $page)
+                            <li>
+                                <a href="{{ route('page.show', $page->slug) }}" 
+                                class="hover:underline">
+                                    {{ $page->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
                 {{-- Social Icons --}}
                 <div class="mt-4 md:mt-0">
                     <livewire:frontend.social-icons />
                 </div>
             </div>
 
-            {{-- Footer Menu --}}
-            <div class="mt-6">
-                <ul class="flex flex-wrap gap-4 text-sm">
-                    @foreach ($pages as $page)
-                        <li>
-                            <a href="{{ route('page.show', $page->slug) }}" 
-                            class="hover:underline">
-                                {{ $page->title }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white pt-4">
+                {{-- Footer Logo --}}
+                <div>
+                    @if (!empty($siteInfo?->office_address))
+                        <p>অফিসঃ {{$siteInfo->office_address}}</p>
+                    @endif
+                </div>
+
+                {{-- Footer Menu --}}
+                <div>
+                    @if (!empty($siteInfo?->office_address))
+                        <p>সম্পাদক ও প্রকাশকঃ {{$siteInfo->editor}}</p>
+                    @endif
+                </div>
+
+                {{-- Social Icons --}}
+                <div class="mt-4 md:mt-0">
+                    <h4 class="border-b border-amber-100 text-center font-bold">যোগাযোগ</h4>
+
+                    @if(!empty($siteInfo->email))
+                        <p class="flex items-center gap-2 mt-2">
+                            <i class="fa-solid fa-envelope text-white"></i>
+                            <span>{{ $siteInfo->email }}</span>
+                        </p>
+                    @endif
+
+                    @if(!empty($siteInfo->mobile))
+                        <p class="flex items-center gap-2 mt-2">
+                            <i class="fa-solid fa-phone text-white"></i>
+                            <span>{{ $siteInfo->mobile }}</span>
+                        </p>
+                    @endif
+                </div>
+
             </div>
 
+            
+            
 
             {{-- Bottom Row: Copyright and Developer --}}
             <div class="flex flex-col md:flex-row justify-between items-center text-sm text-white border-t border-white pt-4">
