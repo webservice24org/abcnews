@@ -44,6 +44,8 @@ use App\Livewire\Frontend\UnsubscribePage;
 use App\Livewire\Admin\Google\AnalyticsSettings;
 use App\Livewire\Admin\Google\AnalyticsConfig;
 use App\Livewire\Admin\Theme\ThemeSelector;
+use App\Livewire\Admin\HomepageManager;
+use App\Livewire\Admin\HomepageLeadSectionManager;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
@@ -164,6 +166,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/analytics-settings', AnalyticsSettings::class)->name('admin.analytics-settings');
     
     Route::get('/admin/themes', ThemeSelector::class)->name('themes.index');
+
+    Route::get('/admin/homepage-builder', HomepageManager::class)->name('admin.homepage.builder');
+
+    Route::get('/homepage/lead-section', HomepageLeadSectionManager::class)
+        ->name('admin.homepage.lead-section');
 
     // Optional: Save theme route (if you want non-Livewire fallback)
    // Route::post('/admin/themes/save', [ThemeController::class, 'save'])->name('themes.save');

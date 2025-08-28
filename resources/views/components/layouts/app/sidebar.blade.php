@@ -503,6 +503,8 @@
             @php
                 $pageRoutes = [
                     'pages.index',
+                    'admin.homepage.builder',
+                    'admin.homepage.lead-section',
                 ];
                 $isPageRoutesOpen = collect($pageRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -530,6 +532,22 @@
                                 wire:navigate
                                 class="{{ request()->routeIs('pages.index') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
                                 {{ __('Page List') }}
+                            </flux:navlist.item>
+                            <flux:navlist.item
+                                icon="home"
+                                :href="route('admin.homepage.builder')"
+                                :current="request()->routeIs('admin.homepage.builder')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.homepage.builder') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Home Page Builder') }}
+                            </flux:navlist.item>
+                            <flux:navlist.item
+                                icon="map"
+                                :href="route('admin.homepage.lead-section')"
+                                :current="request()->routeIs('admin.homepage.lead-section')"
+                                wire:navigate
+                                class="{{ request()->routeIs('admin.homepage.lead-section') ? 'font-semibold bg-gray-200 rounded text-gray-900' : '' }}">
+                                {{ __('Lead news Settings') }}
                             </flux:navlist.item>
 
                         </flux:navlist.group>

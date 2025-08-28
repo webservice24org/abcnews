@@ -124,3 +124,8 @@ html {
 .section-header {
   background-color: var(--section-header-bg);
 }
+
+.section {
+    margin-top: 120px;
+    margin-bottom: 40px;
+}

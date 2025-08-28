@@ -3,10 +3,10 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Category;
-use Livewire\Component;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class CategoryManager extends Component
 {
@@ -15,7 +15,12 @@ class CategoryManager extends Component
     public int|null $editingCategoryId = null;
     public string $name = '';
     public string $slug = '';
-    public string $filter = 'active'; // 👈 default filter
+    public string $filter = 'active'; 
+    public string $search = '';
+
+    // ✅ Sorting
+    public string $sortField = 'created_at';
+    public string $sortDirection = 'desc';
 
     protected function rules()
     {
@@ -28,6 +33,21 @@ class CategoryManager extends Component
     {
         if (!Auth::check() || Auth::user()->hasRole('Subscriber')) {
             abort(403, 'You are not authorized to view this page.');
+        }
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
         }
     }
 
@@ -45,12 +65,11 @@ class CategoryManager extends Component
             [
                 'name' => $this->name,
                 'slug' => $slug,
-                'status' => 1, // 👈 default active when created
+                'status' => 1,
             ]
         );
 
         $this->reset(['name', 'slug', 'editingCategoryId']);
-
         $this->dispatch('toast', type: 'success', message: 'Category saved successfully.');
     }
 
@@ -74,35 +93,37 @@ class CategoryManager extends Component
         $this->dispatch('toast', type: 'success', message: 'Category deleted successfully.');
     }
 
-    // 👇 NEW: Toggle status
     public function toggleStatus($id)
     {
         $category = Category::findOrFail($id);
         $category->status = $category->status ? 0 : 1;
         $category->save();
 
-        // 👇 Cascade: if category is inactive, set all subs inactive
         if ($category->status == 0) {
             $category->subCategories()->update(['status' => 0]);
         }
 
-        $this->dispatch('toast', 
-            type: 'success', 
+        $this->dispatch('toast',
+            type: 'success',
             message: 'Category status updated to ' . ($category->status ? 'Active' : 'Inactive')
         );
     }
 
-
-    // 👇 NEW: Switch filter
     public function setFilter($filter)
     {
         $this->filter = $filter;
-        $this->resetPage(); // reset pagination on filter change
+        $this->resetPage();
     }
 
     public function render()
     {
-        $query = Category::query();
+        $query = Category::query()
+            ->when($this->search, function ($q) {
+                $q->where(function ($subQuery) {
+                    $subQuery->where('name', 'like', "%{$this->search}%")
+                             ->orWhere('slug', 'like', "%{$this->search}%");
+                });
+            });
 
         if ($this->filter === 'active') {
             $query->where('status', 1);
@@ -110,8 +131,9 @@ class CategoryManager extends Component
             $query->where('status', 0);
         }
 
-        return view('livewire.admin.category-manager', [
-            'categories' => $query->latest()->paginate(10),
-        ]);
+        $categories = $query->orderBy($this->sortField, $this->sortDirection)
+                            ->paginate(10);
+
+        return view('livewire.admin.category-manager', compact('categories'));
     }
 }

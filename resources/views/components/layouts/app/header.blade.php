@@ -100,5 +100,6 @@
 
         @livewireScripts
         @fluxScripts
+        
     </body>
 </html>

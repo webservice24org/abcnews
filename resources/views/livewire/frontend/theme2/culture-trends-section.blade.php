@@ -25,7 +25,7 @@
                             class="w-full h-48 object-cover"
                         >
                     </a>
-                    <h2 class="text-base font-semibold leading-tight mt-2 hover:underline">
+                    <h2 class="text-base font-semibold leading-tight mt-2 news_title">
                         <a href="{{ route('news.show', $post->slug) }}">
                             {{ $post->news_title }}
                         </a>
