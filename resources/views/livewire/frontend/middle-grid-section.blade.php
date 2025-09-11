@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     {{-- Section Header --}}
     <div class="flex justify-between items-center border-b-3 mb-4"
          style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">

@@ -1,4 +1,4 @@
-<section class="mb-10 bg-white rounded shadow p-4"> 
+<section class="mb-10 bg-white rounded shadow p-4 max-w-5xl mx-auto px-4 py-4"> 
     <div class="flex justify-between items-center border-b-3 mb-4"
          style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
         <h2 class="text-2xl font-bold p-2 inline-block"

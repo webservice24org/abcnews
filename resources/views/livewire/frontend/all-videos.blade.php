@@ -1,4 +1,4 @@
-<div class="bg-white rounded shadow p-2">
+<div class="bg-white rounded shadow p-2 max-w-5xl mx-auto px-4 py-4">
     <h1 class="text-2xl font-bold mb-4 text-red-600">সব ভিডিও</h1>
 
     @if ($videos->count())

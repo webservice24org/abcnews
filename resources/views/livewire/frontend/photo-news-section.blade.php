@@ -1,4 +1,4 @@
-<section class="mt-20 ">
+<section class="mt-20 max-w-5xl mx-auto px-4 py-4">
     <div class="flex justify-between items-center border-b-3 mb-4" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
         <h2 class="text-2xl font-bold p-2 inline-block" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">ফটো নিউজ</h2>       
         

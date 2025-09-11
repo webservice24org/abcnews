@@ -40,6 +40,16 @@ class HomepageManager extends Component
                 'preview' => asset('storage/home_preview/section-card.png'),
                 'desc' => '1 big + list on the right/left.',
             ],
+            'two-column-section' => [
+                'label' => 'Two column Section',
+                'preview' => asset('storage/home_preview/two-column.png'),
+                'desc' => 'Two column layout with cards.',
+            ],
+            'nine-three-section' => [
+                'label' => '9-3 Layout',
+                'preview' => asset('storage/home_preview/nine-three.png'),
+                'desc' => '9-3 news layout.',
+            ],
             'middle-grid-section' => [
                 'label' => 'Middle Grid Section',
                 'preview' => asset('storage/home_preview/middle-grid.png'),
@@ -75,10 +85,32 @@ class HomepageManager extends Component
                 'preview' => asset('storage/home_preview/four-col.png'),
                 'desc' => 'Four compact columns.',
             ],
+
+            'four-category-section' => [
+                'label' => 'Four Category Section',
+                'preview' => asset('storage/home_preview/four-colum-simple.png'),
+                'desc' => 'Four categories with featured news.',
+            ],
+            
+            'single-news-feature' => [
+                'label' => 'Single News Section',
+                'preview' => asset('storage/home_preview/single-news-feature.png'),
+                'desc' => 'Single News featured news.',
+            ],
+            'one-news-right-section' => [
+                'label' => 'One New Right Section',
+                'preview' => asset('storage/home_preview/one-news-right-section.png'),
+                'desc' => 'one-news-right-section.',
+            ],
             'video-section' => [
                 'label' => 'Video Section',
                 'preview' => asset('storage/home_preview/video.png'),
                 'desc' => 'Latest video block.',
+            ],
+            'video-carousel-section' => [
+                'label' => 'Video Carousel',
+                'preview' => asset('storage/home_preview/video-carousel.png'),
+                'desc' => 'Carousel of featured videos.',
             ],
             'photo-news-section' => [
                 'label' => 'Photo News',

@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" >
         @foreach($sections as $section)
             <div class="bg-white rounded shadow overflow-hidden flex flex-col h-full">

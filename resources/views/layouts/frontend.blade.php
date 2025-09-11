@@ -63,9 +63,9 @@
         }
     </style>
 
-    @if($theme === 'theme2')
-        @vite('resources/css/theme2.css')
-    @endif
+    
+     @vite('resources/css/theme2.css')
+    
 
 
  
@@ -92,7 +92,7 @@
             {{ $slot }}
         </main>
     @elseif($theme === 'theme2')
-        <main class="max-w-5xl mx-auto px-4 py-4">
+        <main class="w-full">
             {{ $slot }}
         </main>
     @else

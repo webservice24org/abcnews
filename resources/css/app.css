@@ -129,3 +129,11 @@ html {
     margin-top: 120px;
     margin-bottom: 40px;
 }
+
+.swiper {
+    overflow: hidden; /* keep slides inside */
+}
+
+.swiper-wrapper {
+    display: flex; /* ensures horizontal row */
+}

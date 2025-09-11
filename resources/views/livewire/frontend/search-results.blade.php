@@ -1,4 +1,4 @@
-<div class="search-result container">
+<div class="search-result container max-w-5xl mx-auto px-4 py-4">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div class="md:col-span-8 space-y-6">
             <h1 class="text-2xl font-semibold mb-4">অনুসন্ধান</h1>

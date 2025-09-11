@@ -1,4 +1,4 @@
-<div class="section">
+<div class="section max-w-5xl mx-auto px-4 py-4">
     {{-- Section header --}}
     <div class="flex items-center justify-between mb-6 pb-2 sectionHeader">
         <a href="{{ route('category.show', $categorySlug) }}"

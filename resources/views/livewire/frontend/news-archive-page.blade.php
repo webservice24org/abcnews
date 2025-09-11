@@ -1,4 +1,4 @@
-<section class="container mx-auto py-6 px-4">
+<section class="container max-w-5xl mx-auto px-4 py-4">
     <h2 class="text-2xl font-bold mb-4 text-black">
         {{ \App\Helpers\DateHelper::formatBanglaDateTime($parsedDate) }} এর সংবাদের তালিকা
     </h2>

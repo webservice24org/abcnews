@@ -1,4 +1,4 @@
-<div class="grid grid-cols-12 gap-4">
+<div class="grid grid-cols-12 gap-4 max-w-5xl mx-auto px-4 py-4">
     {{-- Left Column: Big Lead --}}
     @if($leadNews)
         <div class="col-span-12 md:col-span-6">

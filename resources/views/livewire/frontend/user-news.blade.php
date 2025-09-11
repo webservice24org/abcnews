@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     {{-- Category Name with Inline Subcategories --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3 border-red-700">
         <h2 class="text-2xl font-bold text-white bg-red-600 pb-2 ps-2 pt-2 pr-4">

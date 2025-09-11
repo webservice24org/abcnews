@@ -1,4 +1,4 @@
-<div class="bg-white p-6 rounded-lg shadow">
+<div class="bg-white p-6 rounded-lg shadow max-w-5xl mx-auto px-4 py-4">
     @if (session()->has('success'))
         <div class="mb-4 text-green-600 font-semibold">
             {{ session('success') }}

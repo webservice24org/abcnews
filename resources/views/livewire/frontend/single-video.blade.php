@@ -1,4 +1,4 @@
-<div class="grid md:grid-cols-12 gap-6">
+<div class="grid md:grid-cols-12 gap-6 max-w-5xl mx-auto px-4 py-4">
     {{-- Left 8-column: Video --}}
     <div class="md:col-span-8">
         <div class="aspect-w-16 aspect-h-9">

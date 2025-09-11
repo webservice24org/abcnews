@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     {{-- Category Name with Inline Subcategories --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
         <h2 class="text-2xl font-bold pb-2 ps-2 pt-2 pr-4" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">

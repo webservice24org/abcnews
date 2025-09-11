@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 py-6">
+<div class="container mx-auto max-w-5xl mx-auto px-4 py-4">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
         {{-- Main Content --}}

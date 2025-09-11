@@ -79,7 +79,7 @@ class NewsPostForm extends Component
 
     public function getCategoryTreeProperty()
     {
-        return Category::with('subcategories')->get();
+        return Category::with('subcategories')->where('status', 1)->get();
     }
 
 

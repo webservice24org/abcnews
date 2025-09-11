@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     {{-- Breadcrumb and District Header --}}
     <div class="mb-6">
 

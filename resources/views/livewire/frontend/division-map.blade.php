@@ -1,4 +1,4 @@
-<div class="bg-white p-4 rounded-lg shadow-md text-center space-y-4">
+<div class="bg-white p-4 rounded-lg shadow-md text-center space-y-4 max-w-5xl mx-auto px-4 py-4">
     <h2 class="text-lg font-bold text-black mb-2">আমার এলাকার খবর</h2>
 
     <div class="gap-3">

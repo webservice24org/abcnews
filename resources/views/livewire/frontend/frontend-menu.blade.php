@@ -335,18 +335,24 @@
 @elseif($theme === 'theme2')
 <header class="sticky top-0 z-50 shadow-sm" x-data="{ open: false }">
 
- {{-- Top Row: Logo (desktop only) --}}
-<div class="hidden md:flex h-[70px] md:h-[100px] border-b border-gray-200 " style="background-color: {{ $color->header_bg ?? '#ff0000' }};">
-    <div class="max-w-5xl w-full mx-auto px-4 flex items-center">
+{{-- Top Row: Logo (desktop only) --}}
+<div class="hidden md:flex h-[70px] md:h-[100px] border-b border-gray-200" 
+     style="background-color: {{ $color->header_bg ?? '#ff0000' }};">
+    <div class="max-w-5xl w-full mx-auto px-4 flex items-center justify-center">
         <a href="{{ route('home') }}">
             @if (!empty($siteSetting) && $siteSetting->header_logo)
-                <img src="{{ asset('storage/' . $siteSetting->header_logo) }}" alt="Logo" class="h-12 md:h-16 object-contain">
+                <img src="{{ asset('storage/' . $siteSetting->header_logo) }}" 
+                     alt="Logo" 
+                     class="h-12 md:h-16 object-contain">
             @else
-                <img src="{{ asset('storage/logos/front-real-logo.png') }}" alt="Logo" class="h-12 md:h-16 object-contain">
+                <img src="{{ asset('storage/logos/front-real-logo.png') }}" 
+                     alt="Logo" 
+                     class="h-12 md:h-16 object-contain">
             @endif
         </a>
     </div>
 </div>
+
 
 
 
@@ -384,11 +390,14 @@
 
         {{-- Home --}}
         <a href="{{ url('/') }}"
-           class="nav-item relative font-bold py-3 no-underline"
-           @mouseenter="hoverIndex = 0"
-           :class="currentIndex() === 0 ? 'text-red-600' : 'text-gray-800'">
-            মূলপাতা
-        </a>
+   class="nav-item relative font-bold py-3 no-underline"
+   @mouseenter="hoverIndex = 0"
+   :class="currentIndex() === 0 
+       ? 'text-[rgb(179,25,66)]' 
+       : 'text-gray-800'">
+    মূলপাতা
+</a>
+
 
         {{-- Dynamic Menu --}}
         @foreach ($menuTree as $index => $menu)
@@ -416,19 +425,23 @@
                  @mouseleave="open = false"
             >
                 <a href="{{ $url }}"
-                   class="nav-item relative font-bold py-3 flex items-center no-underline text-gray-800"
-                   x-ref="link"
-                   :class="currentIndex() === {{ $index + 1 }} ? 'text-red-600' : 'text-gray-800'">
-                    {{ $menu->title }}
-                    @if($children->isNotEmpty())
-                        <svg class="ml-1 w-4 h-4 transform transition-transform"
-                             :class="open ? 'rotate-180' : ''" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                  clip-rule="evenodd" />
-                        </svg>
-                    @endif
-                </a>
+                    class="nav-item relative font-bold py-3 flex items-center no-underline hover:text-[rgb(179,25,66)]"
+                    x-ref="link"
+                    :class="{
+                        'text-[rgb(179,25,66)]': currentIndex() === {{ $index + 1 }},
+                        'text-gray-800': currentIndex() !== {{ $index + 1 }}
+                    }">
+                        {{ $menu->title }}
+                        @if($children->isNotEmpty())
+                            <svg class="ml-1 w-4 h-4 transform transition-transform"
+                                :class="open ? 'rotate-180' : ''" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.21l3.71-3.98a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        @endif
+                    </a>
+
 
                 {{-- Dropdown OR Mega Menu --}}
                 @if($children->isNotEmpty())
@@ -455,7 +468,7 @@
                                     };
                                 @endphp
                                 <div>
-                                    <a href="{{ $childUrl }}" class="block font-semibold text-gray-800 mb-2 hover:text-red-600 no-underline">
+                                    <a href="{{ $childUrl }}" class="block font-semibold text-gray-800 mb-2 hover:text-[rgb(179,25,66)] no-underline">
                                         {{ $child->title }}
                                     </a>
 
@@ -473,7 +486,7 @@
                                                     };
                                                 @endphp
                                                 <li>
-                                                    <a href="{{ $subUrl }}" class="text-sm text-gray-600 hover:text-red-500 no-underline">
+                                                    <a href="{{ $subUrl }}" class="text-sm text-gray-600 hover:text-[rgb(179,25,66)] no-underline">
                                                         {{ $subchild->title }}
                                                     </a>
                                                 </li>
@@ -591,7 +604,7 @@
         <a href="{{ url('/') }}"
            class="nav-item relative font-medium py-2 text-gray-800"
            @mouseenter="hoverIndex = 0"
-           :class="activeIndex === 0 ? 'text-red-600' : 'hover:text-red-600'">
+           :class="activeIndex === 0 ? 'text-[rgb(179,25,66)]' : 'hover:text-[rgb(179,25,66)]'">
             মূলপাতা
         </a>
 
@@ -610,13 +623,13 @@
             <a href="{{ $url }}"
                class="nav-item relative font-medium py-2 text-gray-800"
                @mouseenter="hoverIndex = {{ $index + 1 }}"
-               :class="activeIndex === {{ $index + 1 }} ? 'text-red-600' : 'hover:text-red-600'">
+               :class="activeIndex === {{ $index + 1 }} ? 'text-[rgb(179,25,66)]' : 'hover:text-[rgb(179,25,66)]'">
                 {{ $menu->title }}
             </a>
         @endforeach
 
         {{-- Sliding underline --}}
-        <div x-ref="bar" class="absolute bottom-0 h-[2px] bg-red-600 transition-all duration-300 ease-out"></div>
+        <div x-ref="bar" class="absolute bottom-0 h-[2px] bg-[rgb(179,25,66)] transition-all duration-300 ease-out"></div>
     </nav>
 </div>
 

@@ -70,9 +70,10 @@
 
                 {{-- Social Icons --}}
                 <div class="mt-4 md:mt-0">
+                    @if(!empty($siteInfo->email))
                     <h4 class="border-b border-amber-100 text-center font-bold">যোগাযোগ</h4>
 
-                    @if(!empty($siteInfo->email))
+                    
                         <p class="flex items-center gap-2 mt-2">
                             <i class="fa-solid fa-envelope text-white"></i>
                             <span>{{ $siteInfo->email }}</span>
@@ -93,7 +94,7 @@
             
 
             {{-- Bottom Row: Copyright and Developer --}}
-            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-white border-t border-white pt-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-white  pt-4">
                 <div>
                     @if (!empty($siteInfo?->copyright_info))
                         <p>{!! $siteInfo->copyright_info !!}</p>
@@ -101,7 +102,7 @@
                 </div>
 
                 <div class="mt-2 md:mt-0">
-                    <p>Developed by <a href="https://webservicebd.org/" class="underline hover:text-gray-200">WebserviceBD</a></p>
+                    <p class="hidden">Developed by <a href="https://webservicebd.org/" class="underline hover:text-gray-200">WebserviceBD</a></p>
                 </div>
             </div>
 

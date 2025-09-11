@@ -1,4 +1,4 @@
-<div class="section">
+<div class="section max-w-5xl mx-auto px-4 py-4">
     {{-- Section Title --}}
     @if($title)
         <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200 sectionHeader">

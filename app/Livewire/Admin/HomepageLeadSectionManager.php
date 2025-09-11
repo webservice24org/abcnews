@@ -13,14 +13,19 @@ class HomepageLeadSectionManager extends Component
 
     public array $designOptions = [
         'design1' => [
-            'label' => 'Lead News with sub lead and Ad',
+            'label' => 'Lead News with Sub Lead and Ad',
             'preview' => '/storage/home_preview/lead-design1.png',
         ],
         'design2' => [
             'label' => 'Only Lead News',
             'preview' => '/storage/home_preview/lead-design2.png',
         ],
+        'middle-lead' => [
+            'label' => 'Middle Lead Section (1 center, 2 left, 4 right)',
+            'preview' => '/storage/home_preview/middle-lead-section.png',
+        ],
     ];
+
 
     public function mount()
     {

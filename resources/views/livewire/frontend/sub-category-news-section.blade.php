@@ -1,4 +1,4 @@
-<section class="mb-10">
+<section class="mb-10 max-w-5xl mx-auto px-4 py-4">
     {{-- Subcategory Name with Parent Category --}}
     <div class="mb-6 flex flex-wrap items-center gap-2 border-b-3" style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
         {{-- Subcategory Name --}}
