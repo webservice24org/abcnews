@@ -18,6 +18,7 @@ class PagesTableSeeder extends Seeder
             ['title' => 'Our Staff', 'slug' => 'our-staff', 'description' => 'Our Staff page content here.', 'page_thumbnail' => null],
             ['title' => 'Ethics & Guidelines', 'slug' => 'ethics-guidelines', 'description' => 'Ethics & Guidelines page content here.', 'page_thumbnail' => null],
             ['title' => 'How We Make Money', 'slug' => 'how-we-make-money', 'description' => 'How We Make Money page content here.', 'page_thumbnail' => null],
+            ['title' => 'ABS.News Help & FAQs ', 'slug' => 'help-faqs', 'description' => 'ABS.News Help & FAQs .', 'page_thumbnail' => null],
         ];
 
         foreach ($pages as $page) {

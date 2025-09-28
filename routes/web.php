@@ -46,12 +46,13 @@ use App\Livewire\Admin\Google\AnalyticsConfig;
 use App\Livewire\Admin\Theme\ThemeSelector;
 use App\Livewire\Admin\HomepageManager;
 use App\Livewire\Admin\HomepageLeadSectionManager;
+use App\Livewire\Admin\UnderConstructionBanner;
 
 use App\Http\Controllers\Frontend\NewsPrintController; 
 
 
 
-
+use App\Livewire\Frontend\NewsEmbed;
 use App\Livewire\Frontend\HomePage;
 use App\Livewire\Frontend\NewsShow;
  use App\Livewire\Frontend\CategoryNewsSection;
@@ -172,6 +173,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/homepage/lead-section', HomepageLeadSectionManager::class)
         ->name('admin.homepage.lead-section');
 
+        Route::get('/admin/under-construction', UnderConstructionBanner::class)
+    ->name('admin.under-construction');
+
     // Optional: Save theme route (if you want non-Livewire fallback)
    // Route::post('/admin/themes/save', [ThemeController::class, 'save'])->name('themes.save');
 
@@ -243,6 +247,8 @@ Route::get('/photo-news', AllPhotoNews::class)->name('photo-news.index');
 Route::get('/all-news/user/{user}', UserNews::class)->name('news.user');
 
 Route::get('/page/{slug}', PageShow::class)->name('page.show');
+
+Route::get('/embed/news/{slug}', NewsEmbed::class)->name('news.embed');
 
 
 require __DIR__.'/auth.php';

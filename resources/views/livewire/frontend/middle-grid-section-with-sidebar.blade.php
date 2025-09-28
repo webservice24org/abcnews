@@ -16,7 +16,7 @@
             @if (!empty($category))
                 <a href="{{ route('category.show', ['slug' => $category->slug]) }}"
                    class="text-sm hover:bg-red-700 px-4 py-1 rounded shadow-sm transition" style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }}; color:{{$color->cat_btn_color ?? '#e7000b'}}">
-                    আরও দেখুন
+                    ডিটেলস
                 </a>
             @endif
         </div>

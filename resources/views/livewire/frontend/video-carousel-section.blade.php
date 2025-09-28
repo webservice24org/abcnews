@@ -6,11 +6,11 @@
         {{-- Section title + nav --}}
         <div class="flex items-center justify-between border-b border-gray-600 mb-6">
             <h2 class="text-xl font-bold text-white px-2">
-                {{ $title }}
+               <a href="{{ route('videos.all') }}"> {{ $title }}</a>
             </h2>
             <div class="flex space-x-2 mb-1">
                 <button class="swiper-button-prev-video bg-gray-700 hover:bg-gray-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
-                    <i class="fa-regular fa-square-caret-right"></i>
+                    <i class="fa-regular fa-square-caret-left"></i>
                 </button>
                 <button class="swiper-button-next-video bg-gray-700 hover:bg-gray-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
                     <i class="fa-regular fa-square-caret-right"></i>

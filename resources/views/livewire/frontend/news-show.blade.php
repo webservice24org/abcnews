@@ -1,6 +1,9 @@
-<div class="container mx-auto max-w-5xl mx-auto px-4 py-4">
+
+<div class="container mx-auto max-w-5xl px-4 py-4">
+    <livewire:frontend.under-construction-banner />
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
+    
         {{-- Main Content --}}
         <div class="md:col-span-8 space-y-6">
 
@@ -36,52 +39,73 @@
             <h1 class="text-3xl font-bold text-black">{{ $news->news_title }}</h1>
 
             {{-- Author & Date --}}
-            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 mt-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 mt-4 w-full">
 
                 {{-- Author Info --}}
-                <div class="flex items-center text-md mb-2 md:mb-0">
+                <div class="flex items-center mb-2 md:mb-0">
                     @if ($news->user && $news->user->profile)
-                        <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" class="w-10 h-10 rounded-full mr-2"  />
+                        <img src="{{ asset('storage/' . $news->user->profile->profile_photo) }}" 
+                            class="w-10 h-10 rounded-full mr-2" />
                     @endif
                     <span>
-                        <a href="{{ route('news.user', $news->user->id) }}"><strong>{{ $news->user->name ?? 'Unknown' }}</strong> </a> | 
-                        প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
+                        <a href="{{ route('news.user', $news->user->id) }}">
+                            <strong>{{ $news->user->name ?? 'Unknown' }}</strong>
+                        </a> | প্রকাশ: {{ \App\Helpers\DateHelper::formatBanglaDateTime($news->created_at) }}
                     </span>
                 </div>
 
-                {{-- Social Share Icons --}}
-                <div class="flex items-center gap-3 text-xl text-gray-700">
+                {{-- Social Share & Embed --}}
+                <div class="flex items-center gap-2 text-gray-700 flex-wrap">
 
                     {{-- Facebook --}}
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}"
-                    target="_blank" class="hover:text-blue-600" title="Share on Facebook">
-                        <i class="fab fa-facebook-f"></i>
+                    target="_blank"
+                    class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-blue-600 hover:text-white transition"
+                    title="Facebook">
+                        <i class="fab fa-facebook-f text-sm"></i>
                     </a>
 
                     {{-- X (Twitter) --}}
                     <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}&text={{ urlencode($news->news_title) }}"
-                    target="_blank" class="hover:text-black" title="Share on X">
-                        <i class="fab fa-x-twitter"></i>
+                    target="_blank"
+                    class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white transition"
+                    title="Twitter">
+                        <i class="fab fa-x-twitter text-sm"></i>
                     </a>
 
                     {{-- WhatsApp --}}
                     <a href="https://wa.me/?text={{ urlencode(Request::fullUrl()) }}"
-                    target="_blank" class="hover:text-green-600" title="Share on WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
+                    target="_blank"
+                    class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-green-600 hover:text-white transition"
+                    title="WhatsApp">
+                        <i class="fab fa-whatsapp text-sm"></i>
                     </a>
 
                     {{-- Copy Link --}}
                     <button onclick="navigator.clipboard.writeText('{{ Request::fullUrl() }}'); showToast('success', 'Link copied!');"
-                            class="hover:text-blue-500" title="Copy link">
-                        <i class="fas fa-link"></i>
+                            class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-blue-500 hover:text-white transition"
+                            title="Copy Link">
+                        <i class="fas fa-link text-sm"></i>
                     </button>
+
+                    {{-- Print --}}
                     <a href="{{ route('news.print', $news->slug) }}" target="_blank"
-                    class="inline-flex items-center gap-1 px-4 py-1 border text-sm rounded hover:bg-gray-100 text-gray-600 border-gray-400">
+                    class="inline-flex items-center gap-1 px-3 py-1 border border-gray-400 text-sm rounded hover:bg-gray-100 text-gray-600">
                         <i class="fas fa-print"></i> প্রিন্ট
                     </a>
 
+                    {{-- Copy Embed Code --}}
+                    <button 
+                        x-data="{ copied: false, code: `<iframe src='{{ route('news.embed', $news->slug) }}' width='600' height='400' frameborder='0' allowfullscreen></iframe>` }"
+                        @click="navigator.clipboard.writeText(code).then(() => { copied = true; setTimeout(() => copied = false, 2000); })"
+                        class="px-3 py-1 bg-[rgb(179,25,66)] text-white text-sm rounded hover:bg-pink-800 hover:cursor-pointer transition"
+                        x-text="copied ? 'Copied!' : 'Embed'">
+                    </button>
+
                 </div>
             </div>
+
+
 
 
             {{-- Thumbnail --}}
@@ -94,6 +118,11 @@
             <div class="news-show-descp">
                 {!! $news->news_description !!}
             </div>
+
+            
+
+
+
 
             {{-- Tags --}}
             @if($news->tags->isNotEmpty())
@@ -136,7 +165,7 @@
             <div class="mt-2 text-black">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl">মন্তব্য করুন <span class="ml-2 text-red-500"><i class="fa-solid fa-comment"></i></span></h2>
-                    <a href="{{ route('login') }}" class="text-md font-bold bg-red-500 p-2 text-white rounded">Login to comment</a>
+                    <a href="{{ route('login') }}" class="text-md font-bold bg-red-500 p-2 text-white rounded">কমেন্ট করতে লগ ইন করুন</a>
                 </div>
                 <div>
                     <x-commenter::index :model="$news" />

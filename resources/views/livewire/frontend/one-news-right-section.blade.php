@@ -23,7 +23,7 @@
                 </p>
                 <a href="{{ route('news.show', $news->slug) }}" 
                    class="inline-block text-sm text-black border border-black px-3 py-1 rounded transition duration-300 hover:bg-[rgb(179,25,66)]  hover:border-[rgb(179,25,66)] hover:text-white">
-                    Read More
+                    ডিটেলস
                 </a>
             </div>
 

@@ -10,13 +10,11 @@
     class="lakm_commenter space-y-6"
 >
     <div
-        class="text-lg font-bold dark:!text-white"
-        @style([
-            'color: ' . config('commenter.primary_color'),
-        ])
+        class="text-lg font-bold text-black dark:!text-white"
+        
     >
-        {{ __('Comments') }}
-        <span x-text="getTotal()"></span>
+        <span class="text-black ">{{ __('মন্তব্য') }}</span>
+        <span class="text-black " x-text="getTotal()"></span>
     </div>
     <div class="flex flex-col gap-y-2 sm:flex-row sm:items-center sm:justify-between !-mb-2">
         @if (($total > 1 || $filter === 'own') && config('commenter.show_filters'))
@@ -122,7 +120,7 @@
     @elseif ($filter === 'own')
         <div class="text-lg">{{ __('You haven\'t made/approved any comments yet !') }}</div>
     @else
-        <div class="text-lg">{{ __('Be the first one to make a comment !') }}</div>
+        <div class="text-lg text-black">{{ __('সবার আগে মন্তব্য করার সুযোগ নিন') }}</div>
     @endif
 
     @if ($comments->isNotEmpty() && $model->paginationEnabled() && $paginationRequired)

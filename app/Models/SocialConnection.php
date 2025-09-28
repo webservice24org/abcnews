@@ -13,5 +13,6 @@ class SocialConnection extends Model
         'tiktok',
         'instagram',
         'youtube',
+        'whatsapp',
     ];
 }

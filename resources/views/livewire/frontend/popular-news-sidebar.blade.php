@@ -1,5 +1,5 @@
 <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-2">
-    <h3 class="text-lg font-bold text-white mb-4 p-2" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">সর্বাধিক পঠিত</h3>
+    <h3 class="text-lg font-bold text-white mb-4 p-2" style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }}; color: {{ $color->sec_title_color ?? '#fff' }};">মোস্ট পপুলার</h3>
 
     @foreach($popularNews as $news)
         <div class="flex items-start gap-3 mb-3 pt-1 pb-1 @if (!$loop->last) border-b border-gray-200 @endif">

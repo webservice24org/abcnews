@@ -1,4 +1,9 @@
 <div>
+    <livewire:frontend.news-ticker />
+
+    <livewire:frontend.under-construction-banner />
+
+
     @if($leadSettings && $leadSettings->enabled)
         @if($leadSettings->design === 'design1')
             @include('partials.front.lead-news', ['leadNews' => $leadNews, 'subLeadNews' => $subLeadNews])

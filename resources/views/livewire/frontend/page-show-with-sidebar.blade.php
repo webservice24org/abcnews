@@ -1,4 +1,4 @@
-<div class="py-8 grid grid-cols-1 md:grid-cols-3 gap-6 ">
+<div class="py-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto ">
     <div class="col-span-2 bg-white shadow rounded p-6 space-y-4">
         @if($page->page_thumbnail)
             <img src="{{ asset('storage/' . $page->page_thumbnail) }}" 

@@ -1,4 +1,4 @@
-<div class="bg-white p-6 shadow rounded space-y-4 max-w-5xl mx-auto px-4 py-4"> 
+<div class="bg-white p-6 space-y-4 max-w-5xl mx-auto px-4 py-4"> 
     @if($page->page_thumbnail)
         <img src="{{ asset('storage/' . $page->page_thumbnail) }}" 
              alt="{{ $page->title }}" 

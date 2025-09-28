@@ -4,7 +4,7 @@
             {{-- Section Title --}}
             <h2 class="font-bold text-lg text-gray-900 border-b-2 border-black mb-3 pb-1">
                 <a href="{{ route('category.show', $cat['slug']) }}">
-                    {{ strtoupper($cat['title']) }} <span class="ml-1"><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
+                    {{ strtoupper($cat['title']) }} 
                 </a>
             </h2>
 
@@ -29,7 +29,7 @@
             <div class="space-y-2">
                 @foreach($cat['others'] as $news)
                     <a href="{{ route('news.show', $news->slug) }}" 
-                       class="block border-t pt-2 font-semibold text-gray-900 news_title font-medium">
+                       class="block border-t pt-2 font-semibold text-gray-900 news_title">
                         {{ $news->news_title }}
                     </a>
                 @endforeach

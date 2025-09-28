@@ -47,12 +47,9 @@
                     </ul>
                 </div>
 
-                {{-- Social Icons --}}
-                <div class="mt-4 md:mt-0">
-                    <livewire:frontend.social-icons />
-                </div>
+               
             </div>
-
+             
             <div class="flex flex-col md:flex-row justify-between items-center border-t border-white pt-4">
                 {{-- Footer Logo --}}
                 <div>
@@ -90,7 +87,11 @@
 
             </div>
 
-            
+            {{-- Social Icons --}}
+                <div class="mt-4 md:mt-0">
+                    <livewire:frontend.social-icons />
+                </div>
+
             
 
             {{-- Bottom Row: Copyright and Developer --}}

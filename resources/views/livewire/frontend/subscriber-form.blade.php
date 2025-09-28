@@ -4,7 +4,7 @@
             {{ session('success') }}
         </div>
     @endif
-    <h3 class="text-lg font-semibold mb-3">Subscribe to Newsletter</h3>
+    <h3 class="text-lg font-semibold mb-3">সাবস্ক্রাইব টু নিউজলেটার</h3>
 
     <form wire:submit.prevent="subscribe" class="space-y-3">
         <!-- Name -->
@@ -24,7 +24,7 @@
         <!-- Submit -->
         <button type="submit"
             class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-            Subscribe
+            সাবস্ক্রাইব
         </button>
     </form>
 </div>

@@ -14,7 +14,7 @@
 
     @if ($social?->pinterest)
         <a href="{{ $social->pinterest }}" target="_blank" class="hover:text-red-600 hover:bg-white bg-white p-1 rounded">
-            <i class="fa-brands fa-square-pinterest"></i>
+            <i class="fa-brands fa-linkedin"></i>
         </a>
     @endif
 
@@ -33,6 +33,11 @@
     @if ($social?->youtube)
         <a href="{{ $social->youtube }}" target="_blank" class="hover:text-red-600 hover:bg-white bg-white p-1 rounded">
            <i class="fa-brands fa-square-youtube"></i>
+        </a>
+    @endif 
+    @if ($social?->whatsapp)
+        <a href="{{ $social->whatsapp }}" target="_blank" class="hover:text-red-600 hover:bg-white bg-white p-1 rounded">
+           <i class="fa-brands fa-square-whatsapp"></i>
         </a>
     @endif
 

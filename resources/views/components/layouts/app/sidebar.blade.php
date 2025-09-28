@@ -357,7 +357,8 @@
                     'theme.color.picker',
                     'admin.analytics',
                     'admin.analytics-settings',
-                    'themes.index'
+                    'themes.index',
+                    'admin.under-construction',
                 ];
                 $isAppearanceOpen = collect($appearanceOpenRoutes)->contains(fn($route) => request()->routeIs($route));
             @endphp
@@ -440,6 +441,11 @@
                             </flux:navlist.item>
                             <flux:navlist.item icon="tag" :href="route('admin.analytics-settings')" :current="request()->routeIs('admin.analytics-settings')">
                                 {{ __('Google Settings') }}
+                            </flux:navlist.item><flux:navlist.item icon="tag" :href="route('admin.analytics-settings')" :current="request()->routeIs('admin.analytics-settings')">
+                                {{ __('Google Settings') }}
+                            </flux:navlist.item>
+                            <flux:navlist.item icon="globe-alt" :href="route('admin.under-construction')" :current="request()->routeIs('admin.under-construction')">
+                                {{ __('Under construction') }}
                             </flux:navlist.item> 
                             @if (auth()->check() && auth()->user()->hasAnyRole(['Super Admin']))
                                 <flux:navlist.item icon="tag" :href="route('themes.index')" :current="request()->routeIs('themes.index')">
