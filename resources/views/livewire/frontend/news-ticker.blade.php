@@ -1,5 +1,5 @@
-<div class="w-full bg-[rgb(179,25,66)] text-white py-2">
-    <div class="max-w-5xl mx-auto px-4 flex items-center gap-4">
+<div class="max-w-5xl mx-auto bg-[rgb(179,25,66)] text-white py-2">
+    <div class="px-4 flex items-center gap-4">
         {{-- label --}}
         <span class="bg-white px-3 text-black py-1 text-sm font-bold uppercase rounded">
             লেটেস্ট নিউজ

@@ -56,77 +56,105 @@
 
     {{-- Modal --}}
     <div x-data="{ open: @entangle('modalOpen') }"
-         x-show="open" x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+     x-show="open" x-cloak
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    
         <div @click.outside="open=false"
-             class="bg-white w-full max-w-4xl rounded-lg shadow p-6 space-y-6">
-            <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-800">{{ $editingId ? 'Edit Section' : 'Add Section' }}</h3>
+            class="bg-white w-full max-w-4xl max-h-[90vh] rounded-lg shadow flex flex-col">
+            
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b">
+                <h3 class="text-lg font-semibold text-gray-800">
+                    {{ $editingId ? 'Edit Section' : 'Add Section' }}
+                </h3>
                 <button @click="open=false" class="text-gray-500 text-xl leading-none">&times;</button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {{-- Visual picker --}}
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Select Section Layout</label>
+            <!-- Scrollable Content -->
+            <div class="overflow-y-auto px-6 py-4 space-y-6 flex-1">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    {{-- Visual picker --}}
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium mb-2 text-gray-700">Select Section Layout</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            @foreach($componentOptions as $key => $opt)
+                                <label class="relative block cursor-pointer">
+                                    {{-- Hidden radio with peer --}}
+                                    <input type="radio" 
+                                        class="peer hidden" 
+                                        wire:model="component" 
+                                        value="{{ $key }}">
 
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        @foreach($componentOptions as $key => $opt)
-                            <label class="cursor-pointer group">
-                                <input type="radio" class="hidden" wire:model="component" value="{{ $key }}">
-                                <div class="border rounded-lg p-2 group-hover:shadow
-                                            {{ $component === $key ? 'ring-2 ring-blue-500' : '' }}">
-                                    <img src="{{ $opt['preview'] }}" class="w-full h-20 object-cover rounded mb-2">
-                                    <div class="text-sm font-medium text-gray-800">{{ $opt['label'] }}</div>
-                                    <div class="text-xs text-gray-500">{{ $opt['desc'] }}</div>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                    @error('component') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
-                </div>
+                                    {{-- Card --}}
+                                    <div class="border rounded-lg p-2 transition group 
+                                                peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:border-blue-500 
+                                                hover:shadow">
+                                        <img src="{{ $opt['preview'] }}" class="w-full h-20 object-cover rounded mb-2">
+                                        <div class="text-sm font-medium text-gray-800">{{ $opt['label'] }}</div>
+                                        <div class="text-xs text-gray-500">{{ $opt['desc'] }}</div>
+                                    </div>
 
-                {{-- Fields --}}
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Title</label>
-                        <input type="text" wire:model.defer="title"
-                               class="w-full border rounded px-3 py-2 text-gray-800">
-                        @error('title') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Category</label>
-                        <select wire:model="category_id" class="w-full border rounded px-3 py-2 text-gray-800">
-                            <option value="">— None —</option>
-                            @foreach($categories as $c)
-                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                    {{-- Checkmark Badge (only when selected) --}}
+                                    <span class="absolute top-1 right-1 hidden peer-checked:inline-flex bg-blue-600 text-white rounded-full p-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </span>
+                                </label>
                             @endforeach
-                        </select>
-                        @error('category_id') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                        <p class="text-xs text-gray-500 mt-1">Slug will be taken from the selected category automatically in frontend.</p>
+                        </div>
+
+                        @error('component') 
+                            <p class="text-red-600 text-xs mt-2">{{ $message }}</p> 
+                        @enderror
                     </div>
 
-                    <div class="flex items-center gap-2">
-                        <input id="status" type="checkbox" wire:model="status" class="rounded">
-                        <label for="status" class="text-sm text-gray-700">Active</label>
-                    </div>
+                    {{-- Fields --}}
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Title</label>
+                            <input type="text" wire:model.defer="title"
+                                class="w-full border rounded px-3 py-2 text-gray-800">
+                            @error('title') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                        </div>
 
-                    <div class="pt-2">
-                        <button wire:click="save"
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                            Save
-                        </button>
-                        <button @click="open=false"
-                                class="ml-2 bg-gray-200 text-gray-800 px-4 py-2 rounded">
-                            Cancel
-                        </button>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Category</label>
+                            <select wire:model="category_id" class="w-full border rounded px-3 py-2 text-gray-800">
+                                <option value="">— None —</option>
+                                @foreach($categories as $c)
+                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id') 
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p> 
+                            @enderror
+                            <p class="text-xs text-gray-500 mt-1">Slug will be taken from the selected category automatically in frontend.</p>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <input id="status" type="checkbox" wire:model="status" class="rounded">
+                            <label for="status" class="text-sm text-gray-700">Active</label>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t flex justify-end gap-2">
+                <button wire:click="save"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                    Save
+                </button>
+                <button @click="open=false"
+                        class="bg-gray-200 text-gray-800 px-4 py-2 rounded">
+                    Cancel
+                </button>
+            </div>
         </div>
     </div>
+
 </div>
 
 @push('scripts')

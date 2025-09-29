@@ -1,4 +1,6 @@
-<div>
+<div class="max-w-5xl mx-auto shadow-md bg-white z-50 ">
+
+    {{-- News Ticker --}}
     <livewire:frontend.news-ticker />
 
     <livewire:frontend.under-construction-banner />
@@ -11,8 +13,12 @@
             <livewire:frontend.theme2.lead-news />
         @elseif($leadSettings->design === 'middle-lead')
             <livewire:frontend.middle-lead-section />
+        @elseif($leadSettings->design === 'lead-news-alt')
+            <livewire:frontend.theme2.lead-news-alt />
         @endif
     @endif
+
+    
 
 
 

@@ -1,4 +1,4 @@
-<div class="section max-w-5xl mx-auto px-4 py-4">
+<div class="max-w-5xl mx-auto px-4 py-4">
     {{-- Section title --}}
     <div class="flex items-center justify-between border-b border-gray-300 mb-4">
         <h2 class="text-xl font-bold text-gray-900 px-2">
@@ -11,7 +11,7 @@
     {{-- News block --}}
     @if($news)
         <div class="grid grid-cols-1 md:grid-cols-10 gap-6 items-center">
-            {{-- Left Content (70%) --}}
+            {{-- Left Content (30%) --}}
             <div class="md:col-span-3 space-y-4">
                 <h3 class="text-xl font-bold text-gray-900">
                     <a href="{{ route('news.show', $news->slug) }}" class="news_title">
@@ -27,7 +27,7 @@
                 </a>
             </div>
 
-            {{-- Right Image (30%) --}}
+            {{-- Right Image (70%) --}}
             <div class="md:col-span-7">
                 <img src="{{ $news->news_thumbnail 
                             ? asset('storage/'.$news->news_thumbnail) 

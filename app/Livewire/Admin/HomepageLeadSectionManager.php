@@ -24,6 +24,10 @@ class HomepageLeadSectionManager extends Component
             'label' => 'Middle Lead Section (1 center, 2 left, 4 right)',
             'preview' => '/storage/home_preview/middle-lead-section.png',
         ],
+        'lead-news-alt' => [
+            'label' => 'Middle Lead Section (1 center, 2 left, 5 right, 4 bottom)',
+            'preview' => '/storage/home_preview/middle-alt-section.png',
+        ],
     ];
 
 

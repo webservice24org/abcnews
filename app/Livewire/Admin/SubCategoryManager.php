@@ -121,9 +121,12 @@ class SubCategoryManager extends Component
         } elseif ($this->filter === 'inactive') {
             $query->where('status', 0);
         }
+
         return view('livewire.admin.sub-category-manager', [
             'subCategories' => $query->paginate(10),
-            'categories' => Category::all(),
+            // ✅ Only fetch active categories
+            'categories' => Category::where('status', 1)->get(),
         ]);
     }
+
 }

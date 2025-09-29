@@ -1,5 +1,5 @@
-<div class="rooter-wrapper">
-    <div class="max-w-7xl mx-auto text-center mt-10">
+<div class="rooter-wrapper max-w-5xl mx-auto">
+    <div class="text-center">
             @php
             $globalBelowGridAd = \App\Models\Advertisement::where('ad_name', 'Global Before Footer')
                 ->where('is_global', 1)
@@ -19,8 +19,8 @@
         
         @endif
     </div>
-    <footer class="mt-5 border-t border-white pt-10 pb-1 text-white" style="background-color: {{ $color->footer_bg ?? '#e7000b' }};">
-        <div class="max-w-7xl mx-auto px-4 space-y-4">
+    <footer class="max-w-5xl mx-auto border-t border-white pt-10 pb-1 text-white" style="background-color: {{ $color->footer_bg ?? '#e7000b' }};">
+        <div class=" px-4 space-y-4">
 
             {{-- Top Row: Logo and Social Icons --}}
             <div class="flex flex-col md:flex-row justify-between items-center">

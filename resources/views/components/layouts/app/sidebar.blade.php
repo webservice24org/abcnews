@@ -441,8 +441,6 @@
                             </flux:navlist.item>
                             <flux:navlist.item icon="tag" :href="route('admin.analytics-settings')" :current="request()->routeIs('admin.analytics-settings')">
                                 {{ __('Google Settings') }}
-                            </flux:navlist.item><flux:navlist.item icon="tag" :href="route('admin.analytics-settings')" :current="request()->routeIs('admin.analytics-settings')">
-                                {{ __('Google Settings') }}
                             </flux:navlist.item>
                             <flux:navlist.item icon="globe-alt" :href="route('admin.under-construction')" :current="request()->routeIs('admin.under-construction')">
                                 {{ __('Under construction') }}
