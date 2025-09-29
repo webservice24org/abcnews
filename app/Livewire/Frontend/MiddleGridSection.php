@@ -24,9 +24,9 @@ class MiddleGridSection extends Component
                 ->get()
             : collect();
 
-        $leftNews   = $allNews->slice(1, 6);
+        $leftNews   = $allNews->slice(1, 4);
         $middleNews = $allNews->first();
-        $rightNews  = $allNews->slice(7, 6);
+        $rightNews  = $allNews->slice(5, 4);
 
         if ($category) {
             $this->ad = Advertisement::whereHas('categories', function ($query) use ($category) {

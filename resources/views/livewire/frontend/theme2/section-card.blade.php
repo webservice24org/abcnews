@@ -7,7 +7,7 @@
         </a>
         <a href="{{ route('category.show', $categorySlug) }}"
            class="text-blue-600 text-sm hover:underline">
-            আরও দেখুন →
+            আরও দেখুন
         </a>
     </div>
 

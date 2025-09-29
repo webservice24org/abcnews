@@ -342,7 +342,7 @@
 
         <!-- Hamburger Menu Icon (Desktop only) -->
         <div class="flex items-center pl-4">
-            <button @click="open = true" class="text-black hover:cursor-pointer focus:outline-none">
+            <button @click="open = true" class="text-black transition hover:cursor-pointer hover:text-sky-400 focus:outline-none">
                 <!-- Icon -->
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -379,12 +379,12 @@
         <div class="flex-1 flex items-center justify-end pr-4 space-x-4">
 
             <button @click="showSubscribe = true"
-                    class="px-4 py-1 bg-[rgb(179,25,66)] text-white font-semibold rounded hover:bg-black hover:cursor-pointer transition">
+                    class="px-4 py-1 bg-sky-300 text-black font-semibold rounded hover:bg-sky-400 hover:cursor-pointer transition">
                 সাবস্ক্রাইব 
             </button>
 
             <a href="{{ route('login') }}"
-            class="px-4 py-1 bg-[rgb(179,25,66)] text-white font-semibold rounded hover:bg-red-700 transition">
+            class="px-4 py-1 bg-sky-300 text-black font-semibold rounded hover:bg-sky-400 hover:cursor-pointer transition">
                 লগ ইন
             </a>
         </div>
@@ -479,7 +479,7 @@
                     <a href="{{ url('/') }}"
                     class="nav-item relative font-bold py-3 no-underline"
                     @mouseenter="hoverIndex = 0"
-                    :class="currentIndex() === 0 ? 'text-[rgb(179,25,66)]' : 'text-gray-800'">
+                    :class="currentIndex() === 0 ? 'text-sky-400' : 'text-gray-800'">
                         Home
                     </a>
 
@@ -509,10 +509,10 @@
                             @mouseleave="open = false">
 
                             <a href="{{ $url }}"
-                            class="nav-item relative font-bold py-3 flex items-center no-underline hover:text-[rgb(179,25,66)]"
+                            class="nav-item relative font-bold py-3 flex items-center no-underline hover:text-sky-400"
                             x-ref="link"
                             :class="{
-                                'text-[rgb(179,25,66)]': currentIndex() === {{ $index + 1 }},
+                                'text-sky-400': currentIndex() === {{ $index + 1 }},
                                 'text-gray-800': currentIndex() !== {{ $index + 1 }}
                             }">
                                 {{ $menu->title }}
@@ -614,7 +614,7 @@
 
                     {{-- Sliding underline --}}
                     <div x-ref="bar"
-                        class="absolute bottom-0 h-[2px] bg-[rgb(179,25,66)]"
+                        class="absolute bottom-0 h-[2px] bg-sky-400"
                         style="transition: left 0.25s cubic-bezier(0.4,0,0.2,1), width 0.25s cubic-bezier(0.4,0,0.2,1);">
                     </div>
                 </nav>
@@ -623,7 +623,7 @@
             {{-- Search Button --}}
             <div class="flex-shrink-0 ml-4">
                 <button @click="showSearch = !showSearch; $nextTick(() => { if (showSearch) $refs.searchInput.focus() })"
-                        class="inline-flex items-center justify-center w-10 h-10 text-gray-800 hover:text-[rgb(179,25,66)] transition">
+                        class="inline-flex items-center justify-center w-10 h-10 text-sky-400 hover:text-[rgb(179,25,66)] hover:cursor-pointer transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -646,7 +646,7 @@
                    class="w-full border border-gray-300 rounded-l px-3 py-2 focus:outline-none text-black">
 
             <button type="submit"
-                    class="bg-[rgb(179,25,66)] text-white px-4 py-2 rounded-r hover:bg-red-700">
+                    class="bg-sky-400 text-black px-4 py-2 rounded-r hover:bg-sky-700 hover:cursor-pointer transition">
                 Search
             </button>
         </form>
@@ -788,7 +788,7 @@
             <!-- Sidebar Menu -->
             <nav class="p-4 space-y-1">
                 <a href="{{ url('/') }}"
-                class="block text-lg font-semibold text-gray-900 hover:text-[rgb(179,25,66)] transition-colors duration-200 py-1">
+                class="block text-lg font-semibold text-gray-900 hover:text-sky-400 transition-colors duration-200 py-1">
                     Home
                 </a>
 

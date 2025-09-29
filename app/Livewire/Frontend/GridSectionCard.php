@@ -5,12 +5,14 @@ namespace App\Livewire\Frontend;
 use Livewire\Component;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 
 class GridSectionCard extends Component
 {
     public string $title;
     public string $categorySlug = '';
     public $news;
+    public $subcategories;
 
     public function mount(string $title, string $categorySlug = '')
     {
@@ -18,19 +20,28 @@ class GridSectionCard extends Component
         $this->categorySlug = $categorySlug;
 
         if (!empty($categorySlug)) {
-            $category = Category::where('slug', $categorySlug)
-                ->where('status', 1)
-                ->first();
+            $category = Category::with(['subCategories' => function ($q) {
+                $q->where('status', 1); // only active subcategories
+            }])
+            ->where('slug', $categorySlug)
+            ->where('status', 1)
+            ->first();
 
-            $this->news = $category
-                ? $category->newsPosts()
+            if ($category) {
+                $this->news = $category->newsPosts()
                     ->where('status', 'published')
                     ->latest()
                     ->take(9)
-                    ->get()
-                : collect();
+                    ->get();
+
+                $this->subcategories = $category->subCategories;
+            } else {
+                $this->news = collect();
+                $this->subcategories = collect();
+            }
         } else {
             $this->news = collect();
+            $this->subcategories = collect();
         }
     }
 

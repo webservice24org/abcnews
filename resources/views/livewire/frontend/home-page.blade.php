@@ -56,6 +56,12 @@
                 :categorySlug="$section->category?->slug" />
             @break
 
+        @case('news-carousel')
+            <livewire:frontend.news-carousel 
+                :title="$section->title ? $section->title : ($section->category?->name ?? '')" 
+                :categorySlug="$section->category?->slug" />
+        @break
+
         @case('middle-grid-section-with-sidebar')
             <livewire:frontend.middle-grid-section-with-sidebar 
                 :title="$section->title ? $section->title : ($section->category?->name ?? '')" 

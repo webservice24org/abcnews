@@ -1,4 +1,4 @@
-<div class="max-w-5xl mx-auto bg-[rgb(179,25,66)] text-white py-2">
+<div class="max-w-5xl mx-auto bg-sky-300 text-white py-2">
     <div class="px-4 flex items-center gap-4">
         {{-- label --}}
         <span class="bg-white px-3 text-black py-1 text-sm font-bold uppercase rounded">
@@ -14,19 +14,19 @@
                     {{-- original items --}}
                     @foreach($news as $item)
                         <a href="{{ route('news.show', $item->slug) }}"
-                        class="ticker-item inline-block mx-6 text-md text-white whitespace-nowrap">
+                        class="ticker-item inline-block mx-6 text-md text-black font-semibold whitespace-nowrap">
                             {{ $item->news_title }}
                         </a>
-                        <span class="text-white">|</span>
+                        <span class="text-black font-semibold">|</span>
                     @endforeach
 
                     {{-- duplicate for seamless loop --}}
                     @foreach($news as $item)
                         <a href="{{ route('news.show', $item->slug) }}"
-                        class="ticker-item inline-block mx-6 text-md text-white whitespace-nowrap">
+                        class="ticker-item inline-block mx-6 text-md text-black font-semibold whitespace-nowrap">
                             {{ $item->news_title }}
                         </a>
-                        <span class="text-white">|</span>
+                        <span class="text-black font-semibold">|</span>
                     @endforeach
 
                 </div>

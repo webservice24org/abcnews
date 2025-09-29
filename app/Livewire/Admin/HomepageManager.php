@@ -91,6 +91,12 @@ class HomepageManager extends Component
                 'preview' => asset('storage/home_preview/four-colum-simple.png'),
                 'desc' => 'Four categories with featured news.',
             ],
+            'news-carousel' => [
+                'label' => 'News Carousel Section',
+                'preview' => asset('storage/home_preview/four-colum-simple.png'),
+                'desc' => 'Four news in carousel.',
+            ],
+            
             
             'single-news-feature' => [
                 'label' => 'Single News Section',

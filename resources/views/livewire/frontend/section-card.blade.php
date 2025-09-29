@@ -29,7 +29,7 @@
                 {{-- Main News --}}
                 <div class="md:col-span-8">
                     @if($last)
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition p-4">
+                        <div class="bg-sky-300 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition p-4">
                             <img src="{{ asset('storage/' . $last->news_thumbnail) }}"
                                  alt="{{ $last->news_title }}"
                                  class="w-full h-auto mb-4 rounded">
@@ -67,7 +67,7 @@
                 {{-- Remaining News --}}
                 <div class="md:col-span-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition">
                     @foreach($others as $newsItem)
-                        <div class="flex items-start gap-3 p-3 @if (!$loop->last) border-b border-gray-200 @endif">
+                        <div class="flex items-start bg-sky-300 gap-3 p-3 @if (!$loop->last) border-b border-gray-200 @endif">
                             <div class="flex-1">
                                 <a href="{{ route('news.show', $newsItem->slug) }}">
                                     <h4 class="text-md font-bold leading-tight news_title">

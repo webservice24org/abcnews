@@ -1,19 +1,34 @@
 
     <section class="mb-10 max-w-5xl mx-auto px-4 py-4">
         {{-- Section Header --}}
-        <div class="flex justify-between items-center border-b-3 mb-4"
-             style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+        <div class="flex justify-between items-center border-b-3 mb-4 flex-wrap gap-3"
+            style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+            
             <h2 class="text-2xl font-bold p-2"
                 style="background-color: {{ $color->sec_title_bg ?? '#e7000b' }};
-                       color: {{ $color->sec_title_color ?? '#fff' }};">
+                    color: {{ $color->sec_title_color ?? '#fff' }};">
                 {{ $title }}
             </h2>
 
+            {{-- Subcategory List --}}
+            @if(!empty($subcategories) && $subcategories->count())
+                <div class="flex flex-wrap gap-2">
+                    @foreach($subcategories as $sub)
+                        <a href="{{ route('subcategory.show', $sub->slug) }}"
+                        class="text-sm px-3 py-1 rounded border transition
+                                hover:bg-sky-300 hover:text-black font-semibold"
+                        style="border-color: {{ $color->sec_border_color ?? '#e7000b' }};">
+                            {{ $sub->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+
             @if (!empty($categorySlug))
                 <a href="{{ route('category.show', ['slug' => $categorySlug]) }}"
-                   class="text-sm hover:bg-red-700 px-4 py-1 rounded shadow-sm transition"
-                   style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }};
-                          color:{{$color->cat_btn_color ?? '#fff'}}">
+                class="text-sm font-semibold hover:bg-red-700 px-4 py-1 rounded shadow-sm transition"
+                style="background-color:{{ $color->cat_btn_bg ?? '#e7000b' }};
+                        color:{{$color->cat_btn_color ?? '#fff'}}">
                     আরও দেখুন
                 </a>
             @endif
@@ -23,7 +38,7 @@
         @if ($news && $news->count())
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($news as $item)
-                <div class="border rounded-lg shadow-sm hover:shadow-md transition">
+                <div class="border rounded-lg shadow-sm hover:shadow-md transition bg-sky-300">
                     <a href="{{ route('news.show', $item->slug) }}">
                         <img src="{{ asset('storage/' . $item->news_thumbnail) }}"
                              class="w-full h-48 object-cover rounded-t"
