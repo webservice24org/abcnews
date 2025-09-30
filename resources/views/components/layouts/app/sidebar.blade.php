@@ -24,7 +24,7 @@
     
                 <div x-data="{ open: {{ request()->routeIs('roles.index') || request()->routeIs('permissions.index') || request()->routeIs('users.index') ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                            class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                            class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>User Management</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                             viewBox="0 0 24 24">
@@ -90,7 +90,7 @@
         <flux:navlist variant="outline">
             <div x-data="{ open: {{ $isNewsOpen ? 'true' : 'false' }} }">
                 <button @click="open = !open"
-                    class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                    class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
 
                     <span>{{ __('News Management') }}</span>
                     <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -181,7 +181,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $isNewsSettingsOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('News Settings') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -262,7 +262,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $photoNewsRoutesOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Photo News') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -309,7 +309,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $isavideoRoutesOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Video News') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -366,7 +366,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $isAppearanceOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Appearance') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -467,7 +467,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $isadvertisementpentOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Advertisements') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -516,7 +516,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $isPageRoutesOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Page Manager') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -570,7 +570,7 @@
             <flux:navlist variant="outline">
                 <div x-data="{ open: {{ $iscontactOpen ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
+                        class="flex items-center justify-between w-full px-3 py-2 text-left font-medium text-black dark:text-yellow-100 hover:bg-gray-100 hover:text-black rounded">
                         <span>{{ __('Contact Manager') }}</span>
                         <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
